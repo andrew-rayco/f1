@@ -1,5 +1,7 @@
 var test = require('tape')
 var request = require('supertest')
+var cheerio = require('cheerio')
+
 var app = require('../server')
 
 
@@ -7,7 +9,8 @@ test('hello', (t) => {
   request(app)
     .get('/')
     .end( (err, res) => {
-      t.equal(res.text, 'hello', 'content is hello')
+      var $ = cheerio.load(res.text)
+      t.equal($('h1').text(), 'hello', 'content is hello')
       t.end()
     })
 })
