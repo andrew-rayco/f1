@@ -20,7 +20,9 @@
   "homepage": "https://github.com/andrew-rayco/f1#readme",
   "dependencies": {
     "express": "^4.15.2",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "knex": "^0.13.0",
+    "sqlite3": "^3.1.8"
   },
   "devDependencies": {
     "cheerio": "^0.22.0",
