@@ -1,0 +1,33 @@
+{
+  "name": "f1",
+  "version": "1.0.0",
+  "description": "Some sort of Formula 1 data representation - form yet to be determined",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape tests/**/*.test.js | tap-spec",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew-rayco/f1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrew-rayco/f1/issues"
+  },
+  "homepage": "https://github.com/andrew-rayco/f1#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "knex": "^0.13.0",
+    "sqlite3": "^3.1.8"
+  },
+  "devDependencies": {
+    "cheerio": "^0.22.0",
+    "supertest": "^3.0.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3"
+  }
+}
