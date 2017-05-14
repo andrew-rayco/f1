@@ -1,1 +1,7 @@
-<h1>hello</h1>
+<h1>Circuits</h1>
+
+<ul>
+  {{#each circuits}}
+  <li>{{country}} - <a href="{{url}}">{{name}}</a> - <a href="https://www.google.co.nz/maps/@{{lat}},{{lng}},15z?hl=en">map</a></li>
+  {{/each}}
+</ul>
