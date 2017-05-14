@@ -1,0 +1,16 @@
+.seasons {
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  /*display: inline-block;*/
+}
+
+.round {
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin: 10px;
+}

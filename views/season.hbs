@@ -1,0 +1,12 @@
+
+    <h1>The {{season.[0].year}} Formula 1 Season</h1>
+
+      {{#each season}}
+        <div class="row">
+          <div class="twelve columns round">
+            <h3>Round {{round}} - {{name}}</h3>
+            <p>{{date}}</p>
+            <p><a href="{{url}}">{{year}} {{name}} on Wikipedia</a></p>
+          </div>
+        </div>
+      {{/each}}
