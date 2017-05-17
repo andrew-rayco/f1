@@ -8,7 +8,6 @@ exports.up = function(knex, Promise) {
     table.time('time')
     table.string('duration')
     table.integer('milliseconds')
-    table.primary('raceId', 'driverId', 'stop');
   })
 };
 
