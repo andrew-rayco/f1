@@ -3,9 +3,9 @@ var fs = require('fs')
 exports.seed = function(knex, Promise) {
   var sql = fs.readFileSync('./sql/constructor-results.sql').toString()
   // Deletes ALL existing entries
-  return knex('constructorResults').del()
+  return knex('constructorresults').del()
     .then(() => {
-      return knex('constructorResults')
+      return knex('constructorresults')
       .then(() => knex.raw(sql))
     });
 };
