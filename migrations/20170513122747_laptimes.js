@@ -7,7 +7,6 @@ exports.up = function(knex, Promise) {
     table.integer('position')
     table.string('time')
     table.integer('milliseconds')
-    table.primary('raceId', 'driverId', 'lap');
   })
 };
 
