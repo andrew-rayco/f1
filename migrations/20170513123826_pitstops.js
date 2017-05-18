@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('pitStops', function (table) {
+  return knex.schema.createTable('pitstops', function (table) {
     table.integer('raceId')
     table.integer('driverId')
     table.integer('stop')
@@ -8,10 +8,9 @@ exports.up = function(knex, Promise) {
     table.time('time')
     table.string('duration')
     table.integer('milliseconds')
-    table.primary('raceId', 'driverId', 'stop');
   })
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('pitStops')
+  return knex.schema.dropTable('pitstops')
 };
