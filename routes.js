@@ -34,14 +34,14 @@ router.get('/season/:id/:raceId/drivers', (req, res) => {
   var id = req.params.id
   var raceId = req.params.raceId
   console.log('id', id, 'raceId', raceId)
-  if (raceId < 866 && raceId > 840) {
+  if (raceId < 972 && raceId > 0) {
     db('laptimes')
       .select('*')
       // .join('laptimes', 'races.raceId', '=', 'laptimes.raceId')
       .where('laptimes.raceId', raceId)
-      .then((drivers) => {
-        console.log(drivers);
-        res.render('drivers-in-race', {drivers})
+      .then((laptimes) => {
+        console.log(laptimes);
+        res.render('drivers-in-race', {laptimes})
       })
 
   }
