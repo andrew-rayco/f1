@@ -3,7 +3,9 @@ var router = express.Router()
 
 router.get('/', (req, res) => {
   var db = req.app.get('db')
-  db('seasons').then((seasons) => {
+  db('seasons')
+    .orderBy('year', 'asc')
+    .then((seasons) => {
     res.render('index', {seasons})
   })
 })
@@ -24,7 +26,6 @@ router.get('/season/:id', (req, res) => {
     .where('races.year', id)
 
     .then((season) => {
-
 
         console.log(season);
         res.render('season', {season})
