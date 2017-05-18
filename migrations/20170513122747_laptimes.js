@@ -1,6 +1,6 @@
 
 exports.up = function(knex, Promise) {
-  return knex.schema.createTable('lapTimes', function (table) {
+  return knex.schema.createTable('laptimes', function (table) {
     table.integer('raceId')
     table.integer('driverId')
     table.integer('lap')
@@ -12,5 +12,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTable('lapTimes')
+  return knex.schema.dropTable('laptimes')
 };
