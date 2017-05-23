@@ -17,6 +17,7 @@ router.get('/circuits', (req, res) => {
   })
 })
 
+// show all races in selected season
 router.get('/season/:id', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id
@@ -29,7 +30,27 @@ router.get('/season/:id', (req, res) => {
   })
 })
 
+// display a list of drivers taking part in selected race
 router.get('/season/:id/:raceId/drivers', (req, res) => {
+  var db = req.app.get('db')
+  var id = req.params.id
+  var raceId = req.params.raceId
+  console.log('id', id, 'raceId', raceId)
+  if (raceId < 972 && raceId > 0) {
+    db('laptimes')
+      .select('*')
+      // .join('laptimes', 'races.raceId', '=', 'laptimes.raceId')
+      .where('laptimes.raceId', raceId)
+      .then((laptimes) => {
+        console.log(laptimes);
+        res.render('drivers-in-race', {laptimes})
+      })
+  }
+  else console.log("No lap data");
+})
+
+// display laptimes per driver for selected race
+router.get('/season/:id/:raceId/laptimes', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id
   var raceId = req.params.raceId
