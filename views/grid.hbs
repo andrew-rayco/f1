@@ -6,6 +6,7 @@
     <th>Position</th>
     <th>Driver</th>
     <th>Time</th>
+    <th>Team</th>
   </thead>
   <tbody>
   {{#each qualifyingData}}
@@ -13,6 +14,7 @@
       <td><strong>{{position}}</strong></td>
       <td><a href={{url}}>{{forename}} {{surname}}</a></td>
       <td>{{q1}}</td>
+      <td><a href={{constructorUrl}}>{{constructorName}}</a></td>
     </tr>
   {{/each}}
   </tbody>
