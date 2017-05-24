@@ -51,8 +51,7 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
     })
 })
 
-
-// display laptimes per driver for selected race
+// make the race happen!
 router.get('/season/:id/:raceId/laptimes', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id
@@ -63,6 +62,7 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
       .where('laptimes.raceId', raceId)
       .orderBy('lap', 'asc')
       .then((laptimes) => {
+        let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
         res.render('laptimes', {laptimes})
       })
   }
@@ -70,6 +70,27 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
     res.render('no-laptime-data')
   }
 })
+
+
+
+// display laptimes per driver for selected race
+// router.get('/season/:id/:raceId/laptimes', (req, res) => {
+//   var db = req.app.get('db')
+//   var id = req.params.id
+//   var raceId = req.params.raceId
+//   if (raceId < 972 && raceId > 840) {
+//     db('laptimes')
+//       .select('*')
+//       .where('laptimes.raceId', raceId)
+//       .orderBy('lap', 'asc')
+//       .then((laptimes) => {
+//         res.render('laptimes', {laptimes})
+//       })
+//   }
+//   else {
+//     res.render('no-laptime-data')
+//   }
+// })
 
 
 module.exports = router
