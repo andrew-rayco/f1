@@ -43,10 +43,14 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
     .where('qualifying.raceId', raceId)
     // .groupBy('raceName')
     .then((qualifyingData) => {
-      res.render('grid', {qualifyingData})
+      if (qualifyingData[0]) {
+        res.render('grid', {qualifyingData, raceName:qualifyingData[0].raceName})
+      } else {
+        res.render('no-laptime-data')
+      }
     })
 })
-// , raceName:qualifyingData[0].raceName
+
 
 // display laptimes per driver for selected race
 router.get('/season/:id/:raceId/laptimes', (req, res) => {
@@ -66,21 +70,5 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
   }
 })
 
-// display a list of races and qualifying results (just for determining useful data)
-router.get('/season/:id/:raceId/quali', (req, res) => {
-  var db = req.app.get('db')
-  var season = req.params.id
-  var raceId = req.params.raceId
-  db('qualifying')
-    .select('constructors.name as constructorName', 'constructors.url as constructorUrl', 'races.name as raceName', 'qualifying.*', 'drivers.*')
-    .join('drivers', 'qualifying.driverId', '=', 'drivers.driverId')
-    .join('races', 'races.raceId', '=', 'qualifying.raceId')
-    .join('constructors', 'qualifying.constructorId', '=', 'constructors.constructorId')
-    .where('qualifying.raceId', raceId)
-    // .groupBy('raceName')
-    .then((qualifyingData) => {
-      res.render('grid', {qualifyingData})
-    })
-})
 
 module.exports = router
