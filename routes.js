@@ -1,5 +1,8 @@
 var express = require('express')
 var router = express.Router()
+var moment = require('moment')
+
+var dbFunctions = require('./db-functions')
 
 router.get('/', (req, res) => {
   var db = req.app.get('db')
@@ -17,34 +20,44 @@ router.get('/circuits', (req, res) => {
   })
 })
 
+
 // show all races in selected season
 router.get('/season/:id', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id
-  db('races')
-    .select('races.year as season-year', 'races.url as races-url', '*')
-    .join('seasons', 'seasons.year', '=', 'races.year')
-    .where('races.year', id)
+  dbFunctions.getRacesInSeason(db, id)
     .then((season) => {
+      season.forEach((race) => {
+        race.date = moment(race.date).format('MMMM Do YYYY')
+      })
         res.render('season', {season})
   })
 })
 
-// display a list of starting positions for the race
+// display qualifying results
+router.get('/season/:id/:raceId/qualifying', (req, res) => {
+  var db = req.app.get('db')
+  var season = req.params.id
+  var raceId = req.params.raceId
+  dbFunctions.getQualifyingResults(db, season, raceId)
+    .then((qualifyingData) => {
+      if (qualifyingData[0]) {
+        res.render('qualifying', {qualifyingData, raceName:qualifyingData[0].raceName})
+      } else {
+        res.render('no-laptime-data')
+      }
+    })
+})
+
+// display starting grid
 router.get('/season/:id/:raceId/grid', (req, res) => {
   var db = req.app.get('db')
   var season = req.params.id
   var raceId = req.params.raceId
-  db('qualifying')
-    .select('constructors.name as constructorName', 'constructors.url as constructorUrl', 'races.name as raceName', 'qualifying.*', 'drivers.*')
-    .join('drivers', 'qualifying.driverId', '=', 'drivers.driverId')
-    .join('races', 'races.raceId', '=', 'qualifying.raceId')
-    .join('constructors', 'qualifying.constructorId', '=', 'constructors.constructorId')
-    .where('qualifying.raceId', raceId)
-    // .groupBy('raceName')
-    .then((qualifyingData) => {
-      if (qualifyingData[0]) {
-        res.render('grid', {qualifyingData, raceName:qualifyingData[0].raceName})
+  dbFunctions.getGrid(db, raceId)
+    .then((gridData) => {
+      if (gridData[0]) {
+        res.render('grid', {gridData})
       } else {
         res.render('no-laptime-data')
       }
