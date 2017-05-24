@@ -17,6 +17,7 @@ router.get('/circuits', (req, res) => {
   })
 })
 
+// show all races in selected season
 router.get('/season/:id', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id
@@ -29,23 +30,38 @@ router.get('/season/:id', (req, res) => {
   })
 })
 
-router.get('/season/:id/:raceId/drivers', (req, res) => {
+// display a list of starting positions for the race
+router.get('/season/:id/:raceId/grid', (req, res) => {
+  var db = req.app.get('db')
+  var season = req.params.id
+  var raceId = req.params.raceId
+  db('qualifying')
+    .select('races.name as raceName', 'qualifying.*', 'drivers.*')
+    .join('drivers', 'qualifying.driverId', '=', 'drivers.driverId')
+    .join('races', 'races.raceId', '=', 'qualifying.raceId')
+    .where('qualifying.raceId', raceId)
+    // .groupBy('raceName')
+    .then((qualifyingData) => {
+      res.render('grid', {qualifyingData, raceName:qualifyingData[0].raceName})
+    })
+})
+
+// display laptimes per driver for selected race
+router.get('/season/:id/:raceId/laptimes', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id
   var raceId = req.params.raceId
-  console.log('id', id, 'raceId', raceId)
-  if (raceId < 972 && raceId > 0) {
+  if (raceId < 972 && raceId > 840) {
     db('laptimes')
       .select('*')
-      // .join('laptimes', 'races.raceId', '=', 'laptimes.raceId')
       .where('laptimes.raceId', raceId)
       .then((laptimes) => {
-        console.log(laptimes);
-        res.render('drivers-in-race', {laptimes})
+        res.render('laptimes', {laptimes})
       })
-
   }
-  else console.log("No lap data");
+  else {
+    res.render('no-laptime-data')
+  }
 })
 
 module.exports = router
