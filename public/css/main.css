@@ -1,4 +1,79 @@
+
+
+h1, h2, h3 {
+	color: #272623;
+	font-family: 'Martel';
+	font-weight: 300;
+	line-height: 52px;
+	margin-bottom: 48px;
+	text-align: center;
+}
+
+h1 {
+  font-size: 42px;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+h3 {
+  font-size: 26px;
+}
+
+p {
+	color: #272623;
+	font-family: 'Roboto Condensed';
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 24px;
+	letter-spacing: 3px;
+	margin-bottom: 48px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+p:before {
+	background: #56bba7;
+content: '';
+display: block;
+height: 1px;
+margin: 48px auto 47px;
+width: 50px;
+}
+
+a {
+	color: #56bba7;	letter-spacing: 3px;
+	text-decoration: none;
+	/*text-transform: uppercase;*/
+}
+
+a:hover {
+  color: #272623;
+}
+
+.container {
+  margin: 30px auto;
+}
+
+.container:after {
+  background: #56bba7;
+  content: '';
+  display: block;
+  height: 1px;
+  margin: 48px auto 47px;
+  width: 50px;
+}
+
 .seasons {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.season {
+  text-align: center;
+  display: inline;
+  width: 10%;
 }
 
 ul {
@@ -9,8 +84,9 @@ li {
   /*display: inline-block;*/
 }
 
+
+
 .round {
-  border: 1px solid lightgrey;
   border-radius: 5px;
   margin: 10px;
 }

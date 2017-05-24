@@ -36,15 +36,21 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
   var season = req.params.id
   var raceId = req.params.raceId
   db('qualifying')
-    .select('races.name as raceName', 'qualifying.*', 'drivers.*')
+    .select('constructors.name as constructorName', 'constructors.url as constructorUrl', 'races.name as raceName', 'qualifying.*', 'drivers.*')
     .join('drivers', 'qualifying.driverId', '=', 'drivers.driverId')
     .join('races', 'races.raceId', '=', 'qualifying.raceId')
+    .join('constructors', 'qualifying.constructorId', '=', 'constructors.constructorId')
     .where('qualifying.raceId', raceId)
     // .groupBy('raceName')
     .then((qualifyingData) => {
-      res.render('grid', {qualifyingData, raceName:qualifyingData[0].raceName})
+      if (qualifyingData[0]) {
+        res.render('grid', {qualifyingData, raceName:qualifyingData[0].raceName})
+      } else {
+        res.render('no-laptime-data')
+      }
     })
 })
+
 
 // display laptimes per driver for selected race
 router.get('/season/:id/:raceId/laptimes', (req, res) => {
