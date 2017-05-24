@@ -22,7 +22,7 @@ router.get('/season/:id', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id
   db('races')
-    .select('races.year as season-year', '*')
+    .select('races.year as season-year', 'races.url as races-url', '*')
     .join('seasons', 'seasons.year', '=', 'races.year')
     .where('races.year', id)
     .then((season) => {
@@ -61,6 +61,7 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
     db('laptimes')
       .select('*')
       .where('laptimes.raceId', raceId)
+      .orderBy('lap', 'asc')
       .then((laptimes) => {
         res.render('laptimes', {laptimes})
       })
