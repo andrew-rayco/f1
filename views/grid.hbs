@@ -1,0 +1,19 @@
+<h1>Qualifying results</h1>
+<h3>{{raceName}}</h3>
+
+<table>
+  <thead>
+    <th>Position</th>
+    <th>Driver</th>
+    <th>Time</th>
+  </thead>
+  <tbody>
+  {{#each qualifyingData}}
+    <tr>
+      <td><strong>{{position}}</strong></td>
+      <td><a href={{url}}>{{forename}} {{surname}}</a></td>
+      <td>{{q1}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
