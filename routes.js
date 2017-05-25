@@ -57,7 +57,7 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
   dbFunctions.getGrid(db, raceId)
     .then((gridData) => {
       if (gridData[0]) {
-        res.render('grid', {gridData})
+        res.render('grid', {gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
         res.render('no-laptime-data')
       }

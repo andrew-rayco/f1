@@ -92,6 +92,10 @@ li {
   /*display: inline-block;*/
 }
 
+table {
+	margin: 0 auto;
+}
+
 .round {
 	margin-bottom: 3em;
 }
