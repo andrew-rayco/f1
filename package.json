@@ -2,7 +2,7 @@
   "name": "f1",
   "version": "1.0.0",
   "description": "Some sort of Formula 1 data representation - form yet to be determined",
-  "main": "server/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "tape tests/**/*.test.js | tap-spec",
     "start": "node server/index.js",
