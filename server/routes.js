@@ -13,6 +13,11 @@ router.get('/', (req, res) => {
   })
 })
 
+// react router
+router.get('/react', (req, res) => {
+  res.render('react')
+})
+
 router.get('/circuits', (req, res) => {
   var db = req.app.get('db')
   db('circuits').then(function(circuits) {
