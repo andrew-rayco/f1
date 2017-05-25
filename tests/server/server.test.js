@@ -2,7 +2,7 @@ var test = require('tape')
 var request = require('supertest')
 var cheerio = require('cheerio')
 
-var app = require('../server')
+var app = require('../../server/server')
 
 
 test('hello', (t) => {

@@ -75,7 +75,7 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
       .where('laptimes.raceId', raceId)
       .orderBy('lap', 'asc')
       .then((laptimes) => {
-        let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
+        // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
         res.render('laptimes', {laptimes})
       })
   }
