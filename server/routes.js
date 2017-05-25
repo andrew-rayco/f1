@@ -13,9 +13,14 @@ router.get('/', (req, res) => {
   })
 })
 
-// react router
+// react route - Use this for race visualisation!
 router.get('/react', (req, res) => {
-  res.render('react')
+  var db = req.app.get('db')
+  db('seasons')
+    .then((seasons) => {
+      console.log(seasons);
+      res.render('react')
+    })
 })
 
 router.get('/circuits', (req, res) => {

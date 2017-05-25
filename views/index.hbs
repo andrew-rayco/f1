@@ -1,16 +1,20 @@
 <h1>Formula 1 Database</h1>
 
 <div class="row">
-  <div class="twelve columns">
+  <div class="twelve columns home">
     <h3>Seasons</h3>
-    <div class="seasons">
 
+    <div class="seasons">
       {{#each seasons}}
         <div class="season">
           <a href="/season/{{year}}">{{year}}</a>
         </div>
       {{/each}}
-      
+    </div>
+
+    <h3>Circuits</h3>
+    <div class="circuits">
+      <a href="/circuits">See all the circuits</a>
     </div>
   </div>
 </div>

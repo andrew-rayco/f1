@@ -1,8 +1,11 @@
 import React from 'react'
 
 const App = props => {
+  console.log(props);
   return (
-    <div>Hello world</div>
+    <div>
+      <h1>React</h1>
+    </div>
   )
 }
 
