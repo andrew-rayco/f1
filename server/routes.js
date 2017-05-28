@@ -13,6 +13,16 @@ router.get('/', (req, res) => {
   })
 })
 
+// react route - Use this for race visualisation!
+router.get('/react', (req, res) => {
+  var db = req.app.get('db')
+  db('seasons')
+    .then((seasons) => {
+      console.log(seasons);
+      res.render('react')
+    })
+})
+
 router.get('/circuits', (req, res) => {
   var db = req.app.get('db')
   db('circuits').then(function(circuits) {
@@ -75,7 +85,7 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
       .where('laptimes.raceId', raceId)
       .orderBy('lap', 'asc')
       .then((laptimes) => {
-        let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
+        // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
         res.render('laptimes', {laptimes})
       })
   }
