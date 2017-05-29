@@ -9,14 +9,13 @@ function prepareRaceData (laptimes) {
     }
   })
 
-
   // list all laps by driver with id
   var lapsByDriver = []
   driversInRace.forEach((driver) => {
     lapsByDriver.push(laptimes.filter((lap) => {
       return lap.driverId === driver
     }))
-  })
+  }) // make this return driver names instead of driverId
 
   // find maximum laps in race
   var maxLaps = 0;
@@ -28,7 +27,7 @@ function prepareRaceData (laptimes) {
 
   var count = 0;
   var lapCounter = setInterval(function() {
-    if (count < maxLaps) { 
+    if (count < maxLaps) {
       console.log(lapsByDriver[0][count].lap)
       count++
       return count
@@ -36,7 +35,9 @@ function prepareRaceData (laptimes) {
       console.log('race is over');
       clearInterval(lapCounter)
     }
+    console.log(driversInRace);
   }, 50)
+
 
   return lapsByDriver
 

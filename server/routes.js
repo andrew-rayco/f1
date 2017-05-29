@@ -84,6 +84,7 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
     db('laptimes')
       .select('*')
       .where('laptimes.raceId', raceId)
+      .join('drivers', 'laptimes.driverId', '=', 'drivers.driverId')
       .orderBy('lap', 'asc')
       .then((laptimes) => {
         // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
