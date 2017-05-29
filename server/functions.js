@@ -21,23 +21,29 @@ function prepareRaceData (laptimes) {
   // find maximum laps in race
   var maxLaps = 0;
   laptimes.map((lap) => {
-    if (lap > maxLaps) {
-      maxLaps = lap
+    if (lap.lap > maxLaps) {
+      maxLaps = lap.lap
     }
   })
 
   var count = 0;
-  setInterval(function() {
-    if (lapsByDriver[0][count].lap < 59) { // stop this crapping out when exceeding laps!
+  var lapCounter = setInterval(function() {
+    if (count < maxLaps) { 
       console.log(lapsByDriver[0][count].lap)
       count++
+      return count
     } else {
       console.log('race is over');
+      clearInterval(lapCounter)
     }
   }, 50)
 
   return lapsByDriver
+
+
+
 }
+
 
 module.exports = {
   prepareRaceData
