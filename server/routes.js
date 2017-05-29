@@ -88,7 +88,7 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
       .then((laptimes) => {
         // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
         let raceData = functions.prepareRaceData(laptimes)
-        res.render('laptimes', {raceData})
+        res.render('laptimes', {laptimes})
       })
   }
   else {

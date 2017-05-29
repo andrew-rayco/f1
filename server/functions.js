@@ -18,11 +18,23 @@ function prepareRaceData (laptimes) {
     }))
   })
 
+  // find maximum laps in race
+  var maxLaps = 0;
+  laptimes.map((lap) => {
+    if (lap > maxLaps) {
+      maxLaps = lap
+    }
+  })
+
   var count = 0;
   setInterval(function() {
-    console.log(lapsByDriver[0][count].time)
-    count++
-  }, 100)
+    if (lapsByDriver[0][count].lap < 59) { // stop this crapping out when exceeding laps!
+      console.log(lapsByDriver[0][count].lap)
+      count++
+    } else {
+      console.log('race is over');
+    }
+  }, 50)
 
   return lapsByDriver
 }
