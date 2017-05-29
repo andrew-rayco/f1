@@ -3,6 +3,7 @@ var router = express.Router()
 var moment = require('moment')
 
 var dbFunctions = require('./db-functions')
+var functions = require('./functions')
 
 router.get('/', (req, res) => {
   var db = req.app.get('db')
@@ -86,7 +87,8 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
       .orderBy('lap', 'asc')
       .then((laptimes) => {
         // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
-        res.render('laptimes', {laptimes})
+        let raceData = functions.prepareRaceData(laptimes)
+        res.render('laptimes', {raceData})
       })
   }
   else {
