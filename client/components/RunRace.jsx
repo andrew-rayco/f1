@@ -82,14 +82,14 @@ class RunRace extends React.Component {
 
 
   showRace(data) {
-    // console.log(data.raceData);
+
   return data.raceData.map((driverLap, i) => {
    if (driverLap.lap == this.state.count) {
      return (
-         <div key={i} className="driver">
+         <div key={i} className="driver" >
            <div className={driverLap.surname}>
              {driverLap.position}: {driverLap.surname}: {driverLap.time}
-             <div className="vis-color">&nbsp;</div>
+             <div className="vis-color" style={{width: this.calcWidth() + '%'}}>&nbsp;</div>
            </div>
          </div>
        )
@@ -97,11 +97,20 @@ class RunRace extends React.Component {
     })
   }
 
+  // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
+
   calculateProgressBar(currentLap) {
     var cumulativePercentage = 0
     var winningRaceTime = this.winnerRaceTime()
-    var lapIncrement = winningRaceTime / this.maxLapsInRace()
-    // yeah this isn't going to happen.
+    var lapIncrement = winningRaceTime / this.maxLapsInRace() // not necessary?
+    var singleLap = 100 / this.maxLapsInRace()
+    return singleLap
+  }
+
+  calcWidth() {
+    var groundCovered = this.calculateProgressBar() * this.state.lap
+    return groundCovered
+
   }
 
 
@@ -110,7 +119,8 @@ class RunRace extends React.Component {
       <div className="race">
         {/* {console.log(this.state)} */}
         {/* {console.log(this.winnerRaceTime())} */}
-        {console.log(this.calculateProgressBar())}
+        {/* {console.log(this.calculateProgressBar())} */}
+        {console.log(this.calcWidth())}
         <h3>Lap {this.state.lap}</h3>
         {this.showRace(this.props)}
       </div>

@@ -22239,7 +22239,6 @@ var RunRace = function (_React$Component) {
     value: function showRace(data) {
       var _this4 = this;
 
-      // console.log(data.raceData);
       return data.raceData.map(function (driverLap, i) {
         if (driverLap.lap == _this4.state.count) {
           return _react2.default.createElement(
@@ -22255,7 +22254,7 @@ var RunRace = function (_React$Component) {
               driverLap.time,
               _react2.default.createElement(
                 'div',
-                { className: 'vis-color' },
+                { className: 'vis-color', style: { width: _this4.calcWidth() + '%' } },
                 '\xA0'
               )
             )
@@ -22263,13 +22262,23 @@ var RunRace = function (_React$Component) {
         }
       });
     }
+
+    // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
+
   }, {
     key: 'calculateProgressBar',
     value: function calculateProgressBar(currentLap) {
       var cumulativePercentage = 0;
       var winningRaceTime = this.winnerRaceTime();
-      var lapIncrement = winningRaceTime / this.maxLapsInRace();
-      // yeah this isn't going to happen.
+      var lapIncrement = winningRaceTime / this.maxLapsInRace(); // not necessary?
+      var singleLap = 100 / this.maxLapsInRace();
+      return singleLap;
+    }
+  }, {
+    key: 'calcWidth',
+    value: function calcWidth() {
+      var groundCovered = this.calculateProgressBar() * this.state.lap;
+      return groundCovered;
     }
   }, {
     key: 'render',
@@ -22277,7 +22286,7 @@ var RunRace = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         { className: 'race' },
-        console.log(this.calculateProgressBar()),
+        console.log(this.calcWidth()),
         _react2.default.createElement(
           'h3',
           null,

@@ -158,7 +158,7 @@ table {
 	border-left: 1px solid #56bba7;
 	border-right: 4px solid #56bba7;
 	margin-bottom: .5em;
-	overflow: visible;
+	overflow: hidden;
 	z-index: 1;
 	border-radius: 4px;
 }
@@ -168,7 +168,8 @@ table {
 	background: #56bba7;
 	opacity: 0.5;
 	top: 0;
-	width: 60%;
+	/*width: 40%;*/
 	z-index: 2;
-	overflow: visible;
+	/*overflow: visible;*/
+	overflow: hidden;
 }
