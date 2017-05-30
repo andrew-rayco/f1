@@ -9521,46 +9521,24 @@ var _react = __webpack_require__(50);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _RunRace = __webpack_require__(223);
+
+var _RunRace2 = _interopRequireDefault(_RunRace);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App(raceData) {
-  console.log(raceData.raceData);
   return _react2.default.createElement(
-    "div",
+    'div',
     null,
     _react2.default.createElement(
-      "h1",
+      'h1',
       null,
-      "React"
+      'Visualise'
     ),
-    _react2.default.createElement(
-      "div",
-      { className: "race" },
-      showRace(raceData.raceData)
-    )
+    _react2.default.createElement(_RunRace2.default, { raceData: raceData.raceData })
   );
 };
-
-function showRace(data) {
-  return data.map(function (driverLap, i) {
-    if (driverLap.lap == 1) {
-      return _react2.default.createElement(
-        "div",
-        null,
-        _react2.default.createElement(
-          "div",
-          { id: i, className: driverLap.surname },
-          driverLap.position,
-          ": ",
-          driverLap.surname,
-          ": ",
-          driverLap.time
-        )
-      );
-    }
-  });
-  console.log(data[0].lap);
-}
 
 exports.default = App;
 
@@ -22083,6 +22061,142 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(50);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RunRace = function (_React$Component) {
+  _inherits(RunRace, _React$Component);
+
+  function RunRace(props) {
+    _classCallCheck(this, RunRace);
+
+    var _this = _possibleConstructorReturn(this, (RunRace.__proto__ || Object.getPrototypeOf(RunRace)).call(this, props));
+
+    _this.state = {
+      lap: 0,
+      sortedLaps: null,
+      count: 0
+    };
+    return _this;
+  }
+
+  _createClass(RunRace, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      // console.log('get your props here!', this.props);
+      var lapTicker = setInterval(function () {
+        // this is where some sort of state business occurs
+        _this2.setState({
+          count: _this2.state.count++,
+          sortedLaps: _this2.props.lap.filter(function (lap) {
+            return lap.lap == _this2.state.count;
+          })
+        });
+      }, 1000); // I'm getting an error here!
+    }
+  }, {
+    key: "showRace",
+    value: function showRace(data) {
+      // console.log(data.raceData);
+      return data.raceData.map(function (driverLap, i) {
+        if (driverLap.lap == 1) {
+          return _react2.default.createElement(
+            "div",
+            { key: i, className: "driver" },
+            _react2.default.createElement(
+              "div",
+              { className: driverLap.surname },
+              driverLap.position,
+              ": ",
+              driverLap.surname,
+              ": ",
+              driverLap.time
+            )
+          );
+        }
+      });
+      // console.log(data[0].lap);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "div",
+        { className: "race" },
+        this.showRace(this.props)
+      );
+    }
+  }]);
+
+  return RunRace;
+}(_react2.default.Component);
+
+exports.default = RunRace;
 
 /***/ })
 /******/ ]);

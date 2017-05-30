@@ -19,7 +19,7 @@ function prepareRaceData (laptimes) {
 
   // find maximum laps in race
   var maxLaps = 0;
-  laptimes.map((lap) => {
+  laptimes.forEach((lap) => {
     if (lap.lap > maxLaps) {
       maxLaps = lap.lap
     }
@@ -28,7 +28,7 @@ function prepareRaceData (laptimes) {
   // Only take driver surname, lap num, time and milliseconds
   var cleanRaceData = []
   lapsByDriver.map((lap) => {
-    console.log(lap[0].surname);
+    // console.log(lap[0].surname);
     for (var i = 0; i < maxLaps; i++) {
       if (lap[i]) {
         cleanRaceData.push({
@@ -42,12 +42,12 @@ function prepareRaceData (laptimes) {
     }
 
   }) // I can't get this to work, but I'm not sure it's absolutely necessary
-  console.log(cleanRaceData);
+  // console.log(cleanRaceData);
 
   //experimenting
-  var count = 0;
+  var count = 1;
   var lapCounter = setInterval(function() {
-    if (count < maxLaps) {
+    if (count <= maxLaps) {
       // console.log(lapsByDriver[0][count].lap)
       count++
       return count
