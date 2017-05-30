@@ -14,15 +14,6 @@ router.get('/', (req, res) => {
   })
 })
 
-// react route - Use this for race visualisation!
-router.get('/react', (req, res) => {
-  var db = req.app.get('db')
-  db('seasons')
-    .then((seasons) => {
-      console.log(seasons);
-      res.render('react')
-    })
-})
 
 router.get('/circuits', (req, res) => {
   var db = req.app.get('db')
@@ -75,7 +66,30 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
     })
 })
 
+// react route - Use this for race visualisation!
 // make the race happen!
+router.get('/season/:id/:raceId/visualise', (req, res) => {
+  var db = req.app.get('db')
+  var id = req.params.id
+  var raceId = req.params.raceId
+  if (raceId < 972 && raceId > 840) {
+    db('laptimes')
+      .select('*')
+      .where('laptimes.raceId', raceId)
+      .join('drivers', 'laptimes.driverId', '=', 'drivers.driverId')
+      .orderBy('lap', 'asc')
+      .then((laptimes) => {
+        // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
+        let raceData = functions.prepareRaceData(laptimes)
+        res.render('react', {raceData: JSON.stringify(raceData)})
+      })
+  }
+  else {
+    res.render('no-laptime-data')
+  }
+})
+
+// show all laptimes
 router.get('/season/:id/:raceId/laptimes', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id

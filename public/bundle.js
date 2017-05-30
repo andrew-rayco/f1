@@ -9523,18 +9523,44 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var App = function App(props) {
-  console.log(props);
+var App = function App(raceData) {
+  console.log(raceData.raceData);
   return _react2.default.createElement(
-    'div',
+    "div",
     null,
     _react2.default.createElement(
-      'h1',
+      "h1",
       null,
-      'React'
+      "React"
+    ),
+    _react2.default.createElement(
+      "div",
+      { className: "race" },
+      showRace(raceData.raceData)
     )
   );
 };
+
+function showRace(data) {
+  return data.map(function (driverLap, i) {
+    if (driverLap.lap == 1) {
+      return _react2.default.createElement(
+        "div",
+        null,
+        _react2.default.createElement(
+          "div",
+          { id: i, className: driverLap.surname },
+          driverLap.position,
+          ": ",
+          driverLap.surname,
+          ": ",
+          driverLap.time
+        )
+      );
+    }
+  });
+  console.log(data[0].lap);
+}
 
 exports.default = App;
 
@@ -9569,8 +9595,7 @@ var _App2 = _interopRequireDefault(_App);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-console.log(window.seasons);
-_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
+_reactDom2.default.render(_react2.default.createElement(_App2.default, { raceData: window.raceData }), document.getElementById('app'));
 
 /***/ }),
 /* 84 */

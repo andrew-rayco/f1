@@ -1,11 +1,10 @@
 function prepareRaceData (laptimes) {
 
-
   // Get all driver Ids in race
   var driversInRace = []
   laptimes.map((lap) => {
-    if (driversInRace.indexOf(lap.driverId) == -1) {
-      driversInRace.push(lap.driverId)
+    if (driversInRace.indexOf(lap.surname) == -1) {
+      driversInRace.push(lap.surname)
     }
   })
 
@@ -13,9 +12,10 @@ function prepareRaceData (laptimes) {
   var lapsByDriver = []
   driversInRace.forEach((driver) => {
     lapsByDriver.push(laptimes.filter((lap) => {
-      return lap.driverId === driver
+      return lap.surname === driver
     }))
-  }) // make this return driver names instead of driverId
+  })
+
 
   // find maximum laps in race
   var maxLaps = 0;
@@ -25,21 +25,39 @@ function prepareRaceData (laptimes) {
     }
   })
 
+  // Only take driver surname, lap num, time and milliseconds
+  var cleanRaceData = []
+  lapsByDriver.map((lap) => {
+    console.log(lap[0].surname);
+    for (var i = 0; i < maxLaps; i++) {
+      if (lap[i]) {
+        cleanRaceData.push({
+          lap: lap[i].lap,
+          surname: lap[i].surname,
+          time: lap[i].time,
+          milliseconds: lap[i].milliseconds,
+          position: lap[i].position
+        })
+      }
+    }
+
+  }) // I can't get this to work, but I'm not sure it's absolutely necessary
+  console.log(cleanRaceData);
+
+  //experimenting
   var count = 0;
   var lapCounter = setInterval(function() {
     if (count < maxLaps) {
-      console.log(lapsByDriver[0][count].lap)
+      // console.log(lapsByDriver[0][count].lap)
       count++
       return count
     } else {
-      console.log('race is over');
+      // console.log('race is over');
       clearInterval(lapCounter)
     }
-    console.log(driversInRace);
   }, 50)
 
-
-  return lapsByDriver
+  return cleanRaceData
 
 
 
