@@ -22216,6 +22216,7 @@ var RunRace = function (_React$Component) {
             count: _this3.state.count + 1,
             lap: _this3.state.lap + 1
           });
+          _this3.calculateProgressBar(_this3.state.lap);
         } else {
           clearInterval(lapTicker);
         }
@@ -22263,12 +22264,20 @@ var RunRace = function (_React$Component) {
       });
     }
   }, {
+    key: 'calculateProgressBar',
+    value: function calculateProgressBar(currentLap) {
+      var cumulativePercentage = 0;
+      var winningRaceTime = this.winnerRaceTime();
+      var lapIncrement = winningRaceTime / this.maxLapsInRace();
+      // yeah this isn't going to happen.
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         { className: 'race' },
-        console.log(this.state),
+        console.log(this.calculateProgressBar()),
         _react2.default.createElement(
           'h3',
           null,

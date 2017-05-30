@@ -62,6 +62,7 @@ class RunRace extends React.Component {
           count: this.state.count + 1,
           lap: this.state.lap + 1
         })
+        this.calculateProgressBar(this.state.lap)
       } else {
         clearInterval(lapTicker)
       }
@@ -96,12 +97,20 @@ class RunRace extends React.Component {
     })
   }
 
+  calculateProgressBar(currentLap) {
+    var cumulativePercentage = 0
+    var winningRaceTime = this.winnerRaceTime()
+    var lapIncrement = winningRaceTime / this.maxLapsInRace()
+    // yeah this isn't going to happen.
+  }
+
 
   render() {
     return (
       <div className="race">
-        {console.log(this.state)}
+        {/* {console.log(this.state)} */}
         {/* {console.log(this.winnerRaceTime())} */}
+        {console.log(this.calculateProgressBar())}
         <h3>Lap {this.state.lap}</h3>
         {this.showRace(this.props)}
       </div>
