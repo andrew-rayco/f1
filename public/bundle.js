@@ -9534,7 +9534,7 @@ var App = function App(raceData) {
     _react2.default.createElement(
       'h1',
       null,
-      'Visualise'
+      'Visualise Race'
     ),
     _react2.default.createElement(
       'div',
