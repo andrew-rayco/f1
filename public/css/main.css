@@ -150,3 +150,23 @@ table {
 	background: pink;
 	/*display: inline-block;*/
 }
+
+
+  /*  Visualise page  */
+.driver {
+	border: 1px solid #ccc;
+	border-left: 1px solid #56bba7;
+	border-right: 4px solid #56bba7;
+	margin-bottom: .5em;
+	overflow: visible;
+	z-index: 1;
+}
+
+.vis-color {
+	position: relative;
+	background: #56bba7;
+	opacity: 0.5;
+	top: 0;
+	width: 60%;
+	z-index: 2;
+}

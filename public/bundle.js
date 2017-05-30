@@ -9536,7 +9536,11 @@ var App = function App(raceData) {
       null,
       'Visualise'
     ),
-    _react2.default.createElement(_RunRace2.default, { raceData: raceData.raceData })
+    _react2.default.createElement(
+      'div',
+      { className: 'track' },
+      _react2.default.createElement(_RunRace2.default, { raceData: raceData.raceData })
+    )
   );
 };
 
@@ -22137,57 +22141,117 @@ var RunRace = function (_React$Component) {
 
     _this.state = {
       lap: 0,
-      sortedLaps: null,
+      sortedLaps: [], // All laptimes for current lap
       count: 0
     };
     return _this;
   }
 
+  // calculate total race laps so setInterval knows when to stop
+
+
   _createClass(RunRace, [{
-    key: "componentDidMount",
+    key: 'maxLapsInRace',
+    value: function maxLapsInRace() {
+      var maxLaps = 0;
+      this.props.raceData.forEach(function (lap) {
+        if (lap.lap > maxLaps) {
+          maxLaps = lap.lap;
+        }
+      });
+      return maxLaps;
+    }
+
+    // calculate total race time for winner
+
+  }, {
+    key: 'winnerRaceTime',
+    value: function winnerRaceTime() {
+      var winningTime = 0; // milliseconds
+      this.props.raceData.forEach(function (lap) {
+        if (lap.surname == 'Ricciardo') {
+          // hardcoded race winner. Most sub-optimal
+          winningTime += lap.milliseconds;
+        }
+      });
+      return winningTime;
+    }
+
+    // Find all laptimes for next lap and set state
+
+  }, {
+    key: 'componentDidMount',
     value: function componentDidMount() {
       var _this2 = this;
 
-      // console.log('get your props here!', this.props);
       var lapTicker = setInterval(function () {
-        // this is where some sort of state business occurs
-        _this2.setState({
-          count: _this2.state.count++,
-          sortedLaps: _this2.props.lap.filter(function (lap) {
-            return lap.lap == _this2.state.count;
-          })
-        });
-      }, 1000); // I'm getting an error here!
+        if (_this2.state.count < _this2.maxLapsInRace()) {
+          _this2.setState({
+            sortedLaps: _this2.props.raceData.filter(function (lap) {
+              return lap.lap == _this2.state.count;
+            }),
+            count: _this2.state.count + 1,
+            lap: _this2.state.lap + 1
+          });
+        } else {
+          clearInterval(lapTicker);
+        }
+      }, 150);
+
+      // cumulatively add laptimes to generate progress bar
+      this.props.raceData.forEach(function (lap) {
+        // I can't get this to work
+        // console.log(lap.milliseconds);
+        var driverSurname = lap.surname;
+        var stateCopy = Object.assign({}, _this2.state);
+        stateCopy[driverSurname] = typeOf(Number);
+        stateCopy[driverSurname] += lap.milliseconds;
+
+        _this2.setState(stateCopy);
+      });
     }
   }, {
-    key: "showRace",
+    key: 'showRace',
     value: function showRace(data) {
+      var _this3 = this;
+
       // console.log(data.raceData);
       return data.raceData.map(function (driverLap, i) {
-        if (driverLap.lap == 1) {
+        if (driverLap.lap == _this3.state.count) {
           return _react2.default.createElement(
-            "div",
-            { key: i, className: "driver" },
+            'div',
+            { key: i, className: 'driver' },
             _react2.default.createElement(
-              "div",
+              'div',
               { className: driverLap.surname },
               driverLap.position,
-              ": ",
+              ': ',
               driverLap.surname,
-              ": ",
-              driverLap.time
+              ': ',
+              driverLap.time,
+              _react2.default.createElement(
+                'div',
+                { className: 'vis-color' },
+                '\xA0'
+              )
             )
           );
         }
       });
-      // console.log(data[0].lap);
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "div",
-        { className: "race" },
+        'div',
+        { className: 'race' },
+        console.log(this.state),
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Lap ',
+          this.state.lap
+        ),
         this.showRace(this.props)
       );
     }

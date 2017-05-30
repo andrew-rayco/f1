@@ -41,7 +41,7 @@ function prepareRaceData (laptimes) {
       }
     }
 
-  }) // I can't get this to work, but I'm not sure it's absolutely necessary
+  }) 
   // console.log(cleanRaceData);
 
   //experimenting
