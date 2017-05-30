@@ -22140,17 +22140,40 @@ var RunRace = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (RunRace.__proto__ || Object.getPrototypeOf(RunRace)).call(this, props));
 
     _this.state = {
-      lap: 0,
+      lap: 1,
       sortedLaps: [], // All laptimes for current lap
-      count: 0
+      count: 1
+
     };
     return _this;
   }
 
-  // calculate total race laps so setInterval knows when to stop
+  // attempt to set initial state value of 0 for each driver (to avoid NaN error)
 
 
   _createClass(RunRace, [{
+    key: 'letsTryThatAgain',
+    value: function letsTryThatAgain() {
+      var _this2 = this;
+
+      this.props.raceData.forEach(function (lap) {
+        // I can't get this to work
+        // console.log(lap.milliseconds);
+        var driverSurname = lap.surname;
+        // var stateCopy = Object.assign({}, this.state)
+        // stateCopy[driverSurname] = typeOf(Number) // It needs to start at 0, but I can't define it as zero everytime!
+        // stateCopy[driverSurname] += lap.milliseconds
+        //
+        // this.setState(stateCopy)
+        return _this2.setState({
+          driverSurname: 0
+        });
+      });
+    }
+
+    // calculate total race laps so setInterval knows when to stop
+
+  }, {
     key: 'maxLapsInRace',
     value: function maxLapsInRace() {
       var maxLaps = 0;
@@ -22182,16 +22205,16 @@ var RunRace = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
+      var _this3 = this;
 
       var lapTicker = setInterval(function () {
-        if (_this2.state.count < _this2.maxLapsInRace()) {
-          _this2.setState({
-            sortedLaps: _this2.props.raceData.filter(function (lap) {
-              return lap.lap == _this2.state.count;
+        if (_this3.state.count < _this3.maxLapsInRace()) {
+          _this3.setState({
+            sortedLaps: _this3.props.raceData.filter(function (lap) {
+              return lap.lap == _this3.state.count;
             }),
-            count: _this2.state.count + 1,
-            lap: _this2.state.lap + 1
+            count: _this3.state.count + 1,
+            lap: _this3.state.lap + 1
           });
         } else {
           clearInterval(lapTicker);
@@ -22203,21 +22226,21 @@ var RunRace = function (_React$Component) {
         // I can't get this to work
         // console.log(lap.milliseconds);
         var driverSurname = lap.surname;
-        var stateCopy = Object.assign({}, _this2.state);
-        stateCopy[driverSurname] = typeOf(Number);
-        stateCopy[driverSurname] += lap.milliseconds;
+        var stateCopy = Object.assign({}, _this3.state);
+        // stateCopy[driverSurname] = typeOf(Number) // It needs to start at 0, but I can't define it as zero everytime!
+        stateCopy[driverSurname] = lap.milliseconds;
 
-        _this2.setState(stateCopy);
+        _this3.setState(stateCopy);
       });
     }
   }, {
     key: 'showRace',
     value: function showRace(data) {
-      var _this3 = this;
+      var _this4 = this;
 
       // console.log(data.raceData);
       return data.raceData.map(function (driverLap, i) {
-        if (driverLap.lap == _this3.state.count) {
+        if (driverLap.lap == _this4.state.count) {
           return _react2.default.createElement(
             'div',
             { key: i, className: 'driver' },

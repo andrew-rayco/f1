@@ -4,12 +4,28 @@ class RunRace extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      lap: 0,
+      lap: 1,
       sortedLaps: [], // All laptimes for current lap
-      count: 0
+      count: 1,
+
     }
   }
 
+  // attempt to set initial state value of 0 for each driver (to avoid NaN error)
+  letsTryThatAgain() {
+    this.props.raceData.forEach((lap) => {  // I can't get this to work
+      // console.log(lap.milliseconds);
+      var driverSurname = lap.surname
+      // var stateCopy = Object.assign({}, this.state)
+      // stateCopy[driverSurname] = typeOf(Number) // It needs to start at 0, but I can't define it as zero everytime!
+      // stateCopy[driverSurname] += lap.milliseconds
+      //
+      // this.setState(stateCopy)
+      return this.setState({
+        driverSurname: 0
+      })
+    })
+  }
 
   // calculate total race laps so setInterval knows when to stop
   maxLapsInRace() {
@@ -56,8 +72,8 @@ class RunRace extends React.Component {
       // console.log(lap.milliseconds);
       var driverSurname = lap.surname
       var stateCopy = Object.assign({}, this.state)
-      stateCopy[driverSurname] = typeOf(Number)
-      stateCopy[driverSurname] += lap.milliseconds
+      // stateCopy[driverSurname] = typeOf(Number) // It needs to start at 0, but I can't define it as zero everytime!
+      stateCopy[driverSurname] = lap.milliseconds
 
       this.setState(stateCopy)
     })
