@@ -60,12 +60,23 @@ function prepareRaceData (laptimes) {
 }
 
 function cleanResults(results) {
-  var newResults = results.forEach((result) => {
-    if (result.position == '') {
-      result.position = 99
+  let newResults = [...results]
+  newResults.forEach((result) => {
+    // console.log(result.position);
+    if (result.positionText === "R") {
+      result.position = 'DNF'
     }
   })
-  return newResults
+  let finishedResults = newResults.filter((result) => {
+    return result.positionText != 'R'
+  })
+  let dnfResults = results.filter((result) => {
+    return result.positionText == 'R'
+  })
+  return finishedResults.concat(dnfResults)
+  // console.log({finishedResults, dnfResults});
+  // console.log(newResults);
+
 }
 
 

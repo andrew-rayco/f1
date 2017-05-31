@@ -124,8 +124,9 @@ router.get('/season/:id/:raceId/results', (req, res) => {
     .join('races', 'results.raceId', '=', 'races.raceId')
     .orderBy('position', 'asc')
     .then((results) => {
-      var cleanResult = functions.cleanResults(results)
-      res.render('result', {results})
+      // console.log(results);
+      let newResults = functions.cleanResults(results)
+      res.render('result', {results: newResults})
     })
 })
 
