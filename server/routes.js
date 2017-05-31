@@ -77,10 +77,11 @@ router.get('/season/:id/:raceId/visualise', (req, res) => {
       .select('*')
       .where('laptimes.raceId', raceId)
       .join('drivers', 'laptimes.driverId', '=', 'drivers.driverId')
-      .orderBy('lap', 'asc')
+      .orderBy('position', 'asc')
       .then((laptimes) => {
         // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
         let raceData = functions.prepareRaceData(laptimes)
+        console.log(raceData);
         res.render('react', {raceData: JSON.stringify(raceData)})
       })
   }
@@ -111,26 +112,23 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
   }
 })
 
+// show race results
+router.get('/season/:id/:raceId/results', (req, res) => {
+  var db = req.app.get('db')
+  var id = req.params.id
+  var raceId = req.params.raceId
+  db('results')
+    .select('races.name as raceName', 'races.year as raceYear', '*')
+    .where('results.raceId', raceId)
+    .join('drivers', 'results.driverId', '=', 'drivers.driverId')
+    .join('races', 'results.raceId', '=', 'races.raceId')
+    .orderBy('position', 'asc')
+    .then((results) => {
+      var cleanResult = functions.cleanResults(results)
+      res.render('result', {results})
+    })
+})
 
-
-// display laptimes per driver for selected race
-// router.get('/season/:id/:raceId/laptimes', (req, res) => {
-//   var db = req.app.get('db')
-//   var id = req.params.id
-//   var raceId = req.params.raceId
-//   if (raceId < 972 && raceId > 840) {
-//     db('laptimes')
-//       .select('*')
-//       .where('laptimes.raceId', raceId)
-//       .orderBy('lap', 'asc')
-//       .then((laptimes) => {
-//         res.render('laptimes', {laptimes})
-//       })
-//   }
-//   else {
-//     res.render('no-laptime-data')
-//   }
-// })
 
 
 module.exports = router

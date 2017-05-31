@@ -41,8 +41,7 @@ function prepareRaceData (laptimes) {
       }
     }
 
-  }) 
-  // console.log(cleanRaceData);
+  })
 
   //experimenting
   var count = 1;
@@ -58,12 +57,19 @@ function prepareRaceData (laptimes) {
   }, 50)
 
   return cleanRaceData
+}
 
-
-
+function cleanResults(results) {
+  var newResults = results.forEach((result) => {
+    if (result.position == '') {
+      result.position = 99
+    }
+  })
+  return newResults
 }
 
 
 module.exports = {
-  prepareRaceData
+  prepareRaceData,
+  cleanResults
 }
