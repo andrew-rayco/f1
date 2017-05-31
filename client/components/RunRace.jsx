@@ -11,21 +11,6 @@ class RunRace extends React.Component {
     }
   }
 
-  // attempt to set initial state value of 0 for each driver (to avoid NaN error)
-  letsTryThatAgain() {
-    this.props.raceData.forEach((lap) => {  // I can't get this to work
-      // console.log(lap.milliseconds);
-      var driverSurname = lap.surname
-      // var stateCopy = Object.assign({}, this.state)
-      // stateCopy[driverSurname] = typeOf(Number) // It needs to start at 0, but I can't define it as zero everytime!
-      // stateCopy[driverSurname] += lap.milliseconds
-      //
-      // this.setState(stateCopy)
-      return this.setState({
-        driverSurname: 0
-      })
-    })
-  }
 
   // calculate total race laps so setInterval knows when to stop
   maxLapsInRace() {
@@ -68,13 +53,17 @@ class RunRace extends React.Component {
       }
     }, 150)
 
+    console.log(this.state)
+
     // cumulatively add laptimes to generate progress bar
     this.props.raceData.forEach((lap) => {  // I can't get this to work
-      // console.log(lap.milliseconds);
       var driverSurname = lap.surname
       var stateCopy = Object.assign({}, this.state)
-      // stateCopy[driverSurname] = typeOf(Number) // It needs to start at 0, but I can't define it as zero everytime!
-      stateCopy[driverSurname] = lap.milliseconds
+      // It needs to start at 0 so I don't get NaN when trying to add laps
+      if (lap.milliseconds) {
+        stateCopy[driverSurname] = this.state[driverSurname] || 0
+        stateCopy[driverSurname] += lap.milliseconds
+      }
 
       this.setState(stateCopy)
     })
@@ -86,10 +75,10 @@ class RunRace extends React.Component {
   return data.raceData.map((driverLap, i) => {
    if (driverLap.lap == this.state.count) {
      return (
-         <div key={i} className="driver" >
+         <div key={i} className="driver">
            <div className={driverLap.surname}>
              {driverLap.position}: {driverLap.surname}: {driverLap.time}
-             <div className="vis-color" style={{width: this.calcWidth() + '%'}}>&nbsp;</div>
+             <div className="vis-color" style={{width: this.calcWidth(driverLap.surname) + '%'}}>&nbsp;</div>
            </div>
          </div>
        )
@@ -107,10 +96,16 @@ class RunRace extends React.Component {
     return singleLap
   }
 
-  calcWidth() {
-    var groundCovered = this.calculateProgressBar() * this.state.lap
-    return groundCovered
 
+  calcWidth(driver) {
+    var randomNum = Math.floor(Math.random() * 1.5 + 1)
+    var groundCovered = this.calculateProgressBar() * this.state.lap
+    if (driver == 'Ricciardo') {
+      return groundCovered
+      console.log(groundCovered);
+    } else {
+      return groundCovered - randomNum
+    }
   }
 
 
@@ -120,7 +115,7 @@ class RunRace extends React.Component {
         {/* {console.log(this.state)} */}
         {/* {console.log(this.winnerRaceTime())} */}
         {/* {console.log(this.calculateProgressBar())} */}
-        {console.log(this.calcWidth())}
+        {/* {console.log(this.calcWidth())} */}
         <h3>Lap {this.state.lap}</h3>
         {this.showRace(this.props)}
       </div>

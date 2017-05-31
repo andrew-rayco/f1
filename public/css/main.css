@@ -107,10 +107,6 @@ ul {
   list-style: none;
 }
 
-li {
-  /*display: inline-block;*/
-}
-
 table {
 	margin: 0 auto;
 }
@@ -146,15 +142,12 @@ table {
 
 .circuit-list ul {
 	margin: 0 auto;
-	/*text-align: center;*/
-	background: pink;
-	/*display: inline-block;*/
 }
 
 
   /*  Visualise page  */
 .driver {
-	border: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 	border-left: 1px solid #56bba7;
 	border-right: 4px solid #56bba7;
 	margin-bottom: .5em;
@@ -164,12 +157,13 @@ table {
 }
 
 .vis-color {
+	position: relative;
+	top: 0;
+	left: 0;
 	float: left;
 	background: #56bba7;
 	opacity: 0.5;
 	top: 0;
-	/*width: 40%;*/
 	z-index: 2;
-	/*overflow: visible;*/
 	overflow: hidden;
 }
