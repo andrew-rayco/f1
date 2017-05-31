@@ -14,6 +14,16 @@ router.get('/', (req, res) => {
   })
 })
 
+// example json api
+// router.get('/api', (req, res) => {
+//   var db = req.app.get('db')
+//   db('seasons')
+//     .orderBy('year', 'asc')
+//     .then((seasons) => {
+//     res.json(seasons)
+//   })
+// })
+
 
 router.get('/circuits', (req, res) => {
   var db = req.app.get('db')

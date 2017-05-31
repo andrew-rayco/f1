@@ -4,6 +4,7 @@ var express = require('express')
 var hbs = require('express-handlebars')
 
 var routes = require('./routes')
+// var apiRoutes = require('./apiRoutes')
 
 var app = express()
 
@@ -21,6 +22,7 @@ app.use(express.static('public'))
 
 // Routes
 app.use('/', routes)
+// app.use('/api/v1/', apiRoutes)
 
 
 module.exports = function(db) {
