@@ -59,13 +59,11 @@ function prepareRaceData (laptimes) {
   return cleanRaceData
 }
 
+// Add human friendly classification titles and ensure classified runners are
+// listed ahead of others in results table
 function cleanResults(results) {
   let newResults = [...results]
-  newResults.forEach((item) => {
-    console.log(item.positionText);
-  })
   newResults.forEach((result) => {
-    // console.log(result.position);
     switch (result.positionText) {
       case "R":
         result.position = 'Retired'
@@ -88,14 +86,20 @@ function cleanResults(results) {
       default:
         break
     }
-    
   })
+
+  // create array of finished drivers
   let finishedResults = newResults.filter((result) => {
-    return result.positionText != 'R'
+    console.log(typeof result.position)
+    return (typeof result.position == 'number')
   })
+
+  // create array of drivers who failed to finish
   let dnfResults = results.filter((result) => {
-    return result.positionText == 'R'
+    return (typeof result.position == 'string')
   })
+
+  // combine two above arrays with unclassified drivers after classified drivers
   return finishedResults.concat(dnfResults)
 }
 
