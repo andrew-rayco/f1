@@ -1,6 +1,6 @@
 function prepareRaceData (laptimes) {
 
-  // Get all driver Ids in race
+  // Get all driver Surnames in race
   var driversInRace = []
   laptimes.map((lap) => {
     if (driversInRace.indexOf(lap.surname) == -1) {
@@ -61,11 +61,34 @@ function prepareRaceData (laptimes) {
 
 function cleanResults(results) {
   let newResults = [...results]
+  newResults.forEach((item) => {
+    console.log(item.positionText);
+  })
   newResults.forEach((result) => {
     // console.log(result.position);
-    if (result.positionText === "R") {
-      result.position = 'DNF'
+    switch (result.positionText) {
+      case "R":
+        result.position = 'Retired'
+        break
+      case "W":
+        result.position = 'Withdrawn'
+        break
+      case "D":
+        result.position = 'Disqualified'
+        break
+      case "E":
+        result.position = 'Excluded'
+        break
+      case "F":
+        result.position = 'Failed to Qualify'
+        break
+      case "N":
+        result.position = 'Not Classified'
+        break
+      default:
+        break
     }
+    
   })
   let finishedResults = newResults.filter((result) => {
     return result.positionText != 'R'
@@ -74,9 +97,6 @@ function cleanResults(results) {
     return result.positionText == 'R'
   })
   return finishedResults.concat(dnfResults)
-  // console.log({finishedResults, dnfResults});
-  // console.log(newResults);
-
 }
 
 
