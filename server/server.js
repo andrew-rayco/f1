@@ -4,6 +4,7 @@ var express = require('express')
 var hbs = require('express-handlebars')
 
 var routes = require('./routes')
+var apiRoutes = require('./apiRoutes') // api experiment
 
 var app = express()
 
@@ -15,13 +16,12 @@ app.engine('hbs', hbs({
 }))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, '../views'))
-console.log(__dirname);
 app.use(express.static('public'))
 
 
 // Routes
-app.use('/', routes)
-
+// app.use('/', routes)
+app.use('http://ergast.com/api/f1/', apiRoutes) // api experiment
 
 module.exports = function(db) {
   app.set('db', db)
