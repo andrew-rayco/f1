@@ -4,7 +4,7 @@ var express = require('express')
 var hbs = require('express-handlebars')
 
 var routes = require('./routes')
-var apiRoutes = require('./apiRoutes') // api experiment
+// var apiRoutes = require('./apiRoutes') // api experiment
 
 var app = express()
 
@@ -20,8 +20,8 @@ app.use(express.static('public'))
 
 
 // Routes
-// app.use('/', routes)
-app.use('http://ergast.com/api/f1/', apiRoutes) // api experiment
+app.use('/', routes)
+// app.use('http://ergast.com/api/f1/', apiRoutes) // api experiment
 
 module.exports = function(db) {
   app.set('db', db)
