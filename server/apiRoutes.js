@@ -3,7 +3,7 @@ var express = require('express')
 var router = express.Router()
 
 // example json api
-router.get('/2008/5/results', (req, res) => {
+router.get('/', (req, res) => {
   var db = req.app.get('db')
   db('seasons')
     .orderBy('year', 'asc')
