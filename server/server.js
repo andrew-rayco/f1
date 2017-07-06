@@ -4,7 +4,7 @@ var express = require('express')
 var hbs = require('express-handlebars')
 
 var routes = require('./routes')
-var apiRoutes = require('./apiRoutes') // api experiment
+// var apiRoutes = require('./apiRoutes') // api experiment
 
 var app = express()
 
@@ -21,7 +21,7 @@ app.use(express.static('public'))
 
 // Routes
 app.use('/', routes)
-app.use('/api/v1/', apiRoutes) // api experiment - working with db. Make it work with external api
+// app.use('/api/v1/', apiRoutes) // api experiment - working with db. Make it work with external api
 
 module.exports = function(db) {
   app.set('db', db)

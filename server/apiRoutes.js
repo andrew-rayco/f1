@@ -1,21 +1,22 @@
 // part of the great api experiment of 1 July, 2017
-var express = require('express')
-var router = express.Router()
+// var express = require('express')
+// var router = express.Router()
 
 var request = require('superagent')
 
-router.get('/', (req, res) => {
+function getJVOrgs(callback) {
   request
     .get('http://ergast.com/api/f1/seasons')
     .end((err, result) => {
       if(err) {
         console.log(err)
       } else {
-        console.log(Object.keys(res))
-        console.log(res.req)
+        callback(result.body)
       }
-    })
-})
+  })
+}
+
+getJVOrgs(console.log)
 
 // example json api
 // router.get('/', (req, res) => {
@@ -27,15 +28,5 @@ router.get('/', (req, res) => {
 //   })
 // })
 
-// experiment with external api
-// router.get('/', (req, res) => {
-//   var ourData;
-//   var ourRequest = new XMLHttpRequest();
-//   ourRequest.open("GET", "https://eda-te-reo.herokuapp.com/api/proverbs", false);
-//   ourRequest.onload= function () {
-//     ourData = JSON.parse(ourRequest.responseText);
-//   };
-//   ourRequest.send();
-// })
 
-module.exports = router
+// module.exports = router
