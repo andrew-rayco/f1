@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 var moment = require('moment')
 
-var dbFunctions = require('./db-functions')
+var dbFunctions = require('./db/db-functions')
 var functions = require('./functions')
 
 router.get('/', (req, res) => {
@@ -73,19 +73,13 @@ router.get('/season/:id/:raceId/visualise', (req, res) => {
   var id = req.params.id
   var raceId = req.params.raceId
   if (raceId < 972 && raceId > 840) {
-    db('laptimes')
-      .select('*')
-      .where('laptimes.raceId', raceId)
-      .join('drivers', 'laptimes.driverId', '=', 'drivers.driverId')
-      .orderBy('position', 'asc')
+    dbFunctions.visualise(db, id, raceId)
       .then((laptimes) => {
         // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
         let raceData = functions.prepareRaceData(laptimes)
-        console.log(raceData);
         res.render('react', {raceData: JSON.stringify(raceData)})
       })
-  }
-  else {
+  } else {
     res.render('no-laptime-data')
   }
 })
@@ -96,18 +90,13 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
   var id = req.params.id
   var raceId = req.params.raceId
   if (raceId < 972 && raceId > 840) {
-    db('laptimes')
-      .select('*')
-      .where('laptimes.raceId', raceId)
-      .join('drivers', 'laptimes.driverId', '=', 'drivers.driverId')
-      .orderBy('lap', 'asc')
+    dbFunctions.getAllLaptimes(db, id, raceId)
       .then((laptimes) => {
         // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
         let raceData = functions.prepareRaceData(laptimes)
         res.render('laptimes', {laptimes})
       })
-  }
-  else {
+  } else {
     res.render('no-laptime-data')
   }
 })
@@ -117,12 +106,7 @@ router.get('/season/:id/:raceId/results', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id
   var raceId = req.params.raceId
-  db('results')
-    .select('races.name as raceName', 'races.year as raceYear', '*')
-    .where('results.raceId', raceId)
-    .join('drivers', 'results.driverId', '=', 'drivers.driverId')
-    .join('races', 'results.raceId', '=', 'races.raceId')
-    .orderBy('position', 'asc')
+    dbFunctions.getRaceResults(db, id, raceId)
     .then((results) => {
       // console.log(results);
       let newResults = functions.cleanResults(results)

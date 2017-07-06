@@ -1,6 +1,6 @@
 function prepareRaceData (laptimes) {
 
-  // Get all driver Ids in race
+  // Get all driver Surnames in race
   var driversInRace = []
   laptimes.map((lap) => {
     if (driversInRace.indexOf(lap.surname) == -1) {
@@ -59,24 +59,47 @@ function prepareRaceData (laptimes) {
   return cleanRaceData
 }
 
+// Add human friendly classification titles and ensure classified runners are
+// listed ahead of others in results table
 function cleanResults(results) {
   let newResults = [...results]
   newResults.forEach((result) => {
-    // console.log(result.position);
-    if (result.positionText === "R") {
-      result.position = 'DNF'
+    switch (result.positionText) {
+      case "R":
+        result.position = 'Retired'
+        break
+      case "W":
+        result.position = 'Withdrawn'
+        break
+      case "D":
+        result.position = 'Disqualified'
+        break
+      case "E":
+        result.position = 'Excluded'
+        break
+      case "F":
+        result.position = 'Failed to Qualify'
+        break
+      case "N":
+        result.position = 'Not Classified'
+        break
+      default:
+        break
     }
   })
-  let finishedResults = newResults.filter((result) => {
-    return result.positionText != 'R'
-  })
-  let dnfResults = results.filter((result) => {
-    return result.positionText == 'R'
-  })
-  return finishedResults.concat(dnfResults)
-  // console.log({finishedResults, dnfResults});
-  // console.log(newResults);
 
+  // create array of finished drivers
+  let finishedResults = newResults.filter((result) => {
+    return (typeof result.position == 'number')
+  })
+
+  // create array of drivers who failed to finish
+  let dnfResults = results.filter((result) => {
+    return (typeof result.position == 'string')
+  })
+
+  // combine two above arrays with unclassified drivers after classified drivers
+  return finishedResults.concat(dnfResults)
 }
 
 
