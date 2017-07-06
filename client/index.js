@@ -3,8 +3,7 @@ import ReactDom from 'react-dom'
 
 import App from './components/App'
 
-console.log(window.seasons);
 ReactDom.render(
-  <App />,
+  <App raceData={window.raceData} />,
   document.getElementById('app')
 )

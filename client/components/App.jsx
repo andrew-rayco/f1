@@ -1,12 +1,18 @@
 import React from 'react'
 
-const App = props => {
-  console.log(props);
+import RunRace from './RunRace'
+
+const App = raceData => {
   return (
     <div>
-      <h1>React</h1>
+      <h1>Visualise Race</h1>
+        <div className="track">
+          <RunRace raceData={raceData.raceData} />
+        </div>
     </div>
   )
 }
+
+
 
 export default App

@@ -3,6 +3,7 @@ var router = express.Router()
 var moment = require('moment')
 
 var dbFunctions = require('./db-functions')
+var functions = require('./functions')
 
 router.get('/', (req, res) => {
   var db = req.app.get('db')
@@ -13,15 +14,6 @@ router.get('/', (req, res) => {
   })
 })
 
-// react route - Use this for race visualisation!
-router.get('/react', (req, res) => {
-  var db = req.app.get('db')
-  db('seasons')
-    .then((seasons) => {
-      console.log(seasons);
-      res.render('react')
-    })
-})
 
 router.get('/circuits', (req, res) => {
   var db = req.app.get('db')
@@ -74,7 +66,31 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
     })
 })
 
+// react route - Use this for race visualisation!
 // make the race happen!
+router.get('/season/:id/:raceId/visualise', (req, res) => {
+  var db = req.app.get('db')
+  var id = req.params.id
+  var raceId = req.params.raceId
+  if (raceId < 972 && raceId > 840) {
+    db('laptimes')
+      .select('*')
+      .where('laptimes.raceId', raceId)
+      .join('drivers', 'laptimes.driverId', '=', 'drivers.driverId')
+      .orderBy('position', 'asc')
+      .then((laptimes) => {
+        // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
+        let raceData = functions.prepareRaceData(laptimes)
+        console.log(raceData);
+        res.render('react', {raceData: JSON.stringify(raceData)})
+      })
+  }
+  else {
+    res.render('no-laptime-data')
+  }
+})
+
+// show all laptimes
 router.get('/season/:id/:raceId/laptimes', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id
@@ -83,9 +99,11 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
     db('laptimes')
       .select('*')
       .where('laptimes.raceId', raceId)
+      .join('drivers', 'laptimes.driverId', '=', 'drivers.driverId')
       .orderBy('lap', 'asc')
       .then((laptimes) => {
         // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
+        let raceData = functions.prepareRaceData(laptimes)
         res.render('laptimes', {laptimes})
       })
   }
@@ -94,26 +112,24 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
   }
 })
 
+// show race results
+router.get('/season/:id/:raceId/results', (req, res) => {
+  var db = req.app.get('db')
+  var id = req.params.id
+  var raceId = req.params.raceId
+  db('results')
+    .select('races.name as raceName', 'races.year as raceYear', '*')
+    .where('results.raceId', raceId)
+    .join('drivers', 'results.driverId', '=', 'drivers.driverId')
+    .join('races', 'results.raceId', '=', 'races.raceId')
+    .orderBy('position', 'asc')
+    .then((results) => {
+      // console.log(results);
+      let newResults = functions.cleanResults(results)
+      res.render('result', {results: newResults})
+    })
+})
 
-
-// display laptimes per driver for selected race
-// router.get('/season/:id/:raceId/laptimes', (req, res) => {
-//   var db = req.app.get('db')
-//   var id = req.params.id
-//   var raceId = req.params.raceId
-//   if (raceId < 972 && raceId > 840) {
-//     db('laptimes')
-//       .select('*')
-//       .where('laptimes.raceId', raceId)
-//       .orderBy('lap', 'asc')
-//       .then((laptimes) => {
-//         res.render('laptimes', {laptimes})
-//       })
-//   }
-//   else {
-//     res.render('no-laptime-data')
-//   }
-// })
 
 
 module.exports = router
