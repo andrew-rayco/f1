@@ -90,7 +90,6 @@ function cleanResults(results) {
 
   // create array of finished drivers
   let finishedResults = newResults.filter((result) => {
-    console.log(typeof result.position)
     return (typeof result.position == 'number')
   })
 
