@@ -10,15 +10,17 @@ router.get('/', (req, res) => {
   db('seasons')
     .orderBy('year', 'asc')
     .then((seasons) => {
-    res.render('index', {seasons})
+      res.render('index', {seasons})
   })
 })
 
 
 router.get('/circuits', (req, res) => {
   var db = req.app.get('db')
-  db('circuits').then(function(circuits) {
-    res.render('circuits', {circuits})
+  db('circuits')
+    .orderBy('country', 'asc')
+    .then(function(circuits) {
+      res.render('circuits', {circuits})
   })
 })
 
