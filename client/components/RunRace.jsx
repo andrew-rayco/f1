@@ -112,10 +112,6 @@ class RunRace extends React.Component {
   render() {
     return (
       <div className="race">
-        {/* {console.log(this.state)} */}
-        {/* {console.log(this.winnerRaceTime())} */}
-        {/* {console.log(this.calculateProgressBar())} */}
-        {/* {console.log(this.calcWidth())} */}
         <h3>Lap {this.state.lap}</h3>
         {this.showRace(this.props)}
       </div>
