@@ -86,6 +86,14 @@ a:hover {
   width: 10%;
 }
 
+.single-round {
+	background: papayawhip;
+}
+
+.toggle {
+	display: none;
+}
+
 .circuits {
 	margin-top: 0;
 	text-align: center;
