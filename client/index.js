@@ -4,6 +4,6 @@ import ReactDom from 'react-dom'
 import App from './components/App'
 
 ReactDom.render(
-  <App raceData={window.raceData} />,
+  <App />,
   document.getElementById('app')
 )

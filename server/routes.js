@@ -10,8 +10,11 @@ router.get('/', (req, res) => {
   db('seasons')
     .orderBy('year', 'asc')
     .then((seasons) => {
-      res.render('index', {seasons})
-  })
+      res.json(seasons)
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })
 })
 
 
