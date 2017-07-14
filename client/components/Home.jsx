@@ -19,16 +19,17 @@ export default class Home extends React.Component {
   listSeasons(seasons) {
     return seasons.map((item) => {
       let year = item.year
-      return <li key={year}><a href={`api-v1/season/${year}`}>{year}</a></li>
+      return <li className="season" key={year}><a href={`/#/season/${year}`}>{year}</a></li>
     })
   }
 
   render() {
     return (
         <div className="row">
+          {console.log('is this double loading too?')}
           <div className="twelve columns home">
             <h3>Seasons</h3>
-            <ul>
+            <ul className="seasons">
               {this.state.seasons ? this.listSeasons(this.state.seasons) : 'loading...'}
             </ul>
 

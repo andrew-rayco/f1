@@ -15,3 +15,11 @@ export function getCircuits(callback) {
       err ? callback(err) : callback(res.body)
     })
 }
+
+export function getRaces(id, callback) {
+  request
+    .get(`/api-v1/season/${id}`)
+    .end((err, res) => {
+      err ? callback(err) : callback(res.body)
+    })
+}

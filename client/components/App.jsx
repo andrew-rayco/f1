@@ -5,6 +5,7 @@ import RunRace from './RunRace'
 import Home from './Home'
 import Header from './Header'
 import Circuits from './Circuits'
+import FullSeason from './FullSeason'
 
 
 export default class App extends React.Component {
@@ -21,6 +22,7 @@ export default class App extends React.Component {
           <Header />
           <Route path = '/' exact={true} component = {Home} />
           <Route path = '/circuits' exact={true} component = {Circuits} />
+          <Route path = '/season/:id' component = {FullSeason} />
         </div>
       </Router>
     )

@@ -28,6 +28,7 @@ router.get('/circuits', (req, res) => {
     .catch((err) => {
       res.status(500).send('DATABASE ERROR: ' + err.message)
     })
+
 })
 
 
@@ -40,9 +41,10 @@ router.get('/season/:id', (req, res) => {
       season.forEach((race) => {
         race.date = moment(race.date).format('MMMM Do YYYY')
       })
-        res.render('season', {season: season, clicked: function handleClick(e) {
-          console.log(e.target)
-        }})
+        // res.render('season', {season: season, clicked: function handleClick(e) {
+        //   console.log(e.target)
+        // }})
+        res.json(season)
   })
 })
 
