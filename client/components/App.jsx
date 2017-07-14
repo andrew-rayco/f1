@@ -19,7 +19,8 @@ export default class App extends React.Component {
       <Router>
         <div className="container">
           <Header />
-          <Route path ='/' exact={true} component = {Home} />
+          <Route path = '/' exact={true} component = {Home} />
+          <Route path = '/circuits' exact={true} component = {Circuits} />
         </div>
       </Router>
     )

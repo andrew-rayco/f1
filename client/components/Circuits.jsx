@@ -6,6 +6,7 @@ export default class Circuits extends React.Component {
   constructor() {
     super()
     this.state = {
+      circuits: null
     }
   }
 
@@ -17,21 +18,34 @@ export default class Circuits extends React.Component {
   }
 
   listCircuits(circuits) {
-    return circuits.map((item) => {
-      return <li key={item.year}><a href={`api-v1/season/${item.year}`}>{item.year}</a></li>
+    return circuits.map((track) => {
+      return (
+        <tr key={track.circuitId}>
+          <td>{track.country}</td>
+          <td><a href={track.url}>{track.name}</a></td>
+          <td><a href={`https://www.google.co.nz/maps/@${track.lat},${track.lng},3916m/data=!3m1!1e3?hl=en`}>View</a></td>
+        </tr>
+      )
     })
   }
 
   render() {
     return (
-        <div className="row">
-          <div className="twelve columns home">
-            <h3>Circuits</h3>
-            <ul>
-              {this.state.circuits ? this.listCircuits(this.state.circuits) : 'loading...'}
-            </ul>
-          </div>
-        </div>
+      <div className="circuit-list">
+        <h1>Circuits</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Circuit name</th>
+              <th>Map</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.circuits ? this.listCircuits(this.state.circuits) : console.log('loading') }
+          </tbody>
+        </table>
+      </div>
     )
   }
 
