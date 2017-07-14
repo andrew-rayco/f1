@@ -3,7 +3,9 @@ import {HashRouter as Router, Route} from 'react-router-dom'
 
 import RunRace from './RunRace'
 import Home from './Home'
-import * as api from '../api'
+import Header from './Header'
+import Circuits from './Circuits'
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -12,29 +14,14 @@ export default class App extends React.Component {
     }
   }
 
-
-  getSeasons() {
-
-  }
-
   render () {
     return (
       <Router>
         <div className="container">
-          <Route path ='/' exact={true} seasons={this.state.seasons} component = {Home} />
+          <Header />
+          <Route path ='/' exact={true} component = {Home} />
         </div>
       </Router>
     )
   }
 }
-
-// const App = raceData => {
-//   return (
-//     <div>
-//       <h1>Visualise Race</h1>
-//         <div className="track">
-//           <RunRace raceData={raceData.raceData} />
-//         </div>
-//     </div>
-//   )
-// }

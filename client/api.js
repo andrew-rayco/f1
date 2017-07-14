@@ -8,10 +8,10 @@ export function getSeasons(callback) {
     })
 }
 
-// export function getUser(user_id, callback) {
-//   request
-//     .get(`/api-v1/users/${user_id}`)
-//     .end((err, res) => {
-//       err ? callback(err) : callback(res.body)
-//     })
-// }
+export function getCircuits(callback) {
+  request
+    .get('/api-v1/circuits')
+    .end((err, res) => {
+      err ? callback(err) : callback(res.body)
+    })
+}

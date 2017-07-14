@@ -23,8 +23,11 @@ router.get('/circuits', (req, res) => {
   db('circuits')
     .orderBy('country', 'asc')
     .then(function(circuits) {
-      res.render('circuits', {circuits})
-  })
+      res.json(circuits)
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })
 })
 
 
