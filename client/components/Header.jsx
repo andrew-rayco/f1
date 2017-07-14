@@ -4,11 +4,10 @@ const Header = () => {
 
   return (
     <div className="header">
-      {console.log('header')}
       <nav>
-        <a id="home-link" href="/#/"><img id="home-link-img" src="/images/car-formula-1.png" alt="F1 car silhouette" /></a>
+          <a id="home-link" href="/#/">Home</a>
       </nav>
-      <h1>Formula 1 Database</h1>
+      <h1>F1ian</h1>
     </div>
   )
 }
