@@ -74,10 +74,13 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
   dbFunctions.getGrid(db, raceId)
     .then((gridData) => {
       if (gridData[0]) {
-        res.render('grid', {gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
+        res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
-        res.render('no-laptime-data')
+        res.send('no-laptime-data')
       }
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
     })
 })
 
@@ -123,7 +126,6 @@ router.get('/season/:id/:raceId/results', (req, res) => {
   var raceId = req.params.raceId
     dbFunctions.getRaceResults(db, id, raceId)
     .then((results) => {
-      // console.log(results);
       let newResults = functions.cleanResults(results)
       res.render('result', {results: newResults})
     })

@@ -11,7 +11,6 @@ export default class Home extends React.Component {
   }
 
   componentWillMount() {
-    console.log('will mount')
     api.getSeasons((seasons) => {
       this.setState({seasons})
     })

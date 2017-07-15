@@ -31,3 +31,11 @@ export function getQuali(seasonId, raceId, callback) {
       err ? callback(err) : callback(res.body)
     })
 }
+
+export function getGrid(seasonId, raceId, callback) {
+  request
+    .get(`/api-v1/season/${seasonId}/${raceId}/grid`)
+    .end((err, res) => {
+      err ? callback(err) : callback(res.body)
+    })
+}

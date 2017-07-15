@@ -15,7 +15,6 @@ function getQualifyingResults (db, season, raceId) {
   }
 
 function getGrid (db, raceId) {
-  console.log(raceId);
   return db('results')
     .select('races.name as raceName', 'drivers.url as driver-url', 'constructors.name as constructorName', 'constructors.url as constructorUrl', '*')
     .join('drivers', 'drivers.driverId', '=', 'results.driverId')
