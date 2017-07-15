@@ -8,7 +8,8 @@ class RunRace extends React.Component {
     this.state = {
       lap: 1,
       sortedLaps: [], // All laptimes for current lap
-      count: 1
+      count: 1,
+      visualIsRunning: false
     }
   }
 
@@ -54,34 +55,7 @@ class RunRace extends React.Component {
 
   // Find all laptimes for next lap and set state
   componentDidMount() {
-    var lapTicker = setInterval(() => {
-      if (this.state.count < this.maxLapsInRace()) {
-        this.setState({
-          sortedLaps: this.state.raceData.filter((lap) => {
-            return lap.lap == this.state.count
-          }),
-          count: this.state.count + 1,
-          lap: this.state.lap + 1
-        })
-        this.calculateProgressBar(this.state.lap)
-      } else {
-        clearInterval(lapTicker)
-      }
-    }, 150)
 
-
-    // cumulatively add laptimes to generate progress bar
-    this.props.raceData.forEach((lap) => { // I can't get this to work
-      var driverSurname = lap.surname
-      var stateCopy = Object.assign({}, this.state)
-      // It needs to start at 0 so I don't get NaN when trying to add laps
-      if (lap.milliseconds) {
-        stateCopy[driverSurname] = this.state[driverSurname] || 0
-        stateCopy[driverSurname] += lap.milliseconds
-      }
-
-      this.setState(stateCopy)
-    })
   }
 
   showRace(data) {
@@ -122,11 +96,48 @@ class RunRace extends React.Component {
     }
   }
 
+  handleClick() {
+    var lapTicker = setInterval(() => {
+      if (this.state.count < this.maxLapsInRace()) {
+        this.setState({
+          sortedLaps: this.state.raceData.filter((lap) => {
+            return lap.lap == this.state.count
+          }),
+          count: this.state.count + 1,
+          lap: this.state.lap + 1
+        })
+        this.calculateProgressBar(this.state.lap)
+      } else {
+        clearInterval(lapTicker)
+      }
+    }, 150)
+
+
+    // cumulatively add laptimes to generate progress bar
+    if (this.props.raceData) {
+      this.props.raceData.forEach((lap) => { // I can't get this to work
+        var driverSurname = lap.surname
+        var stateCopy = Object.assign({}, this.state)
+        // It needs to start at 0 so I don't get NaN when trying to add laps
+        if (lap.milliseconds) {
+          stateCopy[driverSurname] = this.state[driverSurname] || 0
+          stateCopy[driverSurname] += lap.milliseconds
+        }
+        this.setState(stateCopy)
+      })
+    }
+
+    console.log(this.state.visualIsRunning)
+    this.setState({visualIsRunning: !this.state.visualIsRunning})
+
+  }
+
   render() {
     if (this.state.raceData) {
       return (
         <div className="race">
           <h2>{this.state.raceYear} {this.state.raceName}</h2>
+          <button onClick={() => this.handleClick()}>Start visualisation</button>
           <h3>Lap {this.state.lap}</h3>
           {this.showRace(this.state.raceData)}
         </div>
