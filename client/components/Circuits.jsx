@@ -14,7 +14,6 @@ export default class Circuits extends React.Component {
     api.getCircuits((circuits) => {
       this.setState({circuits})
     })
-    console.log(this.state.circuits)
   }
 
   listCircuits(circuits) {

@@ -12,7 +12,8 @@ export default class FullSeason extends React.Component {
 
   componentWillMount() {
     var location = this.props.location.pathname
-    var thisSeason = location.substring(location.lastIndexOf('/') + 1)
+    var pathArray = location.split('/')
+    var thisSeason = pathArray[2]
     api.getRaces(thisSeason, (races) => {
       this.setState({races})
     })

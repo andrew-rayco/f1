@@ -11,6 +11,7 @@ export default class Home extends React.Component {
   }
 
   componentWillMount() {
+    console.log('will mount')
     api.getSeasons((seasons) => {
       this.setState({seasons})
     })
@@ -26,7 +27,6 @@ export default class Home extends React.Component {
   render() {
     return (
         <div className="row">
-          {console.log('is this double loading too?')}
           <div className="twelve columns home">
             <h3>Seasons</h3>
             <ul className="seasons">
