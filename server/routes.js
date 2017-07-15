@@ -95,10 +95,13 @@ router.get('/season/:id/:raceId/visualise', (req, res) => {
       .then((laptimes) => {
         // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
         let raceData = functions.prepareRaceData(laptimes)
-        res.render('react', {raceData: JSON.stringify(raceData)})
+        res.json(raceData)
+      })
+      .catch((err) => {
+        res.status(500).send('DATABASE ERROR: ' + err.message)
       })
   } else {
-    res.render('no-laptime-data')
+    res.send('no-laptime-data')
   }
 })
 

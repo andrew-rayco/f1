@@ -24,6 +24,7 @@ export default class App extends React.Component {
           <Route path='/season/:id' exact={true} component={FullSeason}/>
           <Route path='/season/:id/:raceId/qualifying' component={Quali}/>
           <Route path='/season/:id/:raceId/grid' component={Grid}/>
+          <Route path='/season/:id/:raceId/visualise' component={RunRace} />
         </div>
       </Router>
     )

@@ -23,7 +23,7 @@ export default class FullSeason extends React.Component {
   listRaces(races) {
     return races.map((race) => {
       return (
-        <RaceOptions props={race} />
+        <RaceOptions key={race.raceId} props={race} />
       )
     })
   }

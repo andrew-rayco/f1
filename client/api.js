@@ -39,3 +39,11 @@ export function getGrid(seasonId, raceId, callback) {
       err ? callback(err) : callback(res.body)
     })
 }
+
+export function getVisData(seasonId, raceId, callback) {
+  request
+    .get(`/api-v1/season/${seasonId}/${raceId}/visualise`)
+    .end((err, res) => {
+      err ? callback(err) : callback(res.body)
+    })
+}

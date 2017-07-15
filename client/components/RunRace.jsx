@@ -1,21 +1,31 @@
 import React from 'react'
 
+import * as api from '../api'
+
 class RunRace extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       lap: 1,
       sortedLaps: [], // All laptimes for current lap
-      count: 1,
-
+      count: 1
     }
   }
 
+  componentWillMount() {
+    let location = this.props.location.pathname
+    let pathArray = location.split('/')
+    let season = pathArray[2]
+    let raceId = pathArray[3]
+    api.getVisData(season, raceId, (raceData) => {
+      this.setState({raceData})
+    })
+  }
 
   // calculate total race laps so setInterval knows when to stop
   maxLapsInRace() {
     var maxLaps = 0;
-    this.props.raceData.forEach((lap) => {
+    this.state.raceData.forEach((lap) => {
       if (lap.lap > maxLaps) {
         maxLaps = lap.lap
       }
@@ -23,25 +33,23 @@ class RunRace extends React.Component {
     return maxLaps
   }
 
-
   // calculate total race time for winner
   winnerRaceTime() {
     var winningTime = 0; // milliseconds
-    this.props.raceData.forEach((lap) => {
-      if (lap.surname == 'Ricciardo') {  // hardcoded race winner. Most sub-optimal
+    this.state.raceData.forEach((lap) => {
+      if (lap.surname == 'Ricciardo') { // hardcoded race winner. Most sub-optimal
         winningTime += lap.milliseconds
       }
     })
     return winningTime
   }
 
-
   // Find all laptimes for next lap and set state
-  componentDidMount () {
+  componentDidMount() {
     var lapTicker = setInterval(() => {
       if (this.state.count < this.maxLapsInRace()) {
         this.setState({
-          sortedLaps: this.props.raceData.filter((lap) => {
+          sortedLaps: this.state.raceData.filter((lap) => {
             return lap.lap == this.state.count
           }),
           count: this.state.count + 1,
@@ -56,7 +64,7 @@ class RunRace extends React.Component {
     console.log(this.state)
 
     // cumulatively add laptimes to generate progress bar
-    this.props.raceData.forEach((lap) => {  // I can't get this to work
+    this.props.raceData.forEach((lap) => { // I can't get this to work
       var driverSurname = lap.surname
       var stateCopy = Object.assign({}, this.state)
       // It needs to start at 0 so I don't get NaN when trying to add laps
@@ -69,20 +77,22 @@ class RunRace extends React.Component {
     })
   }
 
-
   showRace(data) {
-
-  return data.raceData.map((driverLap, i) => {
-   if (driverLap.lap == this.state.count) {
-     return (
-         <div key={i} className="driver">
-           <div className={driverLap.surname}>
-             {driverLap.position}: {driverLap.surname}: {driverLap.time}
-             <div className="vis-color" style={{width: this.calcWidth(driverLap.surname) + '%'}}>&nbsp;</div>
-           </div>
-         </div>
-       )
-     }
+    console.log(this.state)
+    let lapData = this.state.raceData
+    return lapData.map((driverLap, i) => {
+      if (driverLap.lap == this.state.count) {
+        return (
+          <div key={i} className="driver">
+            <div className={driverLap.surname}>
+              {driverLap.position}: {driverLap.surname}: {driverLap.time}
+              <div className="vis-color" style={{
+                width: this.calcWidth(driverLap.surname) + '%'
+              }}>&nbsp;</div>
+            </div>
+          </div>
+        )
+      }
     })
   }
 
@@ -96,7 +106,6 @@ class RunRace extends React.Component {
     return singleLap
   }
 
-
   calcWidth(driver) {
     var randomNum = Math.floor(Math.random() * 1.5 + 1)
     var groundCovered = this.calculateProgressBar() * this.state.lap
@@ -108,14 +117,18 @@ class RunRace extends React.Component {
     }
   }
 
-
   render() {
-    return (
-      <div className="race">
-        <h3>Lap {this.state.lap}</h3>
-        {this.showRace(this.props)}
-      </div>
-    )
+    setTimeout(console.log(this.state), 1500)
+    if (this.state.raceData) {
+      return (
+        <div className="race">
+          <h3>Lap </h3>
+          {this.showRace(this.state.raceData.raceData)}
+        </div>
+      )
+    } else {
+      return <div></div>
+    }
   }
 }
 
