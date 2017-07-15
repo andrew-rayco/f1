@@ -20,8 +20,8 @@ export default class App extends React.Component {
           <Header />
           <Route path='/' exact={true} component={Home}/>
           <Route path='/circuits' exact={true} component={Circuits}/>
-          <Route path='/season/:id' component={FullSeason}/>
-          <Route path='/season/:id/:raceId/qualifying' component={Quali}/>
+          <Route path='/season/:id' exact={true} component={FullSeason}/>
+          <Route path='/season/:id/:raceId/qualifying'  component={Quali}/>
         </div>
       </Router>
     )

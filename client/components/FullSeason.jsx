@@ -15,19 +15,18 @@ export default class FullSeason extends React.Component {
     var thisSeason = location.substring(location.lastIndexOf('/') + 1)
     api.getRaces(thisSeason, (races) => {
       this.setState({races})
-      console.log(this.state.races)
     })
   }
 
   listRaces(races) {
     return races.map((race) => {
       return (
-        <div className="row single-round">
+        <div key={race.raceId} className="row single-round">
           <div className="twelve columns round">
             <h3><a href="#">Round {race.round} - {race.name}</a></h3>
             <div className="toggle">
               <p>{race.date}</p>
-              <p><a href={`/season/${race.year}/${race.raceId}/qualifying`}>Qualifying results</a></p>
+              <p><a href={`/#/season/${race.year}/${race.raceId}/qualifying`}>Qualifying results</a></p>
               <p><a href={`/season/${race.year}/${race.raceId}/grid`}>Starting grid</a></p>
               <p><a href={`/season/${race.year}/${race.raceId}/visualise`}>Visualise</a></p>
               <p><a href={`/season/${race.year}/${race.raceId}/results`}>Results</a></p>
@@ -45,9 +44,7 @@ export default class FullSeason extends React.Component {
       return (
         <div className="season">
           <h2>The {racesInSeason[0].year} Formula 1 Season</h2>
-        {console.log(racesInSeason)}
-        {this.listRaces(racesInSeason)}
-
+          {this.listRaces(racesInSeason)}
         </div>
       )
     } else {
@@ -55,7 +52,5 @@ export default class FullSeason extends React.Component {
         <div></div>
       )
     }
-
-
   }
 }

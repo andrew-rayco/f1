@@ -41,11 +41,11 @@ router.get('/season/:id', (req, res) => {
       season.forEach((race) => {
         race.date = moment(race.date).format('MMMM Do YYYY')
       })
-        // res.render('season', {season: season, clicked: function handleClick(e) {
-        //   console.log(e.target)
-        // }})
-        res.json(season)
-  })
+      res.json(season)
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })
 })
 
 // display qualifying results
@@ -56,10 +56,13 @@ router.get('/season/:id/:raceId/qualifying', (req, res) => {
   dbFunctions.getQualifyingResults(db, season, raceId)
     .then((qualifyingData) => {
       if (qualifyingData[0]) {
-        res.render('qualifying', {qualifyingData, raceName:qualifyingData[0].raceName})
+        res.json({qualifyingData, raceName:qualifyingData[0].raceName})
       } else {
-        res.render('no-laptime-data')
+        res.send('no-laptime-data')
       }
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
     })
 })
 
