@@ -1,13 +1,26 @@
 function getRacesInSeason (db, id) {
   return db('races')
-    .select('races.year as season-year', 'races.url as races-url', '*')
+    .select(
+      'races.year as season-year',
+      'races.url as races-url',
+      'races.name as raceName',
+      '*'
+    )
     .join('seasons', 'seasons.year', '=', 'races.year')
     .where('races.year', id)
 }
 
 function getQualifyingResults (db, season, raceId) {
   return db('qualifying')
-    .select('constructors.name as constructorName', 'constructors.url as constructorUrl', 'races.name as raceName', 'qualifying.*', 'drivers.*')
+    .select(
+      'constructors.name as constructorName',
+      'constructors.url as constructorUrl',
+      'races.name as raceName',
+      'races.url as races-url',
+      'qualifying.*',
+      'drivers.*',
+      'races.*'
+    )
     .join('drivers', 'qualifying.driverId', '=', 'drivers.driverId')
     .join('races', 'races.raceId', '=', 'qualifying.raceId')
     .join('constructors', 'qualifying.constructorId', '=', 'constructors.constructorId')
@@ -16,7 +29,14 @@ function getQualifyingResults (db, season, raceId) {
 
 function getGrid (db, raceId) {
   return db('results')
-    .select('races.name as raceName', 'drivers.url as driver-url', 'constructors.name as constructorName', 'constructors.url as constructorUrl', '*')
+    .select(
+      'races.name as raceName',
+      'drivers.url as driver-url',
+      'constructors.name as constructorName',
+      'constructors.url as constructorUrl',
+      'races.url as races-url',
+      '*'
+    )
     .join('drivers', 'drivers.driverId', '=', 'results.driverId')
     .join('races', 'races.raceId', '=', 'results.raceId')
     .join('constructors', 'results.constructorId', '=', 'constructors.constructorId')
@@ -42,7 +62,11 @@ function getAllLaptimes (db, season, raceId) {
 
 function getRaceResults (db, season, raceId) {
   return db('results')
-    .select('races.name as raceName', 'races.year as raceYear', '*')
+    .select(
+      'races.name as raceName',
+      'races.year as raceYear',
+      '*'
+    )
     .where('results.raceId', raceId)
     .join('drivers', 'results.driverId', '=', 'drivers.driverId')
     .join('races', 'results.raceId', '=', 'races.raceId')

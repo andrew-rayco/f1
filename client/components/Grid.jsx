@@ -1,7 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
-import FullSeason from './FullSeason'
+import RaceOptions from './RaceOptions'
 
 export default class Grid extends React.Component {
   constructor() {
@@ -34,6 +34,7 @@ export default class Grid extends React.Component {
   render() {
     if (this.state.grid) {
       let grid = this.state.grid.gridData
+      console.log(grid)
       return (
         <div className="grid">
           <h2>{grid[0].year} {grid[0].raceName}</h2>
@@ -50,7 +51,7 @@ export default class Grid extends React.Component {
               {this.listGrid(grid)}
             </tbody>
           </table>
-          <FullSeason location={this.props.location}/>
+          <RaceOptions props={grid[0]}/>
         </div>
       )
     } else {

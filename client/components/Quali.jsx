@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
+import RaceOptions from './RaceOptions'
 
 export default class Quali extends React.Component {
   constructor() {
@@ -19,7 +20,6 @@ export default class Quali extends React.Component {
   }
 
   listResults(qualiData) {
-    console.log(qualiData.qualifyingData)
     let allResults = qualiData.qualifyingData
     return allResults.map((driverResult) => {
       return (
@@ -41,26 +41,27 @@ export default class Quali extends React.Component {
       var pathArray = location.split('/')
       var season = pathArray[2]
       var quali = this.state.qualifyingData
+      console.log(quali.qualifyingData[0])
       return (
         <div className="quali-results">
-          <h2>{season} {quali.raceName}</h2>
+          <h2>{quali.qualifyingData[0].year} {quali.raceName}</h2>
           <h3>Qualifying results</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Position</th>
-                  <th>Driver</th>
-                  <th>Team</th>
-                  <th>Q1</th>
-                  <th>Q2</th>
-                  <th>Q3</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.listResults(quali)}
-              </tbody>
-            </table>
-
+          <table>
+            <thead>
+              <tr>
+                <th>Position</th>
+                <th>Driver</th>
+                <th>Team</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q3</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.listResults(quali)}
+            </tbody>
+          </table>
+          <RaceOptions props={quali.qualifyingData[0]} />
         </div>
       )
     } else {

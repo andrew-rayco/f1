@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
+import RaceOptions from './RaceOptions'
 
 export default class FullSeason extends React.Component {
   constructor() {
@@ -11,7 +12,6 @@ export default class FullSeason extends React.Component {
   }
 
   componentWillMount() {
-    console.log(this.props)
     var location = this.props.location.pathname
     var pathArray = location.split('/')
     var thisSeason = pathArray[2]
@@ -23,19 +23,7 @@ export default class FullSeason extends React.Component {
   listRaces(races) {
     return races.map((race) => {
       return (
-        <div key={race.raceId} className="row single-round">
-          <div className="twelve columns round">
-            <h3><a href="#">Round {race.round} - {race.name}</a></h3>
-            <div className="toggle">
-              <p>{race.date}</p>
-              <p><a href={`/#/season/${race.year}/${race.raceId}/qualifying`}>Qualifying results</a></p>
-              <p><a href={`/#/season/${race.year}/${race.raceId}/grid`}>Starting grid</a></p>
-              <p><a href={`/#/season/${race.year}/${race.raceId}/visualise`}>Visualise</a></p>
-              <p><a href={`/#/season/${race.year}/${race.raceId}/results`}>Results</a></p>
-              <p><a href={race['races-url']}>{race.year} {race.name} on Wikipedia</a></p>
-            </div>
-          </div>
-        </div>
+        <RaceOptions props={race} />
       )
     })
   }
