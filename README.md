@@ -8,6 +8,6 @@ It's a pretty handy reference tool too, so it has that going for it which is nic
 [Waffle](https://waffle.io/andrew-rayco/f1)
 
 ### Things to investigate
-- Currently each component that needs data is hitting the api and adding to its own state. Probably better to set up an onclick in the parent component and pass the data as props? (prior to redux version)
+- Currently each component that needs data is hitting the api and adding to its own state. Probably better to set up an onclick in the parent component and pass the data as props? (prior to redux version) - ANSWER: YES, pass it down as props.
 - To avoid hitting undefined errors before component state is populated with data, render methods include an if statement checking if state.whatever exists. There's no doubt a better way to do this.
 
