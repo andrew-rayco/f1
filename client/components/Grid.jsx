@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
+import FullSeason from './FullSeason'
 
 export default class Grid extends React.Component {
   constructor() {
@@ -18,12 +19,38 @@ export default class Grid extends React.Component {
     })
   }
 
+  listGrid(fullGrid) {
+    return fullGrid.map((driver) => {
+      return (
+        <tr key={driver.resultId}>
+          <td><strong>{driver.grid}</strong></td>
+          <td><a href={driver['driver-url']}>{driver.forename} {driver.surname}</a></td>
+          <td><a href={driver.constructorUrl}>{driver.constructorName}</a></td>
+        </tr>
+      )
+    })
+  }
+
   render() {
     if (this.state.grid) {
-      console.log(this.state.grid)
+      let grid = this.state.grid.gridData
       return (
         <div className="grid">
-          <h2>Congratulations on finding the Grid component</h2>
+          <h2>{grid[0].year} {grid[0].raceName}</h2>
+          <h3>Starting Grid</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Position</th>
+                <th>Driver</th>
+                <th>Team</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.listGrid(grid)}
+            </tbody>
+          </table>
+          <FullSeason location={this.props.location}/>
         </div>
       )
     } else {
