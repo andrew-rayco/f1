@@ -47,3 +47,11 @@ export function getVisData(seasonId, raceId, callback) {
       err ? callback(err) : callback(res.body)
     })
 }
+
+export function getRaceDetails(seasonId, raceId, callback) {
+  request
+    .get(`/api-v1/season/${seasonId}/${raceId}/race-details`)
+    .end((err, res) => {
+      err ? callback(err) : callback(res.body)
+    })
+}

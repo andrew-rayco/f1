@@ -73,11 +73,18 @@ function getRaceResults (db, season, raceId) {
     .orderBy('position', 'asc')
 }
 
+function getRaceInfo (db, season, raceId) {
+  return db('races')
+    .select('*')
+    .where('races.raceId', raceId)
+}
+
 module.exports = {
   getRacesInSeason,
   getQualifyingResults,
   getGrid,
   visualise,
   getAllLaptimes,
-  getRaceResults
+  getRaceResults,
+  getRaceInfo
 }

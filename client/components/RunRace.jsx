@@ -17,6 +17,13 @@ class RunRace extends React.Component {
     let pathArray = location.split('/')
     let season = pathArray[2]
     let raceId = pathArray[3]
+    api.getRaceDetails(season, raceId, (raceInfo) => {
+      this.setState({
+        raceName: raceInfo.results[0].name,
+        raceYear: raceInfo.results[0].year
+      })
+    })
+
     api.getVisData(season, raceId, (raceData) => {
       this.setState({raceData})
     })
@@ -32,6 +39,7 @@ class RunRace extends React.Component {
     })
     return maxLaps
   }
+
 
   // calculate total race time for winner
   winnerRaceTime() {
@@ -61,7 +69,6 @@ class RunRace extends React.Component {
       }
     }, 150)
 
-    console.log(this.state)
 
     // cumulatively add laptimes to generate progress bar
     this.props.raceData.forEach((lap) => { // I can't get this to work
@@ -78,7 +85,6 @@ class RunRace extends React.Component {
   }
 
   showRace(data) {
-    console.log(this.state)
     let lapData = this.state.raceData
     return lapData.map((driverLap, i) => {
       if (driverLap.lap == this.state.count) {
@@ -111,19 +117,18 @@ class RunRace extends React.Component {
     var groundCovered = this.calculateProgressBar() * this.state.lap
     if (driver == 'Ricciardo') {
       return groundCovered
-      console.log(groundCovered);
     } else {
       return groundCovered - randomNum
     }
   }
 
   render() {
-    setTimeout(console.log(this.state), 1500)
     if (this.state.raceData) {
       return (
         <div className="race">
-          <h3>Lap </h3>
-          {this.showRace(this.state.raceData.raceData)}
+          <h2>{this.state.raceYear} {this.state.raceName}</h2>
+          <h3>Lap {this.state.lap}</h3>
+          {this.showRace(this.state.raceData)}
         </div>
       )
     } else {

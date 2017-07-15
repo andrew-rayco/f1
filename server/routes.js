@@ -134,5 +134,16 @@ router.get('/season/:id/:raceId/results', (req, res) => {
     })
 })
 
+// core race information (required mainly for headings of child components)
+router.get('/season/:id/:raceId/race-details', (req, res) => {
+  var db = req.app.get('db')
+  var id = req.params.id
+  var raceId = req.params.raceId
+    dbFunctions.getRaceInfo(db, id, raceId)
+    .then((results) => {
+      res.json({results})
+    })
+})
+
 
 module.exports = router
