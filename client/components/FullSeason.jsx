@@ -27,11 +27,11 @@ export default class FullSeason extends React.Component {
             <h3><a href="#">Round {race.round} - {race.name}</a></h3>
             <div className="toggle">
               <p>{race.date}</p>
-              <p><a href="/season/{race.year}/{race.raceId}/qualifying">Qualifying results</a></p>
-              <p><a href="/season/{race.year}/{race.raceId}/grid">Starting grid</a></p>
-              <p><a href="/season/{race.year}/{race.raceId}/visualise">Visualise</a></p>
-              <p><a href="/season/{race.year}/{race.raceId}/results">Results</a></p>
-              <p><a href="{race.races-url}">{race.year} {race.name} on Wikipedia</a></p>
+              <p><a href={`/season/${race.year}/${race.raceId}/qualifying`}>Qualifying results</a></p>
+              <p><a href={`/season/${race.year}/${race.raceId}/grid`}>Starting grid</a></p>
+              <p><a href={`/season/${race.year}/${race.raceId}/visualise`}>Visualise</a></p>
+              <p><a href={`/season/${race.year}/${race.raceId}/results`}>Results</a></p>
+              <p><a href={race['races-url']}>{race.year} {race.name} on Wikipedia</a></p>
             </div>
           </div>
         </div>
