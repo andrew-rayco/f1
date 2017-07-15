@@ -23,3 +23,11 @@ export function getRaces(id, callback) {
       err ? callback(err) : callback(res.body)
     })
 }
+
+export function getQuali(seasonId, raceId, callback) {
+  request
+    .get(`/api-v1/season/${seasonId}/${raceId}/qualifying`)
+    .end((err, res) => {
+      err ? callback(err) : callback(res.body)
+    })
+}
