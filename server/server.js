@@ -1,27 +1,13 @@
 var path = require('path')
-
 var express = require('express')
-var hbs = require('express-handlebars')
-
-var routes = require('./routes')
-// var apiRoutes = require('./apiRoutes') // api experiment
+var bodyParser = require('body-parser')
+var api = require('./routes')
 
 var app = express()
 
-
-// Middleware
-app.engine('hbs', hbs({
-  extname: 'hbs',
-  defaultLayout: 'main'
-}))
-app.set('view engine', 'hbs')
-app.set('views', path.join(__dirname, '../views'))
-app.use(express.static('public'))
-
-
-// Routes
-app.use('/', routes)
-// app.use('/api/v1/', apiRoutes) // api experiment - working with db. Make it work with external api
+app.use(bodyParser.json())
+app.use('/api-v1', api)
+app.use(express.static(path.join(__dirname, '../public')))
 
 module.exports = function(db) {
   app.set('db', db)

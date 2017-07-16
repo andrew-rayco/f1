@@ -10,8 +10,11 @@ router.get('/', (req, res) => {
   db('seasons')
     .orderBy('year', 'asc')
     .then((seasons) => {
-      res.render('index', {seasons})
-  })
+      res.json(seasons)
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })
 })
 
 
@@ -20,8 +23,12 @@ router.get('/circuits', (req, res) => {
   db('circuits')
     .orderBy('country', 'asc')
     .then(function(circuits) {
-      res.render('circuits', {circuits})
-  })
+      res.json(circuits)
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })
+
 })
 
 
@@ -34,8 +41,11 @@ router.get('/season/:id', (req, res) => {
       season.forEach((race) => {
         race.date = moment(race.date).format('MMMM Do YYYY')
       })
-        res.render('season', {season})
-  })
+      res.json(season)
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })
 })
 
 // display qualifying results
@@ -46,10 +56,13 @@ router.get('/season/:id/:raceId/qualifying', (req, res) => {
   dbFunctions.getQualifyingResults(db, season, raceId)
     .then((qualifyingData) => {
       if (qualifyingData[0]) {
-        res.render('qualifying', {qualifyingData, raceName:qualifyingData[0].raceName})
+        res.json({qualifyingData, raceName:qualifyingData[0].raceName})
       } else {
-        res.render('no-laptime-data')
+        res.send('no-laptime-data')
       }
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
     })
 })
 
@@ -61,10 +74,13 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
   dbFunctions.getGrid(db, raceId)
     .then((gridData) => {
       if (gridData[0]) {
-        res.render('grid', {gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
+        res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
-        res.render('no-laptime-data')
+        res.send('no-laptime-data')
       }
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
     })
 })
 
@@ -79,10 +95,13 @@ router.get('/season/:id/:raceId/visualise', (req, res) => {
       .then((laptimes) => {
         // let raceData = prepareRaceData(laptimes) // convert data into multi-dimensional array
         let raceData = functions.prepareRaceData(laptimes)
-        res.render('react', {raceData: JSON.stringify(raceData)})
+        res.json(raceData)
+      })
+      .catch((err) => {
+        res.status(500).send('DATABASE ERROR: ' + err.message)
       })
   } else {
-    res.render('no-laptime-data')
+    res.send('no-laptime-data')
   }
 })
 
@@ -110,12 +129,27 @@ router.get('/season/:id/:raceId/results', (req, res) => {
   var raceId = req.params.raceId
     dbFunctions.getRaceResults(db, id, raceId)
     .then((results) => {
-      // console.log(results);
       let newResults = functions.cleanResults(results)
-      res.render('result', {results: newResults})
+      res.json(newResults)
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
     })
 })
 
+// core race information (required mainly for headings of child components)
+router.get('/season/:id/:raceId/race-details', (req, res) => {
+  var db = req.app.get('db')
+  var id = req.params.id
+  var raceId = req.params.raceId
+    dbFunctions.getRaceInfo(db, id, raceId)
+    .then((results) => {
+      res.json({results})
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
+    })
+})
 
 
 module.exports = router

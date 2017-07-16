@@ -26,12 +26,15 @@
   },
   "homepage": "https://github.com/andrew-rayco/f1#readme",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.2",
     "express-handlebars": "^3.0.0",
     "knex": "^0.13.0",
     "moment": "^2.18.1",
     "pg": "^6.2.2",
-    "sqlite3": "^3.1.8"
+    "react-router-dom": "^4.1.1",
+    "sqlite3": "^3.1.8",
+    "superagent": "^3.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
