@@ -8,6 +8,7 @@ import Circuits from './Circuits'
 import FullSeason from './FullSeason'
 import Quali from './Quali'
 import Grid from './Grid'
+import Results from './Results'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class App extends React.Component {
           <Route path='/season/:id/:raceId/qualifying' component={Quali}/>
           <Route path='/season/:id/:raceId/grid' component={Grid}/>
           <Route path='/season/:id/:raceId/visualise' component={RunRace} />
+          <Route path='/season/:id/:raceId/results' component={Results} />
         </div>
       </Router>
     )

@@ -55,3 +55,11 @@ export function getRaceDetails(seasonId, raceId, callback) {
       err ? callback(err) : callback(res.body)
     })
 }
+
+export function getRaceResults(seasonId, raceId, callback) {
+  request
+    .get(`/api-v1/season/${seasonId}/${raceId}/results`)
+    .end((err, res) => {
+      err ? callback(err) : callback(res.body)
+    })
+}

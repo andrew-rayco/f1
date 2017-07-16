@@ -65,11 +65,16 @@ function getRaceResults (db, season, raceId) {
     .select(
       'races.name as raceName',
       'races.year as raceYear',
+      'drivers.url as driverUrl',
+      'constructors.url as constructorUrl',
+      'constructors.name as constructorName',
+      'results.time as raceTime',
       '*'
     )
     .where('results.raceId', raceId)
     .join('drivers', 'results.driverId', '=', 'drivers.driverId')
     .join('races', 'results.raceId', '=', 'races.raceId')
+    .join('constructors', 'constructors.constructorId', '=', 'results.constructorId')
     .orderBy('position', 'asc')
 }
 

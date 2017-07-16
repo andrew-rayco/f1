@@ -130,7 +130,10 @@ router.get('/season/:id/:raceId/results', (req, res) => {
     dbFunctions.getRaceResults(db, id, raceId)
     .then((results) => {
       let newResults = functions.cleanResults(results)
-      res.render('result', {results: newResults})
+      res.json(newResults)
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
     })
 })
 
@@ -142,6 +145,9 @@ router.get('/season/:id/:raceId/race-details', (req, res) => {
     dbFunctions.getRaceInfo(db, id, raceId)
     .then((results) => {
       res.json({results})
+    })
+    .catch((err) => {
+      res.status(500).send('DATABASE ERROR: ' + err.message)
     })
 })
 
