@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
+import RaceOptions from './RaceOptions'
 
 export default class Results extends React.Component {
   constructor() {
@@ -56,7 +57,6 @@ export default class Results extends React.Component {
     } else {
       return '-'
     }
-    // {(driverResult.fastestLapTime != fastestLap) ? `${driverResult.fastestLapTime}` : <strong>{driverResult.fastestLapTime}</strong>}
   }
 
 
@@ -83,6 +83,7 @@ export default class Results extends React.Component {
               {this.listResults(results)}
             </tbody>
           </table>
+          <RaceOptions props={results[0]} />
         </div>
       )
     } else {

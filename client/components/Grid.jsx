@@ -34,7 +34,6 @@ export default class Grid extends React.Component {
   render() {
     if (this.state.grid) {
       let grid = this.state.grid.gridData
-      console.log(grid)
       return (
         <div className="grid">
           <h2>{grid[0].year} {grid[0].raceName}</h2>

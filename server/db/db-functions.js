@@ -65,6 +65,7 @@ function getRaceResults (db, season, raceId) {
     .select(
       'races.name as raceName',
       'races.year as raceYear',
+      'races.url as races-url',
       'drivers.url as driverUrl',
       'constructors.url as constructorUrl',
       'constructors.name as constructorName',
