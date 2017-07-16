@@ -41,7 +41,6 @@ export default class Quali extends React.Component {
       var pathArray = location.split('/')
       var season = pathArray[2]
       var quali = this.state.qualifyingData
-      console.log(quali.qualifyingData[0])
       return (
         <div className="quali-results">
           <h2>{quali.qualifyingData[0].year} {quali.raceName}</h2>

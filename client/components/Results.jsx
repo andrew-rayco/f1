@@ -21,7 +21,6 @@ export default class Results extends React.Component {
 
   listResults(results) {
     let fastestLap = this.findFastestLap(results)
-    console.log(fastestLap)
     return results.map((driverResult) => {
       return (
         <tr key={driverResult.resultId}>
@@ -64,7 +63,6 @@ export default class Results extends React.Component {
   render() {
     if (this.state.results) {
       let results = this.state.results
-      console.log(results)
       return (
         <div className="results">
           <h2>{results[0].raceYear} {results[0].raceName}</h2>
