@@ -2,7 +2,7 @@ function getRacesInSeason (db, id) {
   return db('races')
     .select(
       'races.year as season-year',
-      'races.url as races-url',
+      'races.url as raceUrl',
       'races.name as raceName',
       '*'
     )
@@ -16,7 +16,8 @@ function getQualifyingResults (db, season, raceId) {
       'constructors.name as constructorName',
       'constructors.url as constructorUrl',
       'races.name as raceName',
-      'races.url as races-url',
+      'races.url as raceUrl',
+      'drivers.url as driverUrl',
       'qualifying.*',
       'drivers.*',
       'races.*'
@@ -31,17 +32,17 @@ function getGrid (db, raceId) {
   return db('results')
     .select(
       'races.name as raceName',
-      'drivers.url as driver-url',
+      'drivers.url as driverUrl',
       'constructors.name as constructorName',
       'constructors.url as constructorUrl',
-      'races.url as races-url',
+      'races.url as raceUrl',
       '*'
     )
     .join('drivers', 'drivers.driverId', '=', 'results.driverId')
     .join('races', 'races.raceId', '=', 'results.raceId')
     .join('constructors', 'results.constructorId', '=', 'constructors.constructorId')
     .where('results.raceId', raceId)
-    .orderBy('grid', 'asc')
+    .orderBy('positionOrder', 'asc')
 }
 
 function visualise (db, season, raceId) {
@@ -65,7 +66,7 @@ function getRaceResults (db, season, raceId) {
     .select(
       'races.name as raceName',
       'races.year as raceYear',
-      'races.url as races-url',
+      'races.url as raceUrl',
       'drivers.url as driverUrl',
       'constructors.url as constructorUrl',
       'constructors.name as constructorName',

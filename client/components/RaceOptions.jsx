@@ -11,7 +11,7 @@ const RaceOptions = ({props}) => {
           <p><a href={`/#/season/${props.year}/${props.raceId}/grid`}>Starting grid</a></p>
           <p><a href={`/#/season/${props.year}/${props.raceId}/visualise`}>Visualise</a></p>
           <p><a href={`/#/season/${props.year}/${props.raceId}/results`}>Results</a></p>
-          <p><a href={props['races-url']}>{props.year} {props.raceName} on Wikipedia</a></p>
+          <p><a href={props.raceUrl}>{props.year} {props.raceName} on Wikipedia</a></p>
         </div>
       </div>
     </div>
