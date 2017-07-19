@@ -25,7 +25,7 @@ export default class Quali extends React.Component {
       return (
         <tr key={driverResult.qualifyId}>
           <td><strong>{driverResult.position}</strong></td>
-          <td><a href={driverResult.url}>{driverResult.forename} {driverResult.surname}</a></td>
+          <td><a href={driverResult.driverUrl}>{driverResult.forename} {driverResult.surname}</a></td>
           <td><a href={driverResult.constructorUrl}>{driverResult.constructorName}</a></td>
           <td>{driverResult.q1}</td>
           <td>{driverResult.q2}</td>

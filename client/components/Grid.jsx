@@ -23,8 +23,8 @@ export default class Grid extends React.Component {
     return fullGrid.map((driver) => {
       return (
         <tr key={driver.resultId}>
-          <td><strong>{driver.grid}</strong></td>
-          <td><a href={driver['driver-url']}>{driver.forename} {driver.surname}</a></td>
+          <td><strong>{driver.positionOrder}</strong></td>
+          <td><a href={driver.driverUrl}>{driver.forename} {driver.surname}</a></td>
           <td><a href={driver.constructorUrl}>{driver.constructorName}</a></td>
         </tr>
       )
