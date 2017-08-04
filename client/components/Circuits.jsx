@@ -22,6 +22,7 @@ export default class Circuits extends React.Component {
         <tr key={track.circuitId}>
           <td>{track.country}</td>
           <td><a href={track.url}>{track.name}</a></td>
+          <td>{track.location}</td>
           <td><a href={`https://www.google.co.nz/maps/@${track.lat},${track.lng},3916m/data=!3m1!1e3?hl=en`}>View</a></td>
         </tr>
       )
@@ -31,12 +32,14 @@ export default class Circuits extends React.Component {
   render() {
     return (
       <div className="circuit-list">
-        <h1>Circuits</h1>
+        <h2>Circuits</h2>
+        <h3>Every circuit in the history of Formula 1</h3>
         <table>
           <thead>
             <tr>
               <th>Country</th>
               <th>Circuit name</th>
+              <th>Locality</th>
               <th>Map</th>
             </tr>
           </thead>

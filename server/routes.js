@@ -38,9 +38,6 @@ router.get('/season/:id', (req, res) => {
   var id = req.params.id
   dbFunctions.getRacesInSeason(db, id)
     .then((season) => {
-      season.forEach((race) => {
-        race.date = moment(race.date).format('MMMM Do YYYY')
-      })
       res.json(season)
     })
     .catch((err) => {

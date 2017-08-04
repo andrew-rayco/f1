@@ -19,7 +19,7 @@ export default class App extends React.Component {
     return (
       <Router>
         <div className="container">
-          <Header/>
+          <Route path='/' component={Header} />
           <Route path='/' exact={true} component={Home}/>
           <Route path='/circuits' exact={true} component={Circuits}/>
           <Route path='/season/:id' exact={true} component={FullSeason}/>

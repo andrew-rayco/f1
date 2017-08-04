@@ -52,7 +52,7 @@ p:before {
 }
 
 a {
-	color: #56bba7;	letter-spacing: 3px;
+	color: #56bba7;	letter-spacing: 2px;
 	text-decoration: none;
 	/*text-transform: uppercase;*/
 }
@@ -66,12 +66,12 @@ a:hover {
 }
 
 .container:after {
-  background: #56bba7;
+  /*background: #56bba7;
   content: '';
   display: block;
   height: 1px;
   margin: 48px auto 47px;
-  width: 50px;
+  width: 50px;*/
 }
 
 .seasons {
@@ -87,7 +87,7 @@ a:hover {
 }
 
 .single-round {
-	background: papayawhip;
+	/*background: papayawhip;*/
 }
 
 .toggle {
@@ -116,19 +116,19 @@ ul {
 }
 
 table {
-	margin: 0 auto;
+	margin: 0 auto 2em;
 }
 
 .round {
-	margin-bottom: 3em;
+
 }
 
-.round:after {
+.separator:after {
 	background: #56bba7;
 	content: '';
 	display: block;
 	height: 1px;
-	margin: 28px auto 17px;
+	margin: 28px auto 3em;
 	width: 50px;
 }
 
@@ -174,4 +174,8 @@ table {
 	top: 0;
 	z-index: 2;
 	overflow: hidden;
+}
+
+.hidden {
+	display: none;
 }
