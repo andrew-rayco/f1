@@ -87,7 +87,7 @@ a:hover {
 }
 
 .single-round {
-	background: papayawhip;
+	/*background: papayawhip;*/
 }
 
 .toggle {
@@ -116,19 +116,19 @@ ul {
 }
 
 table {
-	margin: 0 auto;
+	margin: 0 auto 2em;
 }
 
 .round {
-	margin-bottom: 3em;
+
 }
 
-.round:after {
+.separator:after {
 	background: #56bba7;
 	content: '';
 	display: block;
 	height: 1px;
-	margin: 28px auto 17px;
+	margin: 28px auto 3em;
 	width: 50px;
 }
 
