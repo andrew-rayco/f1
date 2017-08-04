@@ -21,10 +21,13 @@ export default class FullSeason extends React.Component {
   }
 
   listRaces(races) {
+    const toggleStatus = {
+      visibility: 'hidden'
+    }
     return races.map((race) => {
       return (
         <div key={`key${race.raceId}`}>
-          <RaceOptions key={race.raceId} props={race} />
+          <RaceOptions key={race.raceId} props={race} visibility={toggleStatus} />
         </div>
       )
     })

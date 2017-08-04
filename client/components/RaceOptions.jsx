@@ -1,7 +1,9 @@
 import React from 'react'
 
-const RaceOptions = ({props}) => {
+const RaceOptions = ({props, visibility}) => {
 
+  let hidden
+  (visibility) ? hidden = 'hidden' : null
   let raceDetails = document.getElementsByClassName('toggle')
 
   function toggleRound(e, round) {
@@ -13,7 +15,7 @@ const RaceOptions = ({props}) => {
     <div key={props.raceId} className="row single-round">
       <div className="twelve columns round">
         <h4 onClick={(e) => toggleRound(e, props.round)}><a href="#">Round {props.round} - {props.raceName}</a></h4>
-        <div className="toggle hidden">
+        <div className={`toggle ${hidden}`}>
           <p>{props.date}</p>
           <p><a href={`/#/season/${props.year}/${props.raceId}/qualifying`}>Qualifying results</a></p>
           <p><a href={`/#/season/${props.year}/${props.raceId}/grid`}>Starting grid</a></p>
