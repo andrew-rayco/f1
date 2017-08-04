@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Header = () => {
-
+const Header = (props) => {
+  console.log(props.location.pathname.substr(1))
   return (
     <div className="header">
       <nav>

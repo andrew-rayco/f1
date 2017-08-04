@@ -30,7 +30,6 @@ export default class Circuits extends React.Component {
   }
 
   render() {
-    console.log(this.state.circuits)
     return (
       <div className="circuit-list">
         <h2>Circuits</h2>
