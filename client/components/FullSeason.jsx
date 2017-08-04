@@ -25,7 +25,6 @@ export default class FullSeason extends React.Component {
       return (
         <div key={`key${race.raceId}`}>
           <RaceOptions key={race.raceId} props={race} />
-          <div className="separator"></div>
         </div>
       )
     })
