@@ -60,7 +60,7 @@ export default class Quali extends React.Component {
               {this.listResults(quali)}
             </tbody>
           </table>
-          <RaceOptions props={quali.qualifyingData[0]} />
+          <RaceOptions quali={quali.qualifyingData[0]} />
         </div>
       )
     } else {
