@@ -4,8 +4,8 @@ var knex = require('knex')(config)
 
 var server = createServer(knex)
 
-var PORT = process.env.PORT || 3000
+var PORT = process.env.PORT || 3001
 
 server.listen(PORT, () => {
-  console.log('listening on 3000')
+  console.log('listening on 3001')
 })
