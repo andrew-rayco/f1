@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 
 const RaceOptions = ({props, visibility}) => {
 
@@ -16,7 +17,7 @@ const RaceOptions = ({props, visibility}) => {
       <div className="twelve columns round">
         <h4 onClick={(e) => toggleRound(e, props.round)}><a href="#">Round {props.round} - {props.raceName}</a></h4>
         <div className={`toggle ${hidden}`}>
-          <p>{props.date}</p>
+          <p>{moment(props.date).format('MMMM Do YYYY')}</p>
           <p><a href={`/#/season/${props.year}/${props.raceId}/qualifying`}>Qualifying results</a></p>
           <p><a href={`/#/season/${props.year}/${props.raceId}/grid`}>Starting grid</a></p>
           <p><a href={`/#/season/${props.year}/${props.raceId}/visualise`}>Visualise</a></p>
