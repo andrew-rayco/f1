@@ -25,7 +25,7 @@ export default class RaceOptions extends React.Component {
 
   handleClick(e) {
     e.preventDefault()
-    // this.state.gridVisible = !this.state.gridVisible
+    this.setState({gridVisible: !this.state.gridVisible})
   }
 
   render() {
