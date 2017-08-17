@@ -10,10 +10,19 @@ export default class Grid extends React.Component {
   }
 
   componentWillMount() {
-    let location = this.props.location.pathname
-    let pathArray = location.split('/')
-    let season = pathArray[2]
-    let raceId = pathArray[3]
+    // console.log(this.props)
+    // if (this.props.season) {
+    //   let season = this.props.season
+    //   let raceId = this.props.raceId
+    //   console.log(season)
+    // } else {
+    //   let location = this.props.location.pathname
+    //   let pathArray = location.split('/')
+    //   let season = pathArray[2]
+    //   let raceId = pathArray[3]
+    // }
+    let season = this.props.season
+    let raceId = this.props.raceId
     api.getGrid(season, raceId, (grid) => {
       this.setState({grid})
     })
