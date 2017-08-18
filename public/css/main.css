@@ -120,19 +120,17 @@ table {
 	display: inline;
 }
 
-.toggle-image:after {
-	content: "";
-  position: absolute;
-	width: 1em;
-  height: .3em;
-	padding-top: .6em;
-  z-index: 1;
-	background-image: url('../images/down-arrow.svg');
-	background-repeat: no-repeat;
-	-webkit-transform: rotate(270deg);
-  transform: rotate(270deg);
+.toggle-icon {
+	height: .8em;
+	padding: 0;
+	margin: 0;
+	transition: transform 1s ease;
 }
 
+.toggle-icon:hover {
+	-webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
 
  /* Circuits */
 

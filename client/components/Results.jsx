@@ -83,7 +83,6 @@ export default class Results extends React.Component {
               {this.listResults(results)}
             </tbody>
           </table>
-          <RaceOptions props={results[0]} />
         </div>
       )
     } else {
