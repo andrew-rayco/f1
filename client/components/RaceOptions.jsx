@@ -32,8 +32,6 @@ export default class RaceOptions extends React.Component {
     e.preventDefault()
     this.setState({[visibleProperty]: !this.state[visibleProperty]})
     e.target.classList.toggle('toggle-open')
-    let body = document.getElementsByTagName('body')[0]
-    body.classList.toggle('blur')
   }
 
   render() {

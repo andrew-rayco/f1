@@ -52,11 +52,11 @@ a:hover {
 }
 
 ul {
-	list-style: none;
+  list-style: none;
 }
 
 table {
-	margin: 0 auto 2em;
+  margin: 0 auto 2em;
 }
 
 .container {
@@ -95,7 +95,6 @@ table {
   margin-left: -5px;
 }
 
-
 .separator:after {
   background: #56bba7;
   content: '';
@@ -117,14 +116,6 @@ table {
   background: #eee;
 }
 
-.blur {
-	-webkit-filter: blur(1px);
-	-moz-filter: blur(1px);
-	-o-filter: blur(1px);
-	-ms-filter: blur(1px);
-	filter: blur(1px);
-}
-
 .sub-section {
   background: #ddd;
   margin-top: 1em;
@@ -140,13 +131,13 @@ table {
   padding: 0;
   margin: 0;
   transition: transform 0.7s ease;
-	filter: grayscale(100%);
+  filter: grayscale(100%);
 }
 
 .toggle-open .toggle-icon {
   -webkit-transform: rotate(-180deg);
   transform: rotate(-180deg);
-	filter: none;
+  filter: none;
 }
 
 
