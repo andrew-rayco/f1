@@ -31,10 +31,10 @@ export default class RaceOptions extends React.Component {
   handleClick(e, visibleProperty) {
     e.preventDefault()
     this.setState({[visibleProperty]: !this.state[visibleProperty]})
-    // e.target.classList.toggle('toggle-open')
+    e.target.classList.toggle('toggle-open')
     if (this.state[visibleProperty]) {
       console.log('I am closed', e.target)
-      e.target.classList.toggle('toggle-closed')
+      // e.target.classList.toggle('toggle-closed')
     } else {
       console.log('I am open', e.target)
     }
