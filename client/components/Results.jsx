@@ -66,7 +66,7 @@ export default class Results extends React.Component {
     if (this.state.results) {
       let results = this.state.results
       return (
-        <div className="results sub-section">
+        <div className="results sub-section" id="unblur">
           <h2>{results[0].raceYear} {results[0].raceName}</h2>
           <h3>Race results</h3>
           <table>

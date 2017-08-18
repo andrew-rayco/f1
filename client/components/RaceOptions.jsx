@@ -1,6 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-import { CSSTransitionGroup } from 'react-transition-group'
 
 import Grid from './Grid'
 import Quali from './Quali'
@@ -33,12 +32,8 @@ export default class RaceOptions extends React.Component {
     e.preventDefault()
     this.setState({[visibleProperty]: !this.state[visibleProperty]})
     e.target.classList.toggle('toggle-open')
-    if (this.state[visibleProperty]) {
-      console.log('I am closed', e.target)
-      // e.target.classList.toggle('toggle-closed')
-    } else {
-      console.log('I am open', e.target)
-    }
+    let body = document.getElementsByTagName('body')[0]
+    body.classList.toggle('blur')
   }
 
   render() {
