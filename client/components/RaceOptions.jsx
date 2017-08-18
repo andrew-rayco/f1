@@ -3,13 +3,15 @@ import moment from 'moment'
 
 import Grid from './Grid'
 import Quali from './Quali'
+import Results from './Results'
 
 export default class RaceOptions extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       gridVisible: false,
-      qualiVisible: false
+      qualiVisible: false,
+      resultsVisible: false
     }
   }
 
@@ -29,6 +31,13 @@ export default class RaceOptions extends React.Component {
   handleClick(e, visibleProperty) {
     e.preventDefault()
     this.setState({[visibleProperty]: !this.state[visibleProperty]})
+    e.target.classList.toggle('toggle-open')
+    if (this.state[visibleProperty]) {
+      console.log('I am closed', e.target)
+      e.target.classList.toggle('toggle-closed')
+    } else {
+      console.log('I am open', e.target)
+    }
   }
 
   render() {
@@ -39,18 +48,22 @@ export default class RaceOptions extends React.Component {
           <h4 onClick={(e) => this.toggleHidden(e, race.raceId)}><a href="#">Round {race.round} - {race.raceName}</a></h4>
           <div id={race.raceId} className={`toggle hidden`}>
             <p>{moment(race.date).format('MMMM Do YYYY')}</p>
-            <p><a onClick={(e) => this.handleClick(e, 'qualiVisible')} href="#">Qualifying results</a></p>
+            <p><a onClick={(e) => this.handleClick(e, 'qualiVisible')} href="#" className="togglable">Qualifying results</a><div className="toggle-image"></div></p>
             {(this.state.qualiVisible) ?
               <Quali season={race.year} raceId={race.raceId} /> :
               null
             }
-            <p><a onClick={(e) => this.handleClick(e, 'gridVisible')} href="#">Starting grid</a></p>
+            <p className="togglable"><a onClick={(e) => this.handleClick(e, 'gridVisible')} href="#">Starting grid</a></p>
             {(this.state.gridVisible) ?
               <Grid season={race.year} raceId={race.raceId} /> :
               null
             }
             <p><a href={`/#/season/${race.year}/${race.raceId}/visualise`}>Visualise</a></p>
-            <p><a href={`/#/season/${race.year}/${race.raceId}/results`}>Results</a></p>
+            <p className="togglable"><a onClick={(e) => this.handleClick(e, 'resultsVisible')} href="#">Results</a></p>
+            {(this.state.resultsVisible) ?
+              <Results season={race.year} raceId={race.raceId} /> :
+              null
+            }
             <p><a href={race.raceUrl}>{race.year} {race.raceName} on Wikipedia</a></p>
             <div className="separator"></div>
           </div>
