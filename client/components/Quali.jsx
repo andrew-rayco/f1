@@ -10,10 +10,8 @@ export default class Quali extends React.Component {
   }
 
   componentWillMount() {
-    var location = this.props.location.pathname
-    var pathArray = location.split('/')
-    var season = pathArray[2]
-    var raceId = pathArray[3]
+    let season = this.props.season
+    let raceId = this.props.raceId
     api.getQuali(season, raceId, (qualifyingData) => {
       this.setState({qualifyingData})
     })
@@ -37,12 +35,9 @@ export default class Quali extends React.Component {
 
   render() {
     if (this.state.qualifyingData) {
-      var location = this.props.location.pathname
-      var pathArray = location.split('/')
-      var season = pathArray[2]
       var quali = this.state.qualifyingData
       return (
-        <div className="quali-results">
+        <div className="quali-results sub-section">
           <h2>{quali.qualifyingData[0].year} {quali.raceName}</h2>
           <h3>Qualifying results</h3>
           <table>
@@ -60,7 +55,6 @@ export default class Quali extends React.Component {
               {this.listResults(quali)}
             </tbody>
           </table>
-          <RaceOptions props={quali.qualifyingData[0]} />
         </div>
       )
     } else {

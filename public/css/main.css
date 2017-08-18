@@ -42,14 +42,14 @@ p {
 	text-transform: uppercase;
 }
 
-p:before {
+/*p:before {
 	background: #56bba7;
 	content: '';
 	display: block;
 	height: 1px;
 	margin: 48px auto 47px;
 	width: 50px;
-}
+}*/
 
 a {
 	color: #56bba7;	letter-spacing: 2px;
@@ -86,14 +86,6 @@ a:hover {
   width: 10%;
 }
 
-.single-round {
-	/*background: papayawhip;*/
-}
-
-.toggle {
-	/*display: none;*/
-}
-
 .circuits {
 	margin-top: 0;
 	text-align: center;
@@ -119,10 +111,6 @@ table {
 	margin: 0 auto 2em;
 }
 
-.round {
-
-}
-
 .separator:after {
 	background: #56bba7;
 	content: '';
@@ -139,10 +127,15 @@ table {
 	margin-bottom: 0px;
 }
 
-.round p:before {
-	height: 0px;
-	margin: 8px auto 7px;
+.selected {
+	background: #eee;
 }
+
+.sub-section {
+	background: #ddd;
+}
+
+ /* Circuits */
 
 .circuit-list {
 	margin: 0 auto;
