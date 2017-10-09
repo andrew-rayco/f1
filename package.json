@@ -4,7 +4,7 @@
   "description": "Some sort of Formula 1 data representation - form yet to be determined",
   "main": "index.js",
   "scripts": {
-    "test": "tape tests/**/*.test.js | tap-spec",
+    "test": "jest --watch",
     "start": "node server/index.js",
     "dev": "nodemon server/index.js & webpack --watch",
     "knex": "knex"
@@ -44,12 +44,19 @@
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.24.1",
     "cheerio": "^0.22.0",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-15": "^1.0.1",
+    "jest": "^21.2.1",
     "nodemon": "^1.11.0",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
+    "react": "^15.6.2",
+    "react-dom": "^15.6.2",
+    "react-test-renderer": "^15.6.2",
     "supertest": "^3.0.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.6.3",
     "webpack": "^2.6.0"
+  },
+  "jest": {
+    "setupFiles": ["./tests/setupTests.js"]
   }
 }
