@@ -1,36 +1,70 @@
 import React from 'react'
 import moment from 'moment'
 
-const RaceOptions = ({props, visibility}) => {
+import Grid from './Grid'
+import Quali from './Quali'
+import Results from './Results'
 
-  let hidden
-  (visibility) ? hidden = 'hidden' : hidden = ''
-
-  function toggleRound(e, raceId) {
-    e.preventDefault()
-    let raceDetails = document.getElementById(raceId)
-    raceDetails.classList.toggle('hidden')
+export default class RaceOptions extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      gridVisible: false,
+      qualiVisible: false,
+      resultsVisible: false
+    }
   }
 
-  return (
-    <div key={props.raceId} className="row single-round">
-      <div className="twelve columns round">
-        { (visibility) ?
-          <h4 onClick={(e) => toggleRound(e, props.raceId)}><a href="#">Round {props.round} - {props.raceName}</a></h4> :
-          <h4>Round {props.round} - {props.raceName}</h4>
-        }
-        <div id={props.raceId} className={`toggle ${hidden}`}>
-          <p>{moment(props.date).format('MMMM Do YYYY')}</p>
-          <p><a href={`/#/season/${props.year}/${props.raceId}/qualifying`}>Qualifying results</a></p>
-          <p><a href={`/#/season/${props.year}/${props.raceId}/grid`}>Starting grid</a></p>
-          <p><a href={`/#/season/${props.year}/${props.raceId}/visualise`}>Visualise</a></p>
-          <p><a href={`/#/season/${props.year}/${props.raceId}/results`}>Results</a></p>
-          <p><a href={props.raceUrl}>{props.year} {props.raceName} on Wikipedia</a></p>
-          <div className="separator"></div>
+  componentWillMount() {
+    this.setState({race: this.props.props})
+  }
+
+
+  toggleHidden(e, elementToToggle) {
+    e.preventDefault()
+    let raceDetails = document.getElementById(elementToToggle)
+    let raceSection = document.getElementsByClassName(this.state.race.raceId)[0]
+    raceDetails.classList.toggle('hidden')
+    raceSection.classList.toggle('selected')
+  }
+
+  handleClick(e, visibleProperty) {
+    e.preventDefault()
+    this.setState({[visibleProperty]: !this.state[visibleProperty]})
+    e.target.classList.toggle('toggle-open')
+  }
+
+  render() {
+    let race = this.state.race
+    return (
+      <div key={race.raceId} className="row single-round">
+        <div className={`twelve columns round ${race.raceId}`}>
+          <h4 onClick={(e) => this.toggleHidden(e, race.raceId)}><a href="#">Round {race.round} - {race.raceName}</a></h4>
+          <div id={race.raceId} className={`toggle hidden`}>
+            <p>{moment(race.date).format('MMMM Do YYYY')}</p>
+            <p><a onClick={(e) => this.handleClick(e, 'qualiVisible')} href="#" className="togglable">Qualifying results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>
+            {(this.state.qualiVisible) ?
+              <Quali season={race.year} raceId={race.raceId} /> :
+              null
+            }
+            <p><a onClick={(e) => this.handleClick(e, 'gridVisible')} href="#" className="togglable">Starting grid <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>
+            {(this.state.gridVisible) ?
+              <Grid season={race.year} raceId={race.raceId} /> :
+              null
+            }
+            <p><a href={`/#/season/${race.year}/${race.raceId}/visualise`}>Visualise</a></p>
+            <p><a onClick={(e) => this.handleClick(e, 'resultsVisible')} href="#" className="togglable">Results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>
+            {(this.state.resultsVisible) ?
+              <Results season={race.year} raceId={race.raceId} /> :
+              null
+            }
+            <p><a href={race.raceUrl}>{race.year} {race.raceName} on Wikipedia</a></p>
+            <div className="separator"></div>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 module.exports = RaceOptions

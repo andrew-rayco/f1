@@ -10,10 +10,16 @@ export default class Grid extends React.Component {
   }
 
   componentWillMount() {
-    let location = this.props.location.pathname
-    let pathArray = location.split('/')
-    let season = pathArray[2]
-    let raceId = pathArray[3]
+    let season, raceId
+    if (this.props.season) {
+      season = this.props.season
+      raceId = this.props.raceId
+    } else {
+      let location = this.props.location.pathname
+      let pathArray = location.split('/')
+      season = pathArray[2]
+      raceId = pathArray[3]
+    }
     api.getGrid(season, raceId, (grid) => {
       this.setState({grid})
     })
@@ -35,7 +41,7 @@ export default class Grid extends React.Component {
     if (this.state.grid) {
       let grid = this.state.grid.gridData
       return (
-        <div className="grid">
+        <div className="grid sub-section">
           <h2>{grid[0].year} {grid[0].raceName}</h2>
           <h3>Starting Grid</h3>
           <table>
@@ -50,7 +56,6 @@ export default class Grid extends React.Component {
               {this.listGrid(grid)}
             </tbody>
           </table>
-          <RaceOptions props={grid[0]}/>
         </div>
       )
     } else {
