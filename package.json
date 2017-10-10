@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Some sort of Formula 1 data representation - form yet to be determined",
   "main": "index.js",
+  "engines": {
+    "node": "8.2.1"
+  },
   "scripts": {
     "test": "jest --watch",
     "start": "node server/index.js",

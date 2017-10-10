@@ -8,6 +8,7 @@ function getRacesInSeason (db, id) {
     )
     .join('seasons', 'seasons.year', '=', 'races.year')
     .where('races.year', id)
+    .orderBy('round', 'asc')
 }
 
 function getQualifyingResults (db, season, raceId) {

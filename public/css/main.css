@@ -100,7 +100,7 @@ table {
   content: '';
   display: block;
   height: 1px;
-  margin: 28px auto 3em;
+  margin: 28px auto 2em;
   width: 50px;
 }
 
@@ -138,6 +138,21 @@ table {
   -webkit-transform: rotate(-180deg);
   transform: rotate(-180deg);
   filter: none;
+}
+
+.toggle > p:not(:first-of-type) {
+  margin-bottom: .5em;
+}
+
+.toggle p:first-of-type {
+  margin-bottom: 1em;
+}
+
+.quali-results,
+.grid,
+.results {
+  padding: 2em 0 1em;
+  margin-bottom: 2em;
 }
 
 
