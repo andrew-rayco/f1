@@ -29,7 +29,7 @@ export default class Home extends React.Component {
           <div className="twelve columns home">
             <h3>Seasons</h3>
             <ul className="seasons">
-              {this.state.seasons ? this.listSeasons(this.state.seasons) : 'loading...'}
+              {this.state.seasons ? this.listSeasons(this.state.seasons) : <img className="center" src="/images/rolling.svg" alt="loading icon"/>}
             </ul>
 
             <h3>Circuits</h3>

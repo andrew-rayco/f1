@@ -45,33 +45,27 @@ ShallowWrapper {
         "key": null,
         "nodeType": "host",
         "props": Object {
-          "children": Array [
-            <a
-              href="/#/"
-              id="home-link"
-            >
-              Home
-            </a>,
-            undefined,
-          ],
+          "children": <a
+            href="/#/"
+            id="home-link"
+          >
+            Home
+          </a>,
         },
         "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": null,
-            "nodeType": "host",
-            "props": Object {
-              "children": "Home",
-              "href": "/#/",
-              "id": "home-link",
-            },
-            "ref": null,
-            "rendered": "Home",
-            "type": "a",
+        "rendered": Object {
+          "instance": null,
+          "key": null,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Home",
+            "href": "/#/",
+            "id": "home-link",
           },
-          undefined,
-        ],
+          "ref": null,
+          "rendered": "Home",
+          "type": "a",
+        },
         "type": "nav",
       },
       Object {
@@ -116,33 +110,27 @@ ShallowWrapper {
           "key": null,
           "nodeType": "host",
           "props": Object {
-            "children": Array [
-              <a
-                href="/#/"
-                id="home-link"
-              >
-                Home
-              </a>,
-              undefined,
-            ],
+            "children": <a
+              href="/#/"
+              id="home-link"
+            >
+              Home
+            </a>,
           },
           "ref": null,
-          "rendered": Array [
-            Object {
-              "instance": null,
-              "key": null,
-              "nodeType": "host",
-              "props": Object {
-                "children": "Home",
-                "href": "/#/",
-                "id": "home-link",
-              },
-              "ref": null,
-              "rendered": "Home",
-              "type": "a",
+          "rendered": Object {
+            "instance": null,
+            "key": null,
+            "nodeType": "host",
+            "props": Object {
+              "children": "Home",
+              "href": "/#/",
+              "id": "home-link",
             },
-            undefined,
-          ],
+            "ref": null,
+            "rendered": "Home",
+            "type": "a",
+          },
           "type": "nav",
         },
         Object {
