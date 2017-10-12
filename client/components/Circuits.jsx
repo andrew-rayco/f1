@@ -50,5 +50,4 @@ export default class Circuits extends React.Component {
       </div>
     )
   }
-
 }

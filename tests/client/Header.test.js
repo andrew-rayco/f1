@@ -17,4 +17,8 @@ describe('Header', () => {
   it('contains an h1 with the correct text', () => {
     expect(app.find('h1').text()).toEqual('F1ian')
   })
+
+  it('contains a home link', () => {
+    expect(app.find('#home-link').exists()).toBe(true)
+  })
 })
