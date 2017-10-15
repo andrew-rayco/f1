@@ -58,6 +58,9 @@
   "jest": {
     "setupFiles": [
       "./tests/setupTests.js"
+    ],
+    "unmockedModulePathPatterns": [
+      "react"
     ]
   }
 }
