@@ -35,7 +35,9 @@ export default class FullSeason extends React.Component {
 
   render() {
     let racesInSeason = this.state.races
+    console.log(JSON.stringify(racesInSeason))
     if (racesInSeason) {
+      console.log(racesInSeason[0].year)
       return (
         <div className="season">
           <h2>The {racesInSeason[0].year} Formula 1 Season</h2>
