@@ -12,7 +12,7 @@ export default class FullSeason extends React.Component {
   }
 
   componentWillMount() {
-    var location = this.props.location.pathname
+    var location = window.location.pathname
     var pathArray = location.split('/')
     var thisSeason = pathArray[2]
     api.getRaces(thisSeason, (races) => {
@@ -36,7 +36,7 @@ export default class FullSeason extends React.Component {
   render() {
     let racesInSeason = this.state.races
     console.log(JSON.stringify(racesInSeason))
-    if (racesInSeason) {
+    if (racesInSeason.length > 1) {
       console.log(racesInSeason[0].year)
       return (
         <div className="season">
