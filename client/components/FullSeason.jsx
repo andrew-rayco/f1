@@ -12,6 +12,7 @@ export default class FullSeason extends React.Component {
   }
 
   componentWillMount() {
+    console.log(this.props)
     var location = this.props.location.pathname
     var pathArray = location.split('/')
     var thisSeason = pathArray[2]
@@ -35,7 +36,7 @@ export default class FullSeason extends React.Component {
 
   render() {
     let racesInSeason = this.state.races
-    if (racesInSeason) {
+    if (racesInSeason !== null && racesInSeason.length > 1) {
       return (
         <div className="season">
           <h2>The {racesInSeason[0].year} Formula 1 Season</h2>

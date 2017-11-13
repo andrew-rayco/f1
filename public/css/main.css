@@ -1,3 +1,5 @@
+
+
 h1, h2, h3, h4, h5 {
   color: #272623;
   font-family: 'Martel';
@@ -49,6 +51,7 @@ a {
 
 a:hover {
   color: #272623;
+  transition: .15s color ease-in;
 }
 
 ul {
@@ -63,19 +66,30 @@ table {
   margin: 30px auto;
 }
 
+.main-header {
+  color: #272623;
+}
+
+.main-header:hover {
+  color: #56bba7;
+  transition: .15s color ease-in;
+}
+
 
 /* Home */
 
 .seasons {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   margin-bottom: 3em;
 }
 
 .season {
   text-align: center;
   display: inline;
-  width: 10%;
+  padding: 0 2%;
+  flex-basis: 6%;
 }
 
 .circuits {
@@ -113,11 +127,11 @@ table {
 }
 
 .selected {
-  background: #eee;
+  background: #F0F1ED;
 }
 
 .sub-section {
-  background: #ddd;
+  background: #EBEDE7;
   margin-top: 1em;
   padding-top: 1em;
 }
@@ -153,6 +167,17 @@ table {
 .results {
   padding: 2em 0 1em;
   margin-bottom: 2em;
+}
+
+.no-data {
+  color: #3A3937;
+  padding: 1em;
+  margin-bottom: 1em;
+  background: #E8C3CC;
+}
+
+.center {
+  margin: 2em auto;
 }
 
 

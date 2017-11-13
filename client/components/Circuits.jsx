@@ -16,7 +16,9 @@ export default class Circuits extends React.Component {
     })
   }
 
-  listCircuits(circuits) {
+  listCircuits(circuitsObj) {
+    let circuits = Array.from(circuitsObj)
+    console.log('circuits is a ' + typeof circuits)
     return circuits.map((track) => {
       return (
         <tr key={track.circuitId}>
@@ -44,11 +46,10 @@ export default class Circuits extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.circuits ? this.listCircuits(this.state.circuits) : console.log('loading') }
+            {this.state.circuits ? this.listCircuits(this.state.circuits) : <tr><td>Loading...</td></tr> }
           </tbody>
         </table>
       </div>
     )
   }
-
 }

@@ -7,9 +7,9 @@ const Header = (props) => {
     <div className="header">
       <nav>
           <a id="home-link" href="/#/">Home</a>
-          {(path[0] !== "") ? console.log(`Path is ${path.length} long`, path, 'Breadcrumb start from the Header component') : console.log('Path is empty. You should be on the homepage', 'Breadcrumb start from the Header component')}
+          {/* {(path[0] !== "") ? console.log(`Path is ${path.length} long`, path, 'Breadcrumb start from the Header component') : console.log('Path is empty. You should be on the homepage', 'Breadcrumb start from the Header component')} */}
       </nav>
-      <h1>F1ian</h1>
+      <h1><a className="main-header" href="/#/">F1ian</a></h1>
     </div>
   )
 }

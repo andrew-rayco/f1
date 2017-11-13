@@ -58,7 +58,10 @@ export default class Quali extends React.Component {
         </div>
       )
     } else {
-      return <div></div>
+      return <div>
+        <div className="no-data">Sorry, there is no data here. <br/>
+        The event is either too old for the data to exist, or too new for this app that is manually updated by an ageing sloth-beast.</div>
+      </div>
     }
   }
 }

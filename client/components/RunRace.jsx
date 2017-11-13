@@ -129,7 +129,6 @@ class RunRace extends React.Component {
 
     console.log(this.state.visualIsRunning)
     this.setState({visualIsRunning: !this.state.visualIsRunning})
-
   }
 
   render() {
@@ -143,7 +142,12 @@ class RunRace extends React.Component {
         </div>
       )
     } else {
-      return <div></div>
+      return (
+        <div>
+          Sorry. Visualisation isn't possible for this event. <br/>
+          This feature needs data that only started becoming available mid-2011.
+        </div>
+      )
     }
   }
 }
