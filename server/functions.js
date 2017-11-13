@@ -25,9 +25,20 @@ function prepareRaceData (laptimes) {
     }
   })
 
+  // list all laps by lap number
+  // Currently not being used......
+  var lapsByLapNumber = []
+  var count = 1
+  for (i = 1; i <= maxLaps; i++) {
+    lapsByLapNumber.push(laptimes.filter((thisLap) => {
+      return thisLap.lap === count
+    }))
+    count++
+  }
+
   // Only take driver surname, lap num, time and milliseconds
   var cleanRaceData = []
-  lapsByDriver.map((lap) => {
+  lapsByLapNumber.map((lap) => {
     // console.log(lap[0].surname);
     for (var i = 0; i < maxLaps; i++) {
       if (lap[i]) {
@@ -47,7 +58,7 @@ function prepareRaceData (laptimes) {
   var count = 1;
   var lapCounter = setInterval(function() {
     if (count <= maxLaps) {
-      // console.log(lapsByDriver[0][count].lap)
+      // console.log(count)
       count++
       return count
     } else {
