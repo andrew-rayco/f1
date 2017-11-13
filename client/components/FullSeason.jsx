@@ -12,7 +12,8 @@ export default class FullSeason extends React.Component {
   }
 
   componentWillMount() {
-    var location = window.location.pathname
+    console.log(this.props)
+    var location = this.props.location.pathname
     var pathArray = location.split('/')
     var thisSeason = pathArray[2]
     api.getRaces(thisSeason, (races) => {
@@ -35,9 +36,7 @@ export default class FullSeason extends React.Component {
 
   render() {
     let racesInSeason = this.state.races
-    console.log(JSON.stringify(racesInSeason))
-    if (racesInSeason.length > 1) {
-      console.log(racesInSeason[0].year)
+    if (racesInSeason !== null && racesInSeason.length > 1) {
       return (
         <div className="season">
           <h2>The {racesInSeason[0].year} Formula 1 Season</h2>

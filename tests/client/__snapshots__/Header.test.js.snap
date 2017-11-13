@@ -33,7 +33,12 @@ ShallowWrapper {
           </a>
         </nav>,
         <h1>
-          F1ian
+          <a
+            className="main-header"
+            href="/#/"
+          >
+            F1ian
+          </a>
         </h1>,
       ],
       "className": "header",
@@ -73,10 +78,27 @@ ShallowWrapper {
         "key": null,
         "nodeType": "host",
         "props": Object {
-          "children": "F1ian",
+          "children": <a
+            className="main-header"
+            href="/#/"
+          >
+            F1ian
+          </a>,
         },
         "ref": null,
-        "rendered": "F1ian",
+        "rendered": Object {
+          "instance": null,
+          "key": null,
+          "nodeType": "host",
+          "props": Object {
+            "children": "F1ian",
+            "className": "main-header",
+            "href": "/#/",
+          },
+          "ref": null,
+          "rendered": "F1ian",
+          "type": "a",
+        },
         "type": "h1",
       },
     ],
@@ -98,7 +120,12 @@ ShallowWrapper {
             </a>
           </nav>,
           <h1>
-            F1ian
+            <a
+              className="main-header"
+              href="/#/"
+            >
+              F1ian
+            </a>
           </h1>,
         ],
         "className": "header",
@@ -138,10 +165,27 @@ ShallowWrapper {
           "key": null,
           "nodeType": "host",
           "props": Object {
-            "children": "F1ian",
+            "children": <a
+              className="main-header"
+              href="/#/"
+            >
+              F1ian
+            </a>,
           },
           "ref": null,
-          "rendered": "F1ian",
+          "rendered": Object {
+            "instance": null,
+            "key": null,
+            "nodeType": "host",
+            "props": Object {
+              "children": "F1ian",
+              "className": "main-header",
+              "href": "/#/",
+            },
+            "ref": null,
+            "rendered": "F1ian",
+            "type": "a",
+          },
           "type": "h1",
         },
       ],
