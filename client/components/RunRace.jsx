@@ -133,11 +133,14 @@ class RunRace extends React.Component {
 
   render() {
     if (this.state.raceData) {
+      // console.log(this.state.raceData.filter((entry) => {
+      //   return entry.lap === 1
+      // }))
       return (
         <div className="race">
           <h2>{this.state.raceYear} {this.state.raceName}</h2>
           <button onClick={() => this.handleClick()}>Start visualisation</button>
-          <h3>Lap {this.state.lap}</h3>
+          <h3>Lap {this.state.lap} of {this.maxLapsInRace()}</h3>
           {this.showRace(this.state.raceData)}
         </div>
       )
