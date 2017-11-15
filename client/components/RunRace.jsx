@@ -41,24 +41,37 @@ class RunRace extends React.Component {
     return maxLaps
   }
 
+  findWinnerSurname() {
+    var winner
+    var finalLaps = this.state.raceData.filter((lap) => {
+      return lap.lap === this.maxLapsInRace()
+    })
+    winner = finalLaps.filter((lap) => {
+      return lap.position === 1
+    })[0].surname
+
+    return winner
+  }
 
   // calculate total race time for winner
-  winnerRaceTime() {
-    var winningTime = 0; // milliseconds
+  winnerTotalRaceTime() {
+    var winningTime = 0 // milliseconds
+    var winner = this.findWinnerSurname()
+
+    // Calculate total winner race time
     this.state.raceData.forEach((lap) => {
-      if (lap.surname == 'Ricciardo') { // hardcoded race winner. Most sub-optimal
+      if (lap.surname == winner) {
         winningTime += lap.milliseconds
       }
     })
     return winningTime
   }
 
-  // Find all laptimes for next lap and set state
-  componentDidMount() {
-
-  }
-
   showRace(data) {
+    var winner = this.findWinnerSurname()
+    var totalRaceTime = this.winnerTotalRaceTime()
+    var totalRaceLaps = this.maxLapsInRace()
+    var lapIncrementPercent = this.calculateProgressBar(totalRaceTime, totalRaceLaps)
     let lapData = this.state.raceData
     return lapData.map((driverLap, i) => {
       if (driverLap.lap == this.state.count) {
@@ -67,7 +80,7 @@ class RunRace extends React.Component {
             <div className={driverLap.surname}>
               {driverLap.position}: {driverLap.surname}: {driverLap.time}
               <div className="vis-color" style={{
-                width: this.calcWidth(driverLap.surname) + '%'
+                width: this.calcWidth(driverLap.surname, lapIncrementPercent, winner) + '%'
               }}>&nbsp;</div>
             </div>
           </div>
@@ -78,22 +91,24 @@ class RunRace extends React.Component {
 
   // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
 
-  calculateProgressBar(currentLap) {
-    var cumulativePercentage = 0
-    var winningRaceTime = this.winnerRaceTime()
-    var lapIncrement = winningRaceTime / this.maxLapsInRace() // not necessary?
-    var singleLap = 100 / this.maxLapsInRace()
-    return singleLap
+  calculateProgressBar(totalRaceTime, totalRaceLaps) {
+    var singleLap = 100 / totalRaceLaps
+    return singleLap // % of progress bar movement per lap (for race winner)
   }
 
-  calcWidth(driver) {
+  calcWidth(driver, lapIncrementPercent, winner) {
     var randomNum = Math.floor(Math.random() * 1.5 + 1)
-    var groundCovered = this.calculateProgressBar() * this.state.lap
-    if (driver == 'Ricciardo') {
+    var groundCovered = lapIncrementPercent * this.state.lap
+    if (driver == winner) {
+      console.log(groundCovered)
       return groundCovered
     } else {
       return groundCovered - randomNum
     }
+  }
+
+  findDistanceFromWinner(driver, winner) {
+    var totalRaceTime = this.winnerTotalRaceTime()
   }
 
   handleClick() {
@@ -110,12 +125,12 @@ class RunRace extends React.Component {
       } else {
         clearInterval(lapTicker)
       }
-    }, 150)
+    }, 250)
 
 
     // cumulatively add laptimes to generate progress bar
-    if (this.props.raceData) {
-      this.props.raceData.forEach((lap) => { // I can't get this to work
+    if (this.state.raceData) {
+      this.state.raceData.forEach((lap) => { // I can't get this to work
         var driverSurname = lap.surname
         var stateCopy = Object.assign({}, this.state)
         // It needs to start at 0 so I don't get NaN when trying to add laps
