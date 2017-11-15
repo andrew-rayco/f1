@@ -13,7 +13,7 @@ class RunRace extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let location = this.props.location.pathname
     let pathArray = location.split('/')
     let season = pathArray[2]
@@ -30,7 +30,7 @@ class RunRace extends React.Component {
     })
   }
 
-  // calculate total race laps so setInterval knows when to stop
+  // calculate total race laps
   maxLapsInRace() {
     var maxLaps = 0;
     this.state.raceData.forEach((lap) => {
@@ -53,9 +53,9 @@ class RunRace extends React.Component {
     return winner
   }
 
-  // calculate total race time for winner
+  // calculate total race time for winner (milliseconds)
   winnerTotalRaceTime() {
-    var winningTime = 0 // milliseconds
+    var winningTime = 0
     var winner = this.findWinnerSurname()
 
     // Calculate total winner race time
@@ -108,8 +108,8 @@ class RunRace extends React.Component {
 
   findDistanceFromWinner(driver, winner) {
     var totalRaceTime = this.winnerTotalRaceTime()
+    // Filter out the current driver on the current lap
     var toFind = {lap: this.state.lap, surname: driver}
-
     var currentDriverLap = this.state.raceData.filter((lap) => {
       for(var key in toFind) {
         if(lap[key] !== toFind[key]) {
@@ -118,7 +118,12 @@ class RunRace extends React.Component {
       }
       return true
     })
-    console.log(currentDriverLap[0].surname, currentDriverLap[0].milliseconds)
+
+
+    console.log(this.state)
+    // console.log(winner)
+    // console.log(totalRaceTime / this.maxLapsInRace())
+    // console.log(currentDriverLap[0].surname, currentDriverLap[0].milliseconds)
   }
 
   handleClick() {

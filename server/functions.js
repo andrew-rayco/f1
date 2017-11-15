@@ -36,7 +36,6 @@ function prepareRaceData (laptimes) {
     count++
   }
 
-
   // Only take driver surname, lap num, time and milliseconds
   var cleanRaceData = []
   lapsByLapNumber.map((lap) => {
@@ -54,9 +53,6 @@ function prepareRaceData (laptimes) {
     }
   })
 
-  // console.log(cleanRaceData.filter((entry) => {
-  //   return entry.lap === 1
-  // }))
 
   //experimenting
   var count = 1;
