@@ -100,15 +100,25 @@ class RunRace extends React.Component {
     var randomNum = Math.floor(Math.random() * 1.5 + 1)
     var groundCovered = lapIncrementPercent * this.state.lap
     if (driver == winner) {
-      console.log(groundCovered)
       return groundCovered
     } else {
-      return groundCovered - randomNum
+      return this.findDistanceFromWinner(driver, winner)
     }
   }
 
   findDistanceFromWinner(driver, winner) {
     var totalRaceTime = this.winnerTotalRaceTime()
+    var toFind = {lap: this.state.lap, surname: driver}
+
+    var currentDriverLap = this.state.raceData.filter((lap) => {
+      for(var key in toFind) {
+        if(lap[key] !== toFind[key]) {
+          return false
+        }
+      }
+      return true
+    })
+    console.log(currentDriverLap[0].surname, currentDriverLap[0].milliseconds)
   }
 
   handleClick() {
