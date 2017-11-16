@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
+import * as visualise from '../visualisation'
 
 class RunRace extends React.Component {
   constructor(props) {
@@ -30,22 +31,13 @@ class RunRace extends React.Component {
   }
 
   setRaceDetails() {
-    this.getAllDriversInRace()
+    let allDrivers = visualise.getAllDriversInRace(this.state.raceData)
 
     this.setState({
+      allDrivers,
       winner: this.findWinnerSurname(),
       maxLaps: this.maxLapsInRace()
     })
-  }
-
-  getAllDriversInRace() {
-    var allDrivers = {}
-    this.state.raceData.forEach((lap) => {
-      if (allDrivers[lap.surname] === undefined) {
-        allDrivers[lap.surname] = 0
-      }
-    })
-    this.setState({allDrivers})
   }
 
   // calculate total race laps
@@ -139,6 +131,7 @@ class RunRace extends React.Component {
   handleClick() {
     if (this.state.visualIsRunning) {
       clearInterval(lapTicker)
+      console.log('this should stop the running')
     } else {
       var lapTicker = setInterval(() => {
         if (this.state.lap < this.maxLapsInRace()) {
