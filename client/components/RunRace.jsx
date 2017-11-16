@@ -27,7 +27,28 @@ class RunRace extends React.Component {
 
     api.getVisData(season, raceId, (raceData) => {
       this.setState({raceData})
+      this.setRaceDetails()
     })
+  }
+
+  setRaceDetails() {
+    var driverCurrentRaceTime
+    var allDrivers = this.getAllDriversInRace()
+    this.setState({
+      allDrivers,
+      winner: this.findWinnerSurname(),
+      maxLaps: this.maxLapsInRace()
+    })
+  }
+
+  getAllDriversInRace() {
+    var allDrivers = {}
+    this.state.raceData.forEach((lap) => {
+      if (allDrivers[lap.surname] === undefined) {
+        allDrivers[lap.surname] = 0
+      }
+    })
+    return allDrivers
   }
 
   // calculate total race laps
