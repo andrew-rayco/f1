@@ -13,7 +13,7 @@ class RunRace extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     let location = this.props.location.pathname
     let pathArray = location.split('/')
     let season = pathArray[2]
@@ -32,10 +32,9 @@ class RunRace extends React.Component {
   }
 
   setRaceDetails() {
-    var driverCurrentRaceTime
-    var allDrivers = this.getAllDriversInRace()
+    this.getAllDriversInRace()
+
     this.setState({
-      allDrivers,
       winner: this.findWinnerSurname(),
       maxLaps: this.maxLapsInRace()
     })
@@ -48,7 +47,7 @@ class RunRace extends React.Component {
         allDrivers[lap.surname] = 0
       }
     })
-    return allDrivers
+    this.setState({allDrivers})
   }
 
   // calculate total race laps
@@ -118,18 +117,29 @@ class RunRace extends React.Component {
   }
 
   calcWidth(driver, lapIncrementPercent, winner) {
-    var randomNum = Math.floor(Math.random() * 1.5 + 1)
     var groundCovered = lapIncrementPercent * this.state.lap
+    var winnerGroundCovered = this.state.allDrivers[winner] / this.winnerTotalRaceTime() * 100
+    console.log(winnerGroundCovered)
     if (driver == winner) {
-      return groundCovered
+      return this.state.allDrivers[winner] / this.winnerTotalRaceTime() * 100
     } else {
-      return this.findDistanceFromWinner(driver, winner)
+      return this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)
     }
   }
 
   findDistanceFromWinner(driver, winner) {
     var totalRaceTime = this.winnerTotalRaceTime()
+    // console.log(this.state.allDrivers, winner)
+    return this.state.allDrivers[winner] - this.state.allDrivers[driver]
     // Filter out the current driver on the current lap
+
+    console.log(this.state)
+    // console.log(winner)
+    // console.log(totalRaceTime / this.maxLapsInRace())
+    // console.log(currentDriverLap[0].surname, currentDriverLap[0].milliseconds)
+  }
+
+  getCurrentDriverLap(driver, lap) {
     var toFind = {lap: this.state.lap, surname: driver}
     var currentDriverLap = this.state.raceData.filter((lap) => {
       for(var key in toFind) {
@@ -139,21 +149,20 @@ class RunRace extends React.Component {
       }
       return true
     })
-
-
-    console.log(this.state)
-    // console.log(winner)
-    // console.log(totalRaceTime / this.maxLapsInRace())
-    // console.log(currentDriverLap[0].surname, currentDriverLap[0].milliseconds)
+    return currentDriverLap[0] || { milliseconds: 0 }
   }
 
   handleClick() {
     var lapTicker = setInterval(() => {
       if (this.state.count < this.maxLapsInRace()) {
+        var newAllDrivers = {}
+        for (var key in this.state.allDrivers) {
+          var currentDriverLap = this.getCurrentDriverLap(key, this.state.lap)
+          newAllDrivers[key] = this.state.allDrivers[key] + currentDriverLap.milliseconds
+        }
+        console.log(newAllDrivers)
         this.setState({
-          sortedLaps: this.state.raceData.filter((lap) => {
-            return lap.lap == this.state.count
-          }),
+          allDrivers: newAllDrivers,
           count: this.state.count + 1,
           lap: this.state.lap + 1
         })
@@ -161,7 +170,7 @@ class RunRace extends React.Component {
       } else {
         clearInterval(lapTicker)
       }
-    }, 250)
+    }, 150)
 
 
     // cumulatively add laptimes to generate progress bar
@@ -184,15 +193,12 @@ class RunRace extends React.Component {
 
   render() {
     if (this.state.raceData) {
-      // console.log(this.state.raceData.filter((entry) => {
-      //   return entry.lap === 1
-      // }))
       return (
         <div className="race">
           <h2>{this.state.raceYear} {this.state.raceName}</h2>
           <button onClick={() => this.handleClick()}>Start visualisation</button>
-          <h3>Lap {this.state.lap} of {this.maxLapsInRace()}</h3>
-          {this.showRace(this.state.raceData)}
+          <h3>Lap {this.state.lap} of {this.state.maxLaps}</h3>
+          {this.state.allDrivers ? this.showRace(this.state.RaceData) : '<p>Loading...</p>'}
         </div>
       )
     } else {
