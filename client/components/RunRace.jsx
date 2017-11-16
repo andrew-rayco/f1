@@ -93,12 +93,13 @@ class RunRace extends React.Component {
     var totalRaceLaps = this.maxLapsInRace()
     var lapIncrementPercent = this.calculateProgressBar(totalRaceTime, totalRaceLaps)
     let lapData = this.state.raceData
+    // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
     return lapData.map((driverLap, i) => {
       if (driverLap.lap == this.state.count) {
         return (
           <div key={i} className="driver">
             <div className={driverLap.surname}>
-              {driverLap.position}: {driverLap.surname}: {driverLap.time}
+              {driverLap.position}: {driverLap.surname}
               <div className="vis-color" style={{
                 width: this.calcWidth(driverLap.surname, lapIncrementPercent, winner) + '%'
               }}>&nbsp;</div>
@@ -109,7 +110,6 @@ class RunRace extends React.Component {
     })
   }
 
-  // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
 
   calculateProgressBar(totalRaceTime, totalRaceLaps) {
     var singleLap = 100 / totalRaceLaps
@@ -117,26 +117,17 @@ class RunRace extends React.Component {
   }
 
   calcWidth(driver, lapIncrementPercent, winner) {
-    var groundCovered = lapIncrementPercent * this.state.lap
-    var winnerGroundCovered = this.state.allDrivers[winner] / this.winnerTotalRaceTime() * 100
-    console.log(winnerGroundCovered)
     if (driver == winner) {
       return this.state.allDrivers[winner] / this.winnerTotalRaceTime() * 100
     } else {
-      return this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)
+      return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / this.winnerTotalRaceTime() * 100)
     }
   }
 
   findDistanceFromWinner(driver, winner) {
     var totalRaceTime = this.winnerTotalRaceTime()
-    // console.log(this.state.allDrivers, winner)
+    console.log(this.state.allDrivers[winner] - this.state.allDrivers[driver])
     return this.state.allDrivers[winner] - this.state.allDrivers[driver]
-    // Filter out the current driver on the current lap
-
-    console.log(this.state)
-    // console.log(winner)
-    // console.log(totalRaceTime / this.maxLapsInRace())
-    // console.log(currentDriverLap[0].surname, currentDriverLap[0].milliseconds)
   }
 
   getCurrentDriverLap(driver, lap) {
@@ -153,42 +144,45 @@ class RunRace extends React.Component {
   }
 
   handleClick() {
-    var lapTicker = setInterval(() => {
-      if (this.state.count < this.maxLapsInRace()) {
-        var newAllDrivers = {}
-        for (var key in this.state.allDrivers) {
-          var currentDriverLap = this.getCurrentDriverLap(key, this.state.lap)
-          newAllDrivers[key] = this.state.allDrivers[key] + currentDriverLap.milliseconds
+    if (this.state.visualIsRunning) {
+      clearInterval(lapTicker)
+    } else {
+      var lapTicker = setInterval(() => {
+        if (this.state.count < this.maxLapsInRace()) {
+          var newAllDrivers = {}
+          for (var key in this.state.allDrivers) {
+            var currentDriverLap = this.getCurrentDriverLap(key, this.state.lap)
+            newAllDrivers[key] = this.state.allDrivers[key] + currentDriverLap.milliseconds
+          }
+          this.setState({
+            allDrivers: newAllDrivers,
+            count: this.state.count + 1,
+            lap: this.state.lap + 1
+          })
+          this.calculateProgressBar(this.state.lap)
+        } else {
+          clearInterval(lapTicker)
         }
-        console.log(newAllDrivers)
-        this.setState({
-          allDrivers: newAllDrivers,
-          count: this.state.count + 1,
-          lap: this.state.lap + 1
-        })
-        this.calculateProgressBar(this.state.lap)
-      } else {
-        clearInterval(lapTicker)
-      }
-    }, 150)
+      }, 150)
+
+      this.setState({visualIsRunning: !this.state.visualIsRunning})
+    }
 
 
     // cumulatively add laptimes to generate progress bar
-    if (this.state.raceData) {
-      this.state.raceData.forEach((lap) => { // I can't get this to work
-        var driverSurname = lap.surname
-        var stateCopy = Object.assign({}, this.state)
-        // It needs to start at 0 so I don't get NaN when trying to add laps
-        if (lap.milliseconds) {
-          stateCopy[driverSurname] = this.state[driverSurname] || 0
-          stateCopy[driverSurname] += lap.milliseconds
-        }
-        this.setState(stateCopy)
-      })
-    }
+    // if (this.state.raceData) {
+    //   this.state.raceData.forEach((lap) => { // I can't get this to work
+    //     var driverSurname = lap.surname
+    //     var stateCopy = Object.assign({}, this.state)
+    //     // It needs to start at 0 so I don't get NaN when trying to add laps
+    //     if (lap.milliseconds) {
+    //       stateCopy[driverSurname] = this.state[driverSurname] || 0
+    //       stateCopy[driverSurname] += lap.milliseconds
+    //     }
+    //     this.setState(stateCopy)
+    //   })
+    // }
 
-    console.log(this.state.visualIsRunning)
-    this.setState({visualIsRunning: !this.state.visualIsRunning})
   }
 
   render() {
