@@ -7,8 +7,6 @@ class RunRace extends React.Component {
     super(props)
     this.state = {
       lap: 1,
-      sortedLaps: [], // All laptimes for current lap
-      count: 1,
       visualIsRunning: false
     }
   }
@@ -91,32 +89,28 @@ class RunRace extends React.Component {
     var winner = this.findWinnerSurname()
     var totalRaceTime = this.winnerTotalRaceTime()
     var totalRaceLaps = this.maxLapsInRace()
-    var lapIncrementPercent = this.calculateProgressBar(totalRaceTime, totalRaceLaps)
-    let lapData = this.state.raceData
+    let retiredDrivers
+    let lapData = this.state.raceData.filter((lap) => {
+      return lap.lap === this.state.lap
+    })
     // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
+
     return lapData.map((driverLap, i) => {
-      if (driverLap.lap == this.state.count) {
-        return (
-          <div key={i} className="driver">
-            <div className={driverLap.surname}>
-              {driverLap.position}: {driverLap.surname}
-              <div className="vis-color" style={{
-                width: this.calcWidth(driverLap.surname, lapIncrementPercent, winner) + '%'
-              }}>&nbsp;</div>
-            </div>
+      return (
+        <div key={i} className="driver">
+          <div className={driverLap.surname}>
+            {driverLap.position}: {driverLap.surname}
+            <div className="vis-color" style={{
+              width: this.calcWidth(driverLap.surname, winner) + '%'
+            }}>&nbsp;</div>
           </div>
-        )
-      }
+        </div>
+      )
+      // else if no driver.lap matching this, show the driver.lap with the highest lap number. Or better still, show their accumulated race time
     })
   }
 
-
-  calculateProgressBar(totalRaceTime, totalRaceLaps) {
-    var singleLap = 100 / totalRaceLaps
-    return singleLap // % of progress bar movement per lap (for race winner)
-  }
-
-  calcWidth(driver, lapIncrementPercent, winner) {
+  calcWidth(driver, winner) {
     if (driver == winner) {
       return this.state.allDrivers[winner] / this.winnerTotalRaceTime() * 100
     } else {
@@ -126,7 +120,6 @@ class RunRace extends React.Component {
 
   findDistanceFromWinner(driver, winner) {
     var totalRaceTime = this.winnerTotalRaceTime()
-    console.log(this.state.allDrivers[winner] - this.state.allDrivers[driver])
     return this.state.allDrivers[winner] - this.state.allDrivers[driver]
   }
 
@@ -148,7 +141,7 @@ class RunRace extends React.Component {
       clearInterval(lapTicker)
     } else {
       var lapTicker = setInterval(() => {
-        if (this.state.count < this.maxLapsInRace()) {
+        if (this.state.lap < this.maxLapsInRace()) {
           var newAllDrivers = {}
           for (var key in this.state.allDrivers) {
             var currentDriverLap = this.getCurrentDriverLap(key, this.state.lap)
@@ -156,10 +149,8 @@ class RunRace extends React.Component {
           }
           this.setState({
             allDrivers: newAllDrivers,
-            count: this.state.count + 1,
             lap: this.state.lap + 1
           })
-          this.calculateProgressBar(this.state.lap)
         } else {
           clearInterval(lapTicker)
         }
