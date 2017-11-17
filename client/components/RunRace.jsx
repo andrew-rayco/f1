@@ -87,24 +87,44 @@ class RunRace extends React.Component {
     })
     // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
     var retiredDrivers = this.findRetiredDrivers(lapData)
-    var retiredDriversLastLap = retiredDrivers.map((driver) => {
-      return
-    })
 
+    // Collect last full laps of retired drivers (possibly do this before processing race)
+    var retiredDriversLastLaps = {}
+    retiredDrivers.map((driver) => {
+      var allDriverLaps = this.state.raceData.filter((lap) => {
+        return lap.surname === driver
+      })
+      retiredDriversLastLaps[driver] = allDriverLaps[allDriverLaps.length - 1]
+    })
+    lapData.retirees = retiredDriversLastLaps
+
+    // console.log(lapData)
+
+    // try and figure out how to show retirees
     return lapData.map((driverLap, i) => {
-      if (driverLap.lap === 3) {
-        // console.log(Object.keys(allDrivers))
-      }
-      return (
-        <div key={i} className="driver">
-          <div className={driverLap.surname}>
-            {driverLap.position}: {driverLap.surname}
-            <div className="vis-color" style={{
-              width: this.calcWidth(driverLap.surname, winner) + '%'
-            }}>&nbsp;</div>
+      if (Object.values(lapData.retirees).length == 0) {
+        return (
+          <div key={i} className="driver">
+            <div className={driverLap.surname}>
+              {driverLap.position}: {driverLap.surname}
+              <div className="vis-color" style={{
+                width: this.calcWidth(driverLap.surname, winner) + '%'
+              }}>&nbsp;</div>
+            </div>
           </div>
-        </div>
-      )
+        )
+      } else {
+        return (
+          <div key={i} className="driver">
+            <div className={driverLap.surname}>
+              {driverLap.position}: {driverLap.surname}
+              <div className="vis-color" style={{
+                width: this.calcWidth(driverLap.surname, winner) + '%', backgroundColor: 'red'
+              }}>&nbsp;</div>
+            </div>
+          </div>
+        )
+      }
       // else if no driver.lap matching this, show the driver.lap with the highest lap number. Or better still, show their accumulated race time
     })
   }

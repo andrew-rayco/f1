@@ -1,4 +1,5 @@
 function prepareRaceData (laptimes) {
+  console.log(laptimes)
 
   // Get all driver Surnames in race
   var driversInRace = []
@@ -39,7 +40,6 @@ function prepareRaceData (laptimes) {
   // Only take driver surname, lap num, time and milliseconds
   var cleanRaceData = []
   lapsByLapNumber.map((lap) => {
-    // console.log(lap[0]);
     for (var i = 0; i < maxLaps; i++) {
       if (lap[i]) {
         cleanRaceData.push({
