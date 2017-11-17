@@ -85,6 +85,7 @@ function getRaceInfo (db, season, raceId) {
   return db('races')
     .select('*')
     .where('races.raceId', raceId)
+    .join('results', 'races.raceId', '=', 'results.raceId')
 }
 
 module.exports = {

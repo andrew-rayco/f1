@@ -37,12 +37,14 @@ function prepareRaceData (laptimes) {
     count++
   }
 
+  console.log(lapsByLapNumber)
   // Only take driver surname, lap num, time and milliseconds
   var cleanRaceData = []
   lapsByLapNumber.map((lap) => {
     for (var i = 0; i < maxLaps; i++) {
       if (lap[i]) {
         cleanRaceData.push({
+          driverId: lap[i].driverId,
           lap: lap[i].lap,
           surname: lap[i].surname,
           time: lap[i].time,

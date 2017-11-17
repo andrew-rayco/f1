@@ -12,6 +12,17 @@ function getAllDriversInRace(raceData) {
   return allDrivers
 }
 
+function maxLapsInRace(raceData) {
+  var maxLaps = 0;
+  raceData.forEach((lap) => {
+    if (lap.lap > maxLaps) {
+      maxLaps = lap.lap
+    }
+  })
+  return maxLaps
+}
+
 module.exports = {
-  getAllDriversInRace
+  getAllDriversInRace,
+  maxLapsInRace
 }

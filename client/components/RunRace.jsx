@@ -12,7 +12,7 @@ class RunRace extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let location = this.props.location.pathname
     let pathArray = location.split('/')
     let season = pathArray[2]
@@ -20,41 +20,35 @@ class RunRace extends React.Component {
     api.getRaceDetails(season, raceId, (raceInfo) => {
       this.setState({
         raceName: raceInfo.results[0].name,
-        raceYear: raceInfo.results[0].year
+        raceYear: raceInfo.results[0].year,
+        results: raceInfo.results,
       })
     })
 
     api.getVisData(season, raceId, (raceData) => {
-      this.setState({raceData})
+      this.setState({ raceData })
       this.setRaceDetails()
     })
   }
 
   setRaceDetails() {
     let allDrivers = visualise.getAllDriversInRace(this.state.raceData)
+    let maxLaps = visualise.maxLapsInRace(this.state.raceData)
+    let winner = this.findWinnerSurname(maxLaps)
 
     this.setState({
       allDrivers,
-      winner: this.findWinnerSurname(),
-      maxLaps: this.maxLapsInRace()
+      winner,
+      maxLaps
     })
   }
 
-  // calculate total race laps
-  maxLapsInRace() {
-    var maxLaps = 0;
-    this.state.raceData.forEach((lap) => {
-      if (lap.lap > maxLaps) {
-        maxLaps = lap.lap
-      }
-    })
-    return maxLaps
-  }
 
-  findWinnerSurname() {
+  findWinnerSurname(maxLaps) {
+    console.log(maxLaps, this.state.maxLaps)
     var winner
     var finalLaps = this.state.raceData.filter((lap) => {
-      return lap.lap === this.maxLapsInRace()
+      return lap.lap === maxLaps || this.state.maxLaps
     })
     winner = finalLaps.filter((lap) => {
       return lap.position === 1
@@ -80,7 +74,7 @@ class RunRace extends React.Component {
   showRace(data) {
     var winner = this.findWinnerSurname()
     var totalRaceTime = this.winnerTotalRaceTime()
-    var totalRaceLaps = this.maxLapsInRace()
+    var totalRaceLaps = this.state.maxLaps
     let allDrivers = this.state.allDrivers
     let lapData = this.state.raceData.filter((lap) => {
       return lap.lap === this.state.lap
@@ -89,20 +83,32 @@ class RunRace extends React.Component {
     var retiredDrivers = this.findRetiredDrivers(lapData)
 
     // Collect last full laps of retired drivers (possibly do this before processing race)
-    var retiredDriversLastLaps = {}
+    var driversWithR = this.state.results.filter((result) => {
+      return result.positionText === 'R'
+    })
+
+    var retiredDriversLastLaps = []
     retiredDrivers.map((driver) => {
       var allDriverLaps = this.state.raceData.filter((lap) => {
         return lap.surname === driver
       })
-      retiredDriversLastLaps[driver] = allDriverLaps[allDriverLaps.length - 1]
+      allDriverLaps[allDriverLaps.length - 1].retired = true
+      retiredDriversLastLaps.push(allDriverLaps[allDriverLaps.length - 1])
     })
-    lapData.retirees = retiredDriversLastLaps
+    retiredDriversLastLaps.map((retiredLap) => {
+      lapData.push(retiredLap)
+    })
+    // lapData.retirees = retiredDriversLastLaps
 
     // console.log(lapData)
+    // console.log(this.state.results)
 
     // try and figure out how to show retirees
     return lapData.map((driverLap, i) => {
-      if (Object.values(lapData.retirees).length == 0) {
+      if (driverLap.lap == 70) {
+        console.log(lapData)
+      }
+      if (driverLap.retired !== true) {
         return (
           <div key={i} className="driver">
             <div className={driverLap.surname}>
@@ -114,12 +120,15 @@ class RunRace extends React.Component {
           </div>
         )
       } else {
+        let finalPosition = this.state.results.filter((result) => {
+          return driverLap.driverId === result.driverId
+        })[0]
         return (
           <div key={i} className="driver">
             <div className={driverLap.surname}>
-              {driverLap.position}: {driverLap.surname}
+              {finalPosition.positionOrder}: {driverLap.surname} - Lap {finalPosition.laps}
               <div className="vis-color" style={{
-                width: this.calcWidth(driverLap.surname, winner) + '%', backgroundColor: 'red'
+                width: (this.state.allDrivers[driverLap.surname] / totalRaceTime) * 100 + '%', backgroundColor: 'red'
               }}>&nbsp;</div>
             </div>
           </div>
@@ -131,15 +140,17 @@ class RunRace extends React.Component {
 
   findRetiredDrivers(lapData) {
     let driversArray = Object.keys(this.state.allDrivers)
-
     lapData.map((lap) => {
       if (driversArray.indexOf(lap.surname) > -1) {
         driversArray.splice(driversArray.indexOf(lap.surname), 1)
       }
     })
+    // reorder driversArray into the order of retirements
+    let orderedDriversArray = driversArray.map((driver) => {
+      console.log(this.state.results[driver])
+    })
     return driversArray
-    // console.log(Object.keys(this.state.allDrivers))
-    // console.log(lapData[0])
+
   }
 
   calcWidth(driver, winner) {
@@ -172,7 +183,7 @@ class RunRace extends React.Component {
     if (!this.state.visualIsRunning) {
 
       var lapTicker = setInterval(() => {
-        if (this.state.lap < this.maxLapsInRace()) {
+        if (this.state.lap < this.state.maxLaps) {
           var newAllDrivers = {}
           for (var key in this.state.allDrivers) {
             var currentDriverLap = this.getCurrentDriverLap(key, this.state.lap)
