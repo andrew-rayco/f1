@@ -81,13 +81,20 @@ class RunRace extends React.Component {
     var winner = this.findWinnerSurname()
     var totalRaceTime = this.winnerTotalRaceTime()
     var totalRaceLaps = this.maxLapsInRace()
-    let retiredDrivers
+    let allDrivers = this.state.allDrivers
     let lapData = this.state.raceData.filter((lap) => {
       return lap.lap === this.state.lap
     })
     // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
+    var retiredDrivers = this.findRetiredDrivers(lapData)
+    var retiredDriversLastLap = retiredDrivers.map((driver) => {
+      return
+    })
 
     return lapData.map((driverLap, i) => {
+      if (driverLap.lap === 3) {
+        // console.log(Object.keys(allDrivers))
+      }
       return (
         <div key={i} className="driver">
           <div className={driverLap.surname}>
@@ -100,6 +107,19 @@ class RunRace extends React.Component {
       )
       // else if no driver.lap matching this, show the driver.lap with the highest lap number. Or better still, show their accumulated race time
     })
+  }
+
+  findRetiredDrivers(lapData) {
+    let driversArray = Object.keys(this.state.allDrivers)
+
+    lapData.map((lap) => {
+      if (driversArray.indexOf(lap.surname) > -1) {
+        driversArray.splice(driversArray.indexOf(lap.surname), 1)
+      }
+    })
+    return driversArray
+    // console.log(Object.keys(this.state.allDrivers))
+    // console.log(lapData[0])
   }
 
   calcWidth(driver, winner) {
@@ -129,10 +149,8 @@ class RunRace extends React.Component {
   }
 
   handleClick() {
-    if (this.state.visualIsRunning) {
-      clearInterval(lapTicker)
-      console.log('this should stop the running')
-    } else {
+    if (!this.state.visualIsRunning) {
+
       var lapTicker = setInterval(() => {
         if (this.state.lap < this.maxLapsInRace()) {
           var newAllDrivers = {}
@@ -151,22 +169,11 @@ class RunRace extends React.Component {
 
       this.setState({visualIsRunning: !this.state.visualIsRunning})
     }
-
-
-    // cumulatively add laptimes to generate progress bar
-    // if (this.state.raceData) {
-    //   this.state.raceData.forEach((lap) => { // I can't get this to work
-    //     var driverSurname = lap.surname
-    //     var stateCopy = Object.assign({}, this.state)
-    //     // It needs to start at 0 so I don't get NaN when trying to add laps
-    //     if (lap.milliseconds) {
-    //       stateCopy[driverSurname] = this.state[driverSurname] || 0
-    //       stateCopy[driverSurname] += lap.milliseconds
-    //     }
-    //     this.setState(stateCopy)
-    //   })
+    // if !visualIsRunning, stop visualisation
+    // else {
+    //   clearInterval(lapTicker)
+    //   console.log('this should stop the running')
     // }
-
   }
 
   render() {
