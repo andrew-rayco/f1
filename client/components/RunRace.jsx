@@ -8,7 +8,7 @@ class RunRace extends React.Component {
     super(props)
     this.getAndSetRaceInfo()
     this.state = {
-      lap: 0,
+      lap: 1,
       visualIsRunning: false
     }
   }
@@ -53,6 +53,7 @@ class RunRace extends React.Component {
 
 
   showRace(data) {
+
     var winner = this.state.winner.winningDriver
     var totalRaceTime = this.state.winner.winningTime
     var totalRaceLaps = this.state.maxLaps
@@ -64,29 +65,83 @@ class RunRace extends React.Component {
     var retiredDrivers = this.findRetiredDrivers(lapData)
 
     // Collect last full laps of retired drivers (possibly do this before processing race)
-    var driversWithR = this.state.results.filter((result) => {
-      return result.positionText === 'R'
-    })
 
-    var retiredDriversLastLaps = []
-    retiredDrivers.map((driver) => {
-      var allDriverLaps = this.state.raceData.filter((lap) => {
-        return lap.surname === driver
+    this.state = {
+      lap: 1,
+      visualIsRunning: false
+    }
+  }
+
+  getAndSetRaceInfo() {
+    let location = this.props.location.pathname
+    let pathArray = location.split('/')
+    let season = pathArray[2]
+    let raceId = pathArray[3]
+    api.getRaceDetails(season, raceId, (raceInfo) => {
+      let raceWinner = raceInfo.results.filter((result) => {
+        return result.position === 1
+      })[0]
+      this.setState({
+        raceName: raceInfo.results[0].name,
+        raceYear: raceInfo.results[0].year,
+        results: raceInfo.results,
+        winner: {
+          winningDriver: raceWinner.surname,
+          driverId: raceWinner.driverId,
+          winningTime: raceWinner.milliseconds,
+          laps: raceWinner.laps
+         }
       })
-      allDriverLaps[allDriverLaps.length - 1].retired = true
-      retiredDriversLastLaps.push(allDriverLaps[allDriverLaps.length - 1])
     })
-    retiredDriversLastLaps.map((retiredLap) => {
-      lapData.push(retiredLap)
-    })
-    // lapData.retirees = retiredDriversLastLaps
 
-    // console.log(lapData)
-    // console.log(this.state.results)
+    api.getVisData(season, raceId, (raceData) => {
+      this.setState({ raceData })
+      this.setRaceDetails()
+    })
+  }
+
+  setRaceDetails() {
+    let allDrivers = visualise.getAllDriversInRace(this.state.raceData)
+    let maxLaps = this.state.winner.laps
+
+    this.setState({
+      allDrivers,
+      maxLaps
+    })
+  }
+
+
+  showRace(data) {
+
+    var winner = this.state.winner.winningDriver
+    var totalRaceTime = this.state.winner.winningTime
+    var totalRaceLaps = this.state.maxLaps
+    let allDrivers = this.state.allDrivers
+    let lapData = this.state.raceData.filter((lap) => {
+      return lap.lap === this.state.lap
+    })
+    // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
+    var retiredDrivers = this.findRetiredDrivers(lapData)
+
+    // Collect last full laps of retired drivers (possibly do this before processing race)
+
+    console.log(retiredDrivers)
+
+    // var retiredDriversLastLaps = []
+    // retiredDrivers.map((driver) => {
+    //   var allDriverLaps = this.state.raceData.filter((lap) => {
+    //     return lap.surname === driver
+    //   })
+    //   allDriverLaps[allDriverLaps.length - 1].retired = true
+    //   retiredDriversLastLaps.push(allDriverLaps[allDriverLaps.length - 1])
+    // })
+    // retiredDriversLastLaps.map((retiredLap) => {
+    //   lapData.push(retiredLap)
+    // })
 
     // try and figure out how to show retirees
     return lapData.map((driverLap, i) => {
-      if (driverLap.lap == 70) {
+      if (driverLap.lap == this.state.winner.laps) {
         // console.log(this.state.lapData)
       }
       if (driverLap.retired !== true) {
@@ -120,6 +175,35 @@ class RunRace extends React.Component {
   }
 
   findRetiredDrivers(lapData) {
+    var driversWithR = this.state.results.filter((result) => {
+      return result.positionText === 'R'
+    })
+    var retiredDriversArray = []
+    driversWithR.map((retiredResult) => {
+      retiredDriversArray.push({
+        surname: retiredResult.surname,
+        laps: retiredResult.laps,
+        position: retiredResult.positionOrder
+      })
+    })
+    var sortedRetirees = retiredDriversArray.sort((a, b) => {
+      if (a.laps >= b.laps) {
+        return 1
+      }
+    })
+    // retiredDrivers2 = sortedRetirees.map((result) => {
+    //   retiredDrivers2.push(result.surname)
+    // })
+    let retireesInOrder = []
+    sortedRetirees.map((result) => {
+      retireesInOrder.push(result.surname)
+    })
+    console.log(ballSack)
+    return ballSack
+  }
+
+
+  findRetiredDriversOLD(lapData) {
     let driversArray = Object.keys(this.state.allDrivers)
     lapData.map((lap) => {
       if (driversArray.indexOf(lap.surname) > -1) {
