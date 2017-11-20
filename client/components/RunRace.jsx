@@ -22,13 +22,16 @@ class RunRace extends React.Component {
       let raceWinner = raceInfo.results.filter((result) => {
         return result.position === 1
       })[0]
-      console.log(raceWinner.surname, raceWinner.driverId)
-      console.log(raceInfo.results)
       this.setState({
         raceName: raceInfo.results[0].name,
         raceYear: raceInfo.results[0].year,
         results: raceInfo.results,
-        winner: (raceWinner.surname, raceWinner.driverId)
+        winner: {
+          winningDriver: raceWinner.surname,
+          driverId: raceWinner.driverId,
+          winningTime: raceWinner.milliseconds,
+          laps: raceWinner.laps
+         }
       })
     })
 
@@ -40,47 +43,18 @@ class RunRace extends React.Component {
 
   setRaceDetails() {
     let allDrivers = visualise.getAllDriversInRace(this.state.raceData)
-    let maxLaps = visualise.maxLapsInRace(this.state.raceData)
-    let winner = this.findWinnerSurname(maxLaps)
+    let maxLaps = this.state.winner.laps
 
     this.setState({
       allDrivers,
-      winner,
       maxLaps
     })
   }
 
 
-  findWinnerSurname(maxLaps) {
-    // console.log(maxLaps, this.state.maxLaps)
-    var winner
-    var finalLaps = this.state.raceData.filter((lap) => {
-      return lap.lap === maxLaps || this.state.maxLaps
-    })
-    winner = finalLaps.filter((lap) => {
-      return lap.position === 1
-    })[0].surname
-
-    return winner
-  }
-
-  // calculate total race time for winner (milliseconds)
-  winnerTotalRaceTime() {
-    var winningTime = 0
-    var winner = this.findWinnerSurname()
-
-    // Calculate total winner race time
-    this.state.raceData.forEach((lap) => {
-      if (lap.surname == winner) {
-        winningTime += lap.milliseconds
-      }
-    })
-    return winningTime
-  }
-
   showRace(data) {
-    var winner = this.findWinnerSurname()
-    var totalRaceTime = this.winnerTotalRaceTime()
+    var winner = this.state.winner.winningDriver
+    var totalRaceTime = this.state.winner.winningTime
     var totalRaceLaps = this.state.maxLaps
     let allDrivers = this.state.allDrivers
     let lapData = this.state.raceData.filter((lap) => {
@@ -161,15 +135,16 @@ class RunRace extends React.Component {
   }
 
   calcWidth(driver, winner) {
+    var totalRaceTime = this.state.winner.winningTime
     if (driver == winner) {
-      return this.state.allDrivers[winner] / this.winnerTotalRaceTime() * 100
+      return this.state.allDrivers[winner] / totalRaceTime * 100
     } else {
-      return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / this.winnerTotalRaceTime() * 100)
+      return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100)
     }
   }
 
   findDistanceFromWinner(driver, winner) {
-    var totalRaceTime = this.winnerTotalRaceTime()
+    var totalRaceTime = this.state.winner.winningTime
     return this.state.allDrivers[winner] - this.state.allDrivers[driver]
   }
 
