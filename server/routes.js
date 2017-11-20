@@ -141,6 +141,7 @@ router.get('/season/:id/:raceId/race-details', (req, res) => {
   var raceId = req.params.raceId
     dbFunctions.getRaceInfo(db, id, raceId)
     .then((results) => {
+      console.log(results)
       res.json({results})
     })
     .catch((err) => {

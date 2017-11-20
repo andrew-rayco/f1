@@ -6,22 +6,29 @@ import * as visualise from '../visualisation'
 class RunRace extends React.Component {
   constructor(props) {
     super(props)
+    this.getAndSetRaceInfo()
     this.state = {
-      lap: 1,
+      lap: 0,
       visualIsRunning: false
     }
   }
 
-  componentDidMount() {
+  getAndSetRaceInfo() {
     let location = this.props.location.pathname
     let pathArray = location.split('/')
     let season = pathArray[2]
     let raceId = pathArray[3]
     api.getRaceDetails(season, raceId, (raceInfo) => {
+      let raceWinner = raceInfo.results.filter((result) => {
+        return result.position === 1
+      })[0]
+      console.log(raceWinner.surname, raceWinner.driverId)
+      console.log(raceInfo.results)
       this.setState({
         raceName: raceInfo.results[0].name,
         raceYear: raceInfo.results[0].year,
         results: raceInfo.results,
+        winner: (raceWinner.surname, raceWinner.driverId)
       })
     })
 
@@ -45,7 +52,7 @@ class RunRace extends React.Component {
 
 
   findWinnerSurname(maxLaps) {
-    console.log(maxLaps, this.state.maxLaps)
+    // console.log(maxLaps, this.state.maxLaps)
     var winner
     var finalLaps = this.state.raceData.filter((lap) => {
       return lap.lap === maxLaps || this.state.maxLaps
@@ -106,7 +113,7 @@ class RunRace extends React.Component {
     // try and figure out how to show retirees
     return lapData.map((driverLap, i) => {
       if (driverLap.lap == 70) {
-        console.log(lapData)
+        // console.log(this.state.lapData)
       }
       if (driverLap.retired !== true) {
         return (
@@ -147,7 +154,7 @@ class RunRace extends React.Component {
     })
     // reorder driversArray into the order of retirements
     let orderedDriversArray = driversArray.map((driver) => {
-      console.log(this.state.results[driver])
+      // console.log(driver)
     })
     return driversArray
 
@@ -180,8 +187,10 @@ class RunRace extends React.Component {
   }
 
   handleClick() {
-    if (!this.state.visualIsRunning) {
-
+    if (this.state.visualIsRunning) {
+      clearInterval(lapTicker)
+      console.log('this should be working')
+    } else {
       var lapTicker = setInterval(() => {
         if (this.state.lap < this.state.maxLaps) {
           var newAllDrivers = {}
