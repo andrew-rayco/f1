@@ -1,4 +1,5 @@
 function prepareRaceData (laptimes) {
+  // console.log(laptimes)
 
   // Get all driver Surnames in race
   var driversInRace = []
@@ -25,13 +26,25 @@ function prepareRaceData (laptimes) {
     }
   })
 
+  // list all laps by lap number
+  // Currently not being used......
+  var lapsByLapNumber = []
+  var count = 1
+  for (i = 1; i <= maxLaps; i++) {
+    lapsByLapNumber.push(laptimes.filter((thisLap) => {
+      return thisLap.lap === count
+    }))
+    count++
+  }
+
+  // console.log(lapsByLapNumber)
   // Only take driver surname, lap num, time and milliseconds
   var cleanRaceData = []
-  lapsByDriver.map((lap) => {
-    // console.log(lap[0].surname);
+  lapsByLapNumber.map((lap) => {
     for (var i = 0; i < maxLaps; i++) {
       if (lap[i]) {
         cleanRaceData.push({
+          driverId: lap[i].driverId,
           lap: lap[i].lap,
           surname: lap[i].surname,
           time: lap[i].time,
@@ -40,14 +53,14 @@ function prepareRaceData (laptimes) {
         })
       }
     }
-
   })
+
 
   //experimenting
   var count = 1;
   var lapCounter = setInterval(function() {
     if (count <= maxLaps) {
-      // console.log(lapsByDriver[0][count].lap)
+      // console.log(count)
       count++
       return count
     } else {

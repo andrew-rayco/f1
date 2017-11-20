@@ -4,7 +4,7 @@
 
 var request = require('superagent')
 
-function getJVOrgs(callback) {
+function getData(callback) {
   request
     .get('http://ergast.com/api/f1/seasons')
     .end((err, result) => {
@@ -16,7 +16,7 @@ function getJVOrgs(callback) {
   })
 }
 
-getJVOrgs(console.log)
+getData(console.log)
 
 // example json api
 // router.get('/', (req, res) => {
