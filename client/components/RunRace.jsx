@@ -191,32 +191,14 @@ class RunRace extends React.Component {
         return 1
       }
     })
-    // retiredDrivers2 = sortedRetirees.map((result) => {
-    //   retiredDrivers2.push(result.surname)
-    // })
+
     let retireesInOrder = []
     sortedRetirees.map((result) => {
       retireesInOrder.push(result.surname)
     })
-    console.log(ballSack)
-    return ballSack
+    return retireesInOrder
   }
 
-
-  findRetiredDriversOLD(lapData) {
-    let driversArray = Object.keys(this.state.allDrivers)
-    lapData.map((lap) => {
-      if (driversArray.indexOf(lap.surname) > -1) {
-        driversArray.splice(driversArray.indexOf(lap.surname), 1)
-      }
-    })
-    // reorder driversArray into the order of retirements
-    let orderedDriversArray = driversArray.map((driver) => {
-      // console.log(driver)
-    })
-    return driversArray
-
-  }
 
   calcWidth(driver, winner) {
     var totalRaceTime = this.state.winner.winningTime
