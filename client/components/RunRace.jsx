@@ -2,6 +2,7 @@ import React from 'react'
 
 import * as api from '../api'
 import * as visualise from '../visualisation'
+import RaceOptions from './RaceOptions'
 
 class RunRace extends React.Component {
   constructor(props) {
@@ -116,7 +117,7 @@ class RunRace extends React.Component {
     }) + 1
     var retiredDrivers = this.findRetiredDrivers(lapData)
 
-    // ADD RETIRED LAST LAPS TO THE LAPDATA
+    // Add retired last laps to the lapData
     this.addRetiredLaps(lapData, retiredDrivers)
 
     if (this.state.lap === this.state.maxLaps) {
@@ -125,28 +126,46 @@ class RunRace extends React.Component {
 
     console.log(lapData)
 
-    // console.log('lappedDrivers', lappedDrivers)
-    // 2. Find drivers last lap (results.laps)
-    // 3. For each lap after drivers last lap, add to lapData
-
     return lapData.map((driverLap, i) => {
       if (this.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !this.hasDriverRetiredYet(driverLap.surname, retiredDrivers)) {
-        return (
-          <div key={i} className="driver">
-            <div className={driverLap.surname}>
-              {driverLap.position || driverLap.positionText}: {driverLap.surname}
-              <div className="vis-color" style={{
-                width: this.calcWidth(driverLap.surname, winner) + '%'
-              }}>&nbsp;</div>
+        if (this.state.lap > (this.state.maxLaps * 0.25)) {
+          return (
+            <div key={i} className="driver">
+              <div className={driverLap.surname, `driverBar`}>
+                <div className="vis-color" style={{
+                  width: this.calcWidth(driverLap.surname, winner) + '%'
+                }}>{driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
+              </div>
             </div>
-          </div>
-        )
+          )
+        } else if (this.state.lap > (this.state.maxLaps * 0.75)) {
+          return (
+            <div key={i} className="driver">
+              <div className={driverLap.surname, `driverBar`}>
+                <div className="vis-color" style={{
+                  width: this.calcWidth(driverLap.surname, winner) + '%'
+                }}>{driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
+              </div>
+            </div>
+          )
+        }
+
+        else {
+          return (
+            <div key={i} className="driver">
+              <div className={driverLap.surname, `driverBar`}>
+                {driverLap.position || driverLap.positionText}: {driverLap.surname}
+                <div className="vis-color" style={{
+                  width: this.calcWidth(driverLap.surname, winner) + '%'
+                }}>&nbsp;</div>
+              </div>
+            </div>
+          )
+        }
       } else if (this.hasDriverRetiredYet(driverLap.surname, retiredDrivers)) {
-        console.log('driverLap', driverLap)
         return (
           <div key={i} className="driver">
-            <div className={driverLap.surname}>
-              {console.log(driverLap.positionOrder || driverLap.position)}
+            <div className={'driverBar ' + driverLap.surname} >
               {driverLap.position || driverLap.positionOrder}: {driverLap.surname} - Lap {driverLap.laps}
               <div className="vis-color" style={{
                 width: (this.state.allDrivers[driverLap.surname] / totalRaceTime) * 100 + '%', backgroundColor: 'red'
@@ -229,9 +248,9 @@ class RunRace extends React.Component {
   calcWidth (driver, winner) {
     var totalRaceTime = this.state.winner.winningTime
     if (driver == winner) {
-      return this.state.allDrivers[winner] / totalRaceTime * 100
+      return (this.state.allDrivers[winner] / totalRaceTime * 100) + (this.state.allDrivers[winner] / totalRaceTime * 100 / this.state.maxLaps)
     } else {
-      return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100)
+      return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100) + ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100 / this.state.maxLaps)
     }
   }
 
@@ -280,12 +299,14 @@ class RunRace extends React.Component {
 
   render () {
     if (this.state.raceData) {
+      console.log(this.state.results[0])
       return (
         <div className="race">
           <h2>{this.state.raceYear} {this.state.raceName}</h2>
           <button onClick={() => this.handleClick()}>Start visualisation</button>
           <h3>Lap {this.state.lap} of {this.state.maxLaps}</h3>
           {this.state.allDrivers ? this.showRace(this.state.RaceData) : '<p>Loading...</p>'}
+          <RaceOptions key={this.state.results[0].raceId} props={this.state.results[0]} />
         </div>
       )
     } else {
