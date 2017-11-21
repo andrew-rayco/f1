@@ -1,3 +1,4 @@
+// Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
 import React from 'react'
 
 import * as api from '../api'
@@ -100,7 +101,6 @@ class RunRace extends React.Component {
       return lap.lap === this.state.lap
     })
 
-    // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
 
     // DEAL WITH LAPPED DRIVERS
     // 1. Find drivers where result.positionText != 'R'
@@ -134,7 +134,7 @@ class RunRace extends React.Component {
               <div className={driverLap.surname, `driverBar`}>
                 <div className="vis-color" style={{
                   width: this.calcWidth(driverLap.surname, winner) + '%'
-                }}> {driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
+                }}>{driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
               </div>
             </div>
           )
@@ -292,7 +292,7 @@ class RunRace extends React.Component {
 
     pathArray[3] = Number(pathArray[3]) + 1
     // console.log(`#/season/${season}/${pathArray[3]}/${pathArray[4]}`)
-    return `/#/season/${season}/${pathArray[3]}/${pathArray[4]}`
+    return `/season/${season}/${pathArray[3]}/${pathArray[4]}`
   }
 
   render () {
