@@ -2,13 +2,14 @@ import React from 'react'
 
 import * as api from '../api'
 import * as visualise from '../visualisation'
+import RaceOptions from './RaceOptions'
 
 class RunRace extends React.Component {
   constructor(props) {
     super(props)
     this.getAndSetRaceInfo()
     this.state = {
-      lap: 0,
+      lap: 1,
       visualIsRunning: false
     }
   }
@@ -127,7 +128,7 @@ class RunRace extends React.Component {
 
     return lapData.map((driverLap, i) => {
       if (this.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !this.hasDriverRetiredYet(driverLap.surname, retiredDrivers)) {
-        if (this.state.lap > (this.state.maxLaps * 0.15)) {
+        if (this.state.lap > (this.state.maxLaps * 0.25)) {
           return (
             <div key={i} className="driver">
               <div className={driverLap.surname, `driverBar`}>
@@ -137,7 +138,19 @@ class RunRace extends React.Component {
               </div>
             </div>
           )
-        } else {
+        } else if (this.state.lap > (this.state.maxLaps * 0.75)) {
+          return (
+            <div key={i} className="driver">
+              <div className={driverLap.surname, `driverBar`}>
+                <div className="vis-color" style={{
+                  width: this.calcWidth(driverLap.surname, winner) + '%'
+                }}>{driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
+              </div>
+            </div>
+          )
+        }
+
+        else {
           return (
             <div key={i} className="driver">
               <div className={driverLap.surname, `driverBar`}>
@@ -286,12 +299,14 @@ class RunRace extends React.Component {
 
   render () {
     if (this.state.raceData) {
+      console.log(this.state.results[0])
       return (
         <div className="race">
           <h2>{this.state.raceYear} {this.state.raceName}</h2>
           <button onClick={() => this.handleClick()}>Start visualisation</button>
           <h3>Lap {this.state.lap} of {this.state.maxLaps}</h3>
           {this.state.allDrivers ? this.showRace(this.state.RaceData) : '<p>Loading...</p>'}
+          <RaceOptions key={this.state.results[0].raceId} props={this.state.results[0]} />
         </div>
       )
     } else {

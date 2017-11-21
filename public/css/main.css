@@ -196,6 +196,8 @@ table {
 
 .driver {
   /*display: flex;*/
+  text-align: center;
+  border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   border-left: 1px solid #56bba7;
   border-right: 4px solid #56bba7;
@@ -205,8 +207,10 @@ table {
   border-radius: 4px;
 }
 
+.driverBar {
+}
+
 .vis-color {
-  /*position: relative;*/
   text-align: center;
   color: black;
   top: 0;
