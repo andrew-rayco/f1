@@ -128,7 +128,7 @@ class RunRace extends React.Component {
 
     return lapData.map((driverLap, i) => {
       if (this.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !this.hasDriverRetiredYet(driverLap.surname, retiredDrivers)) {
-        if (this.state.lap > (this.state.maxLaps * 0.25)) {
+        if (this.state.lap > this.state.maxLaps * .10) {
           return (
             <div key={i} className="driver">
               <div className={driverLap.surname, `driverBar`}>
@@ -138,19 +138,7 @@ class RunRace extends React.Component {
               </div>
             </div>
           )
-        } else if (this.state.lap > (this.state.maxLaps * 0.75)) {
-          return (
-            <div key={i} className="driver">
-              <div className={driverLap.surname, `driverBar`}>
-                <div className="vis-color" style={{
-                  width: this.calcWidth(driverLap.surname, winner) + '%'
-                }}>{driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
-              </div>
-            </div>
-          )
-        }
-
-        else {
+        } else {
           return (
             <div key={i} className="driver">
               <div className={driverLap.surname, `driverBar`}>
@@ -297,16 +285,29 @@ class RunRace extends React.Component {
     }
   }
 
+  nextRaceLink () {
+    let location = this.props.location.pathname
+    let pathArray = location.split('/')
+    let season = pathArray[2]
+
+    pathArray[3] = Number(pathArray[3]) + 1
+    // console.log(`#/season/${season}/${pathArray[3]}/${pathArray[4]}`)
+    return `/#/season/${season}/${pathArray[3]}/${pathArray[4]}`
+  }
+
   render () {
     if (this.state.raceData) {
-      console.log(this.state.results[0])
       return (
         <div className="race">
           <h2>{this.state.raceYear} {this.state.raceName}</h2>
           <button onClick={() => this.handleClick()}>Start visualisation</button>
           <h3>Lap {this.state.lap} of {this.state.maxLaps}</h3>
           {this.state.allDrivers ? this.showRace(this.state.RaceData) : '<p>Loading...</p>'}
-          <RaceOptions key={this.state.results[0].raceId} props={this.state.results[0]} />
+          <p><a href={this.nextRaceLink()}>Next Race</a></p>
+          <div>
+            <p>More from</p>
+            <RaceOptions key={this.state.results[0].raceId} props={this.state.results[0]} />
+          </div>
         </div>
       )
     } else {
