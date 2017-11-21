@@ -54,7 +54,8 @@
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-test-renderer": "^15.6.2",
-    "webpack": "^2.6.0"
+    "webpack": "^2.6.0",
+    "webpack-dev-server": "^2.9.4"
   },
   "jest": {
     "setupFiles": [

@@ -134,7 +134,7 @@ class RunRace extends React.Component {
               <div className={driverLap.surname, `driverBar`}>
                 <div className="vis-color" style={{
                   width: this.calcWidth(driverLap.surname, winner) + '%'
-                }}>{driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
+                }}> {driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
               </div>
             </div>
           )
@@ -305,8 +305,7 @@ class RunRace extends React.Component {
           {this.state.allDrivers ? this.showRace(this.state.RaceData) : '<p>Loading...</p>'}
           <p><a href={this.nextRaceLink()}>Next Race</a></p>
           <div>
-            <p>More from</p>
-            <RaceOptions key={this.state.results[0].raceId} props={this.state.results[0]} />
+            <RaceOptions key={this.state.results[0].raceId} props={this.state.results[0]} intro='More from' />
           </div>
         </div>
       )
