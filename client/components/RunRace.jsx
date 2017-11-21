@@ -128,7 +128,7 @@ class RunRace extends React.Component {
 
     return lapData.map((driverLap, i) => {
       if (this.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !this.hasDriverRetiredYet(driverLap.surname, retiredDrivers)) {
-        if (this.state.lap > this.state.maxLaps * .10) {
+        if (this.state.lap > this.state.maxLaps * .20) {
           return (
             <div key={i} className="driver">
               <div className={driverLap.surname, `driverBar`}>

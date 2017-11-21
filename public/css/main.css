@@ -220,7 +220,6 @@ table {
   opacity: 0.5;
   top: 0;
   z-index: 2;
-  overflow: hidden;
   transition: width 0.75s linear;
 }
 
