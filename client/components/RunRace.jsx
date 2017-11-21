@@ -116,7 +116,7 @@ class RunRace extends React.Component {
     }) + 1
     var retiredDrivers = this.findRetiredDrivers(lapData)
 
-    // ADD RETIRED LAST LAPS TO THE LAPDATA
+    // Add retired last laps to the lapData
     this.addRetiredLaps(lapData, retiredDrivers)
 
     if (this.state.lap === this.state.maxLaps) {
@@ -125,27 +125,35 @@ class RunRace extends React.Component {
 
     console.log(lapData)
 
-    // console.log('lappedDrivers', lappedDrivers)
-    // 2. Find drivers last lap (results.laps)
-    // 3. For each lap after drivers last lap, add to lapData
-
     return lapData.map((driverLap, i) => {
       if (this.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !this.hasDriverRetiredYet(driverLap.surname, retiredDrivers)) {
-        return (
-          <div key={i} className="driver">
-            <div className={driverLap.surname}>
-              {driverLap.position || driverLap.positionText}: {driverLap.surname}
-              <div className="vis-color" style={{
-                width: this.calcWidth(driverLap.surname, winner) + '%'
-              }}>&nbsp;</div>
+        if (this.state.lap > (this.state.maxLaps * 0.15)) {
+          return (
+            <div key={i} className="driver">
+              <div className={driverLap.surname, `driverBar`}>
+                <div className="vis-color" style={{
+                  width: this.calcWidth(driverLap.surname, winner) + '%'
+                }}>{driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
+              </div>
             </div>
-          </div>
-        )
+          )
+        } else {
+          return (
+            <div key={i} className="driver">
+              <div className={driverLap.surname, `driverBar`}>
+                {driverLap.position || driverLap.positionText}: {driverLap.surname}
+                <div className="vis-color" style={{
+                  width: this.calcWidth(driverLap.surname, winner) + '%'
+                }}>&nbsp;</div>
+              </div>
+            </div>
+          )
+        }
       } else if (this.hasDriverRetiredYet(driverLap.surname, retiredDrivers)) {
         console.log('driverLap', driverLap)
         return (
           <div key={i} className="driver">
-            <div className={driverLap.surname}>
+            <div className={'driverBar ' + driverLap.surname} >
               {console.log(driverLap.positionOrder || driverLap.position)}
               {driverLap.position || driverLap.positionOrder}: {driverLap.surname} - Lap {driverLap.laps}
               <div className="vis-color" style={{

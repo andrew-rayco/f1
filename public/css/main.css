@@ -195,6 +195,7 @@ table {
 /*  Visualise page  */
 
 .driver {
+  /*display: flex;*/
   border-bottom: 1px solid #ccc;
   border-left: 1px solid #56bba7;
   border-right: 4px solid #56bba7;
@@ -205,7 +206,9 @@ table {
 }
 
 .vis-color {
-  position: relative;
+  /*position: relative;*/
+  text-align: center;
+  color: black;
   top: 0;
   left: 0;
   float: left;
@@ -214,7 +217,7 @@ table {
   top: 0;
   z-index: 2;
   overflow: hidden;
-  transition: width 0.15s
+  transition: width 0.75s linear;
 }
 
 .hidden {
