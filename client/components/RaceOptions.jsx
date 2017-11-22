@@ -16,7 +16,7 @@ export default class RaceOptions extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({race: this.props.props})
+    this.setState({race: this.props.props, intro: this.props.intro })
   }
 
 
@@ -39,7 +39,10 @@ export default class RaceOptions extends React.Component {
     return (
       <div key={race.raceId} className="row single-round">
         <div className={`twelve columns round ${race.raceId}`}>
-          <h4 onClick={(e) => this.toggleHidden(e, race.raceId)}><a href="#">{race.round} - {race.raceName}</a></h4>
+          <h4 onClick={(e) => this.toggleHidden(e, race.raceId)}><a href="#">{(this.state.intro) ?
+            `${this.state.intro} the ${race.year} ${race.name}` :
+            `${race.round} - ${race.raceName || race.name}`}
+          </a></h4>
           <div id={race.raceId} className={`toggle hidden`}>
             <p>{moment(race.date).format('MMMM Do YYYY')}</p>
             <p><a onClick={(e) => this.handleClick(e, 'qualiVisible')} href="#" className="togglable">Qualifying results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>

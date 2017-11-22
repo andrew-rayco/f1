@@ -1,8 +1,4 @@
-import React from 'react'
-
-import RunRace from './components/RunRace'
-
-function getAllDriversInRace(raceData) {
+export function getAllDriversInRace(raceData) {
   var allDrivers = {}
   raceData.forEach((lap) => {
     if (allDrivers[lap.surname] === undefined) {
@@ -12,6 +8,21 @@ function getAllDriversInRace(raceData) {
   return allDrivers
 }
 
-module.exports = {
-  getAllDriversInRace
+// Keep getting 'typeError' - is not a function
+export function getCurrentDriverLap(driver, lap) {
+  var toFind = {
+    lap: lap,
+    surname: driver
+  }
+  var currentDriverLap = this.state.raceData.filter((lap) => {
+    for (var key in toFind) {
+      if (lap[key] !== toFind[key]) {
+        return false
+      }
+    }
+    return true
+  })
+  return currentDriverLap[0] || {
+    milliseconds: 0
+  }
 }
