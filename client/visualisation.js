@@ -1,8 +1,4 @@
-import React from 'react'
-
-import RunRace from './components/RunRace'
-
-function getAllDriversInRace(raceData) {
+export function getAllDriversInRace(raceData) {
   var allDrivers = {}
   raceData.forEach((lap) => {
     if (allDrivers[lap.surname] === undefined) {
@@ -10,8 +6,4 @@ function getAllDriversInRace(raceData) {
     }
   })
   return allDrivers
-}
-
-module.exports = {
-  getAllDriversInRace
 }

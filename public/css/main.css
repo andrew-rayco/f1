@@ -206,6 +206,7 @@ table {
 }
 
 .driverBar {
+  display: inline;
 }
 
 .vis-color {
