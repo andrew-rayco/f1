@@ -195,6 +195,7 @@ table {
 /*  Visualise page  */
 
 .driver {
+  text-align: left;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   border-left: 1px solid #56bba7;
@@ -220,6 +221,15 @@ table {
   top: 0;
   z-index: 2;
   transition: width 0.15s linear;
+}
+
+.race {
+  text-align: center;
+}
+
+.race button {
+  background: #56bba7;
+  border-color: #56bba7;
 }
 
 .hidden {

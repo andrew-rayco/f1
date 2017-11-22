@@ -82,78 +82,6 @@ class RunRace extends React.Component {
     })
   }
 
-
-
-
-
-
-  // findRetiredDrivers(lapData) {
-  //   var retiredDriversArray = []
-  //
-  //   // Find all drivers with result positionText of 'R'
-  //   var driversWithR = this.state.results.filter((result) => {
-  //     return result.positionText === 'R'
-  //   })
-  //
-  //   // Push retired driver object to retiredDriversArray
-  //   driversWithR.map((retiredResult) => {
-  //     retiredDriversArray.push({surname: retiredResult.surname, laps: retiredResult.laps, position: retiredResult.positionOrder})
-  //   })
-  //
-  //   // Sort retiredDriversArray by laps completed
-  //   var sortedRetirees = retiredDriversArray.sort((a, b) => {
-  //     if (a.laps >= b.laps) {
-  //       return 1
-  //     }
-  //   })
-  //
-  //   let retireesInOrder = []
-  //   sortedRetirees.map((result) => {
-  //     retireesInOrder.push(result)
-  //   })
-  //   return retireesInOrder
-  // }
-
-  // addRetiredLaps(lapData, retiredDrivers) {
-  //   // Find drivers who do not complete first lap, sorted by position
-  //   let driversDoNotCompleteFirstLap = retiredDrivers.filter((result) => {
-  //     return result.laps == 0
-  //   }).sort((a, b) => {
-  //     if (a.laps >= b.laps) {
-  //       return 1
-  //     }
-  //   })
-  //
-  //   // If driver has retired, add to raceData
-  //   let allRetiredDrivers = []
-  //   retiredDrivers.forEach((driver) => {
-  //     if (driver.laps <= this.state.lap) {
-  //       allRetiredDrivers.unshift(driver)
-  //     }
-  //   })
-  //
-  //   allRetiredDrivers.forEach((driver) => {
-  //     lapData.push(driver)
-  //   })
-  // }
-
-  // driverDoesNotRetire (driver, retiredDrivers) {
-  //   let hasDriverRetired = retiredDrivers.filter((retiredDriver) => {
-  //     return driver == retiredDriver.surname
-  //   })
-  //   return (hasDriverRetired.length < 1) ? true : false
-  // }
-
-  // hasDriverRetiredYet (driver, retiredDrivers) {
-  //   // Find result of retired driver
-  //   let driverResult = retiredDrivers.filter((retiredDriver) => {
-  //     return driver == retiredDriver.surname
-  //   })[0]
-  //
-  //   // Return true if drivers completed laps are <= current race lap (if driver has retired)
-  //   return(driverResult.laps <= this.state.lap)
-  // }
-
   calcWidth (driver, winner) {
     console.log(driver, winner)
     var totalRaceTime = this.state.winner.winningTime
@@ -247,9 +175,7 @@ class RunRace extends React.Component {
     if (this.state.lap === this.state.maxLaps) {
       lapData = this.state.results
     }
-    //
-    // console.log(lapData)
-  //
+
     return lapData.map((driverLap, i) => {
       if (h.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !h.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
         if (this.state.lap > this.state.maxLaps * .20) {
@@ -275,7 +201,7 @@ class RunRace extends React.Component {
           )
         }
       } else if (h.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
-        if (this.state.lap < this.state.maxLaps * .40) {
+        if (driverLap.laps < this.state.maxLaps * .40) {
           return (
             <div key={i} className="driver">
               <div className={'driverBar ' + driverLap.surname} >
@@ -297,11 +223,11 @@ class RunRace extends React.Component {
           )
         }
       }
-    // else if no driver.lap matching this, show the driver.lap with the highest lap number. Or better still, show their accumulated race time
     })
   }
 
   render () {
+    console.log(this.state.results)
     if (this.state.raceData) {
       return (
         <div className="race">
