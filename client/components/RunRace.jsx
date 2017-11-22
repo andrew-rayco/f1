@@ -83,7 +83,6 @@ class RunRace extends React.Component {
   }
 
   calcWidth (driver, winner) {
-    console.log(driver, winner)
     var totalRaceTime = this.state.winner.winningTime
     if (driver == winner) {
       return (this.state.allDrivers[winner] / totalRaceTime * 100) + (this.state.allDrivers[winner] / totalRaceTime * 100 / this.state.maxLaps)
@@ -227,7 +226,6 @@ class RunRace extends React.Component {
   }
 
   render () {
-    console.log(this.state.results)
     if (this.state.raceData) {
       return (
         <div className="race">
