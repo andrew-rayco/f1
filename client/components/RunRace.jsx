@@ -1,5 +1,6 @@
 // Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import * as api from '../api'
 import * as hVis from '../helpers/visualisation'
@@ -231,10 +232,11 @@ class RunRace extends React.Component {
         <div className="race">
           <h2>{this.state.raceYear} {this.state.raceName}</h2>
           <button onClick={() => this.handleClick()}>Start visualisation</button>
+          <p className="beta">This feature is in beta.</p>
           <h3>Lap {this.state.lap} of {this.state.maxLaps}</h3>
           {this.state.allDrivers ? this.showRace(this.state.raceData) : '<p>Loading...</p>'}
-          <p><a href={this.nextRaceLink()}>Next Race</a></p>
-          <div>
+          {/* <p><Link to={this.nextRaceLink()}>Next Race</Link></p> */}
+          <div className="more-from">
             <RaceOptions key={this.state.results[0].raceId} props={this.state.results[0]} intro='More from' />
           </div>
         </div>
