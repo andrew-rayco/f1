@@ -38,8 +38,11 @@ export default class Grid extends React.Component {
   }
 
   render() {
-    if (this.state.grid) {
+    console.log(this.state)
+    if (this.state.grid != undefined) {
+      console.log(this.state.grid.gridData)
       let grid = this.state.grid.gridData
+      console.log(grid)
       return (
         <div className="grid sub-section">
           <h2>{grid[0].year} {grid[0].raceName}</h2>
