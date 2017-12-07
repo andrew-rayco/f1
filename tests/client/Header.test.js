@@ -19,6 +19,6 @@ describe('Header', () => {
   })
 
   it('contains a home link', () => {
-    expect(app.find('#home-link').exists()).toBe(true)
+    expect(app.find('.main-header').exists()).toBe(true)
   })
 })
