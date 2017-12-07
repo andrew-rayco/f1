@@ -4,8 +4,8 @@ import * as api from '../api'
 import RaceOptions from './RaceOptions'
 
 export default class FullSeason extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       races: null
     }

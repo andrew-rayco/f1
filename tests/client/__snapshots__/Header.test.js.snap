@@ -24,14 +24,7 @@ ShallowWrapper {
     "nodeType": "host",
     "props": Object {
       "children": Array [
-        <nav>
-          <a
-            href="/#/"
-            id="home-link"
-          >
-            Home
-          </a>
-        </nav>,
+        <nav />,
         <h1>
           <a
             className="main-header"
@@ -50,27 +43,10 @@ ShallowWrapper {
         "key": null,
         "nodeType": "host",
         "props": Object {
-          "children": <a
-            href="/#/"
-            id="home-link"
-          >
-            Home
-          </a>,
+          "children": null,
         },
         "ref": null,
-        "rendered": Object {
-          "instance": null,
-          "key": null,
-          "nodeType": "host",
-          "props": Object {
-            "children": "Home",
-            "href": "/#/",
-            "id": "home-link",
-          },
-          "ref": null,
-          "rendered": "Home",
-          "type": "a",
-        },
+        "rendered": null,
         "type": "nav",
       },
       Object {
@@ -111,14 +87,7 @@ ShallowWrapper {
       "nodeType": "host",
       "props": Object {
         "children": Array [
-          <nav>
-            <a
-              href="/#/"
-              id="home-link"
-            >
-              Home
-            </a>
-          </nav>,
+          <nav />,
           <h1>
             <a
               className="main-header"
@@ -137,27 +106,10 @@ ShallowWrapper {
           "key": null,
           "nodeType": "host",
           "props": Object {
-            "children": <a
-              href="/#/"
-              id="home-link"
-            >
-              Home
-            </a>,
+            "children": null,
           },
           "ref": null,
-          "rendered": Object {
-            "instance": null,
-            "key": null,
-            "nodeType": "host",
-            "props": Object {
-              "children": "Home",
-              "href": "/#/",
-              "id": "home-link",
-            },
-            "ref": null,
-            "rendered": "Home",
-            "type": "a",
-          },
+          "rendered": null,
           "type": "nav",
         },
         Object {
