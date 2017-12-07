@@ -10,6 +10,10 @@ describe('App', () => {
     expect(app).toMatchSnapshot()
   })
 
+  it('only displays once', () => {
+    expect(app).toHaveLength(1)
+  })
+
   it('contains a container div', () => {
     expect(app.find('.container').exists()).toBe(true)
   })
