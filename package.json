@@ -7,7 +7,7 @@
     "node": "8.2.1"
   },
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest --watch --coverage",
     "start": "node server/index.js",
     "dev": "nodemon server/index.js & webpack --watch",
     "knex": "knex"

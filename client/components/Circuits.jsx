@@ -18,7 +18,6 @@ export default class Circuits extends React.Component {
 
   listCircuits(circuitsObj) {
     let circuits = Array.from(circuitsObj)
-    console.log('circuits is a ' + typeof circuits)
     return circuits.map((track) => {
       return (
         <tr key={track.circuitId}>
