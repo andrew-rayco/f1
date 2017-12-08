@@ -1,10 +1,12 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 const ListSeasons = (props) => {
   let year = props.year
   return (
     <li className="season">
-      <a href={`/#/season/${year}`}>{year}</a>
+      <Link to={`/season/${year}`}>{year}</Link>
     </li>
   )
 }
