@@ -24,6 +24,9 @@ export default class Home extends React.Component {
   }
 
   render() {
+    if (this.state.seasons) {
+      console.log(typeof this.state.seasons[0], this.state.seasons[0])
+    }
     return (
         <div className="row">
           <div className="twelve columns home">
