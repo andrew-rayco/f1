@@ -10,7 +10,8 @@ export default class Grid extends React.Component {
   }
 
   componentWillMount() {
-    let season, raceId
+    let season,
+      raceId
     if (this.props.season) {
       season = this.props.season
       raceId = this.props.raceId
@@ -29,17 +30,26 @@ export default class Grid extends React.Component {
     return fullGrid.map((driver) => {
       return (
         <tr key={driver.resultId}>
-          <td><strong>{driver.positionOrder}</strong></td>
-          <td><a href={driver.driverUrl}>{driver.forename} {driver.surname}</a></td>
-          <td><a href={driver.constructorUrl}>{driver.constructorName}</a></td>
+          <td>
+            <strong>{driver.positionOrder}</strong>
+          </td>
+          <td>
+            <a href={driver.driverUrl}>{driver.forename} {driver.surname}</a>
+          </td>
+          <td>
+            <a href={driver.constructorUrl}>{driver.constructorName}</a>
+          </td>
         </tr>
       )
     })
   }
 
   render() {
+    console.log('this.state:', this.state)
     if (this.state.grid) {
       let grid = this.state.grid.gridData
+      console.log('typeof this.state.grid.gridData:', typeof grid, '(should be an array!?)')
+      console.log('this.state.grid.gridData[0]:', this.state.grid.gridData[0])
       return (
         <div className="grid sub-section">
           <h2>{grid[0].year} {grid[0].raceName}</h2>
@@ -59,6 +69,7 @@ export default class Grid extends React.Component {
         </div>
       )
     } else {
+      console.log('Renders an empty div before this.state.grid is defined. As expected.')
       return <div></div>
     }
   }
