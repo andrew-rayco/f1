@@ -5,7 +5,7 @@ ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <RaceOptions
-    props={
+    race={
       Object {
         "race": Object {
           "raceId": 999,
@@ -42,7 +42,7 @@ ShallowWrapper {
           id={undefined}
         >
           <p>
-            December 8th 2017
+            December 10th 2017
           </p>
           <p>
             <a
@@ -129,7 +129,7 @@ ShallowWrapper {
             id={undefined}
           >
             <p>
-              December 8th 2017
+              December 10th 2017
             </p>
             <p>
               <a
@@ -231,7 +231,7 @@ ShallowWrapper {
           "props": Object {
             "children": Array [
               <p>
-                December 8th 2017
+                December 10th 2017
               </p>,
               <p>
                 <a
@@ -307,10 +307,10 @@ ShallowWrapper {
               "key": undefined,
               "nodeType": "host",
               "props": Object {
-                "children": "December 8th 2017",
+                "children": "December 10th 2017",
               },
               "ref": null,
-              "rendered": "December 8th 2017",
+              "rendered": "December 10th 2017",
               "type": "p",
             },
             Object {
@@ -592,7 +592,7 @@ ShallowWrapper {
             id={undefined}
           >
             <p>
-              December 8th 2017
+              December 10th 2017
             </p>
             <p>
               <a
@@ -679,7 +679,7 @@ ShallowWrapper {
               id={undefined}
             >
               <p>
-                December 8th 2017
+                December 10th 2017
               </p>
               <p>
                 <a
@@ -781,7 +781,7 @@ ShallowWrapper {
             "props": Object {
               "children": Array [
                 <p>
-                  December 8th 2017
+                  December 10th 2017
                 </p>,
                 <p>
                   <a
@@ -857,10 +857,10 @@ ShallowWrapper {
                 "key": undefined,
                 "nodeType": "host",
                 "props": Object {
-                  "children": "December 8th 2017",
+                  "children": "December 10th 2017",
                 },
                 "ref": null,
-                "rendered": "December 8th 2017",
+                "rendered": "December 10th 2017",
                 "type": "p",
               },
               Object {

@@ -7,11 +7,9 @@ describe('RaceOptions component', () => {
     raceId: 999
     }
   }
-  const app = shallow(<RaceOptions props={props}/>)
-
+  const app = shallow(<RaceOptions race={props}/>)
 
   it('renders correctly', () => {
     expect(app).toMatchSnapshot()
   })
-
 })

@@ -15,15 +15,10 @@ export default class RaceOptions extends React.Component {
     }
   }
 
-  componentWillMount() {
-    this.setState({race: this.props.props, intro: this.props.intro })
-  }
-
-
   toggleHidden(e, elementToToggle) {
     e.preventDefault()
     let raceDetails = document.getElementById(elementToToggle)
-    let raceSection = document.getElementsByClassName(this.state.race.raceId)[0]
+    let raceSection = document.getElementsByClassName(this.props.race.raceId)[0]
     raceDetails.classList.toggle('hidden')
     raceSection.classList.toggle('selected')
   }
@@ -35,12 +30,12 @@ export default class RaceOptions extends React.Component {
   }
 
   render() {
-    let race = this.state.race
+    let race = this.props.race
     return (
       <div key={race.raceId} className="row single-round">
         <div className={`twelve columns round ${race.raceId}`}>
-          <h4 onClick={(e) => this.toggleHidden(e, race.raceId)}><a href="#">{(this.state.intro) ?
-            `${this.state.intro} the ${race.year} ${race.name}` :
+          <h4 onClick={(e) => this.toggleHidden(e, race.raceId)}><a href="#">{(this.props.intro) ?
+            `${this.props.intro} the ${race.year} ${race.name}` :
             `${race.round} - ${race.raceName || race.name}`}
           </a></h4>
           <div id={race.raceId} className={`toggle hidden`}>
@@ -61,7 +56,7 @@ export default class RaceOptions extends React.Component {
               <Results season={race.year} raceId={race.raceId} /> :
               null
             }
-            <p><a href={race.raceUrl}>{race.year} {race.raceName} on Wikipedia</a></p>
+            <p><a href={race.raceUrl || race.url}>{race.year} {race.raceName || race.name} on Wikipedia</a></p>
             <div className="separator"></div>
           </div>
         </div>

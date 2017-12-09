@@ -1,7 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
-import ListSeasons from './ListSeasons'
+import ListSeason from './ListSeason'
 
 export default class Home extends React.Component {
   constructor() {
@@ -16,15 +16,15 @@ export default class Home extends React.Component {
   }
 
   listSeasons(seasons) {
-    return seasons.map((season) => {
-      return <ListSeasons year={season.year} key={season.year} />
+    return seasons.map(({year}) => {
+      return <ListSeason year={year} key={year} />
     })
   }
 
   render() {
-    console.log('state', this.state)
-    console.log('this.state.seasons', this.state.seasons)
-    console.log('props', this.props)
+    console.log('state:', this.state)
+    console.log('this.state.seasons:', this.state.seasons)
+    console.log('props:', this.props)
     return (
         <div className="row">
           <div className="twelve columns home">
@@ -41,5 +41,4 @@ export default class Home extends React.Component {
         </div>
     )
   }
-
 }

@@ -116,7 +116,6 @@ class RunRace extends React.Component {
     let season = pathArray[2]
 
     pathArray[3] = Number(pathArray[3]) + 1
-    // console.log(`#/season/${season}/${pathArray[3]}/${pathArray[4]}`)
     return `/season/${season}/${pathArray[3]}/${pathArray[4]}`
   }
 
@@ -237,7 +236,7 @@ class RunRace extends React.Component {
           {this.state.allDrivers ? this.showRace(this.state.raceData) : '<p>Loading...</p>'}
           {/* <p><Link to={this.nextRaceLink()}>Next Race</Link></p> */}
           <div className="more-from">
-            <RaceOptions key={this.state.results[0].raceId} props={this.state.results[0]} intro='More from' />
+            <RaceOptions key={this.state.results[0].raceId} race={this.state.results[0]} intro='More from' />
           </div>
         </div>
       )

@@ -48,9 +48,22 @@ function getGrid (db, raceId) {
 
 function visualise (db, season, raceId) {
   return db('laptimes')
-    .select('*')
+    .select(
+      'laptimes.raceId',
+      'laptimes.position',
+      'laptimes.time',
+      'laptimes.milliseconds',
+      'laptimes.lap',
+      'races.url as raceUrl',
+      'races.year',
+      'races.name',
+      'drivers.driverId',
+      'drivers.forename',
+      'drivers.surname',
+      'drivers.url as driverUrl')
     .where('laptimes.raceId', raceId)
     .join('drivers', 'laptimes.driverId', '=', 'drivers.driverId')
+    .join('races', 'laptimes.raceId', '=', 'races.raceId')
     .orderBy('position', 'asc')
 }
 
@@ -83,7 +96,7 @@ function getRaceResults (db, season, raceId) {
 
 function getRaceInfo (db, season, raceId) {
   return db('races')
-    .select('*')
+    .select('races.url as raceUrl', '*')
     .where('races.raceId', raceId)
     .join('results', 'races.raceId', '=', 'results.raceId')
     .join('drivers', 'results.driverId', '=', 'drivers.driverId')

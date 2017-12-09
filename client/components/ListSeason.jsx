@@ -2,8 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-const ListSeasons = (props) => {
-  let year = props.year
+const ListSeason = ({year}) => {
   return (
     <li className="season">
       <Link to={`/season/${year}`}>{year}</Link>
@@ -11,4 +10,4 @@ const ListSeasons = (props) => {
   )
 }
 
-export default ListSeasons
+export default ListSeason
