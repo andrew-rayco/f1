@@ -27,7 +27,7 @@ export default class FullSeason extends React.Component {
     return races.map((race) => {
       return (
         <div key={`key${race.raceId}`}>
-          <RaceOptions key={race.raceId} props={race} visibility={toggleStatus} />
+          <RaceOptions key={race.raceId} race={race} visibility={toggleStatus} />
         </div>
       )
     })
