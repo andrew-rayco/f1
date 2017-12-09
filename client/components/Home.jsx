@@ -22,9 +22,9 @@ export default class Home extends React.Component {
   }
 
   render() {
-    console.log('state', this.state)
-    console.log('this.state.seasons', this.state.seasons)
-    console.log('props', this.props)
+    console.log('state:', this.state)
+    console.log('this.state.seasons:', this.state.seasons)
+    console.log('props:', this.props)
     return (
         <div className="row">
           <div className="twelve columns home">
@@ -41,5 +41,4 @@ export default class Home extends React.Component {
         </div>
     )
   }
-
 }
