@@ -1,7 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
-import ListSeasons from './ListSeasons'
+import ListSeason from './ListSeason'
 
 export default class Home extends React.Component {
   constructor() {
@@ -16,8 +16,8 @@ export default class Home extends React.Component {
   }
 
   listSeasons(seasons) {
-    return seasons.map((season) => {
-      return <ListSeasons year={season.year} key={season.year} />
+    return seasons.map(({year}) => {
+      return <ListSeason year={year} key={year} />
     })
   }
 

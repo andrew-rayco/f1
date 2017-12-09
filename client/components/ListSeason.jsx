@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-const ListSeasons = (props) => {
+const ListSeason = (props) => {
   let year = props.year
   return (
     <li className="season">
@@ -11,4 +11,4 @@ const ListSeasons = (props) => {
   )
 }
 
-export default ListSeasons
+export default ListSeason

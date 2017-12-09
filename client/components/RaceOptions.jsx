@@ -16,7 +16,10 @@ export default class RaceOptions extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({race: this.props.props, intro: this.props.intro })
+    this.setState({
+      race: this.props.race,
+      intro: this.props.intro
+    })
   }
 
 
@@ -61,7 +64,7 @@ export default class RaceOptions extends React.Component {
               <Results season={race.year} raceId={race.raceId} /> :
               null
             }
-            <p><a href={race.raceUrl}>{race.year} {race.raceName} on Wikipedia</a></p>
+            <p><a href={race.raceUrl || race.url}>{race.year} {race.raceName || race.name} on Wikipedia</a></p>
             <div className="separator"></div>
           </div>
         </div>
