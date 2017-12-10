@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import { Link } from 'react-router-dom'
 
 import Grid from './Grid'
 import Quali from './Quali'
@@ -29,6 +30,14 @@ export default class RaceOptions extends React.Component {
     e.target.classList.toggle('toggle-open')
   }
 
+  visualise(race) {
+    return (
+      <p>
+        <a href={`/#/season/${race.year}/${race.raceId}/visualise`}>Visualise</a>
+      </p>
+    )
+  }
+
   render() {
     let race = this.props.race
     return (
@@ -50,7 +59,9 @@ export default class RaceOptions extends React.Component {
               <Grid season={race.year} raceId={race.raceId} /> :
               null
             }
-            <p><a href={`/#/season/${race.year}/${race.raceId}/visualise`}>Visualise</a></p>
+
+            {this.props.intro ? null : this.visualise(race)}
+
             <p><a onClick={(e) => this.handleClick(e, 'resultsVisible')} href="#" className="togglable">Results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>
             {(this.state.resultsVisible) ?
               <Results season={race.year} raceId={race.raceId} /> :

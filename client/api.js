@@ -44,7 +44,7 @@ export function getVisData(seasonId, raceId, callback) {
   request
     .get(`/api-v1/season/${seasonId}/${raceId}/visualise`)
     .end((err, res) => {
-      err ? callback(err) : callback(res.body)
+      err ? callback(res.text) : callback(res.body || res.text)
     })
 }
 
