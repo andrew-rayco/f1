@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for client/helpers/retiredDrivers.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">client/helpers</a> retiredDrivers.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/28</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/28</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export function <span class="fstat-no" title="function not covered" >findRetiredDrivers(</span>lapData, results) {
+  var retiredDriversArray = <span class="cstat-no" title="statement not covered" >[]</span>
+&nbsp;
+  // Find all drivers with result positionText of 'R'
+  var driversWithR = <span class="cstat-no" title="statement not covered" >results.filter(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return result.positionText === 'R'</span>
+  })
+&nbsp;
+  // Push retired driver object to retiredDriversArray
+<span class="cstat-no" title="statement not covered" >  driversWithR.map(<span class="fstat-no" title="function not covered" >(r</span>etiredResult) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    retiredDriversArray.push({surname: retiredResult.surname, laps: retiredResult.laps, position: retiredResult.positionOrder})</span>
+  })
+&nbsp;
+  // Sort retiredDriversArray by laps completed
+  var sortedRetirees = <span class="cstat-no" title="statement not covered" >retiredDriversArray.sort(<span class="fstat-no" title="function not covered" >(a</span>, b) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (a.laps &gt;= b.laps) {</span>
+<span class="cstat-no" title="statement not covered" >      return 1</span>
+    }
+  })
+&nbsp;
+  let retireesInOrder = <span class="cstat-no" title="statement not covered" >[]</span>
+<span class="cstat-no" title="statement not covered" >  sortedRetirees.map(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    retireesInOrder.push(result)</span>
+  })
+<span class="cstat-no" title="statement not covered" >  return retireesInOrder</span>
+}
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >addRetiredLaps(</span>lapData, retiredDrivers, currentLap) {
+  // Find drivers who do not complete first lap, sorted by position
+  let driversDoNotCompleteFirstLap = <span class="cstat-no" title="statement not covered" >retiredDrivers.filter(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return result.laps == 0</span>
+  }).sort(<span class="fstat-no" title="function not covered" >(a</span>, b) =&gt; {
+<span class="cstat-no" title="statement not covered" >    if (a.laps &gt;= b.laps) {</span>
+<span class="cstat-no" title="statement not covered" >      return 1</span>
+    }
+  })
+&nbsp;
+  // If driver has retired, add to raceData
+  let allRetiredDrivers = <span class="cstat-no" title="statement not covered" >[]</span>
+<span class="cstat-no" title="statement not covered" >  retiredDrivers.forEach(<span class="fstat-no" title="function not covered" >(d</span>river) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    if (driver.laps &lt;= currentLap) {</span>
+<span class="cstat-no" title="statement not covered" >      allRetiredDrivers.unshift(driver)</span>
+    }
+  })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  allRetiredDrivers.forEach(<span class="fstat-no" title="function not covered" >(d</span>river) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    lapData.push(driver)</span>
+  })
+}
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >driverDoesNotRetire </span>(driver, retiredDrivers) {
+  let hasDriverRetired = <span class="cstat-no" title="statement not covered" >retiredDrivers.filter(<span class="fstat-no" title="function not covered" >(r</span>etiredDriver) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    return driver == retiredDriver.surname</span>
+  })
+<span class="cstat-no" title="statement not covered" >  return (hasDriverRetired.length &lt; 1) ? true : false</span>
+}
+&nbsp;
+export function <span class="fstat-no" title="function not covered" >hasDriverRetiredYet </span>(driver, retiredDrivers, currentLap) {
+    // Find result of retired driver
+    let driverResult = <span class="cstat-no" title="statement not covered" >retiredDrivers.filter(<span class="fstat-no" title="function not covered" >(r</span>etiredDriver) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      return driver == retiredDriver.surname</span>
+    })[0]
+&nbsp;
+    // Return true if drivers completed laps are &lt;= current race lap (if driver has retired)
+<span class="cstat-no" title="statement not covered" >    return(driverResult.laps &lt;= currentLap)</span>
+  }
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Dec 10 2017 03:27:09 GMT+1300 (NZDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

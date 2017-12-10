@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for client/components/RunRace.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">client/components</a> RunRace.jsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/88</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/36</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/88</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
+import React from 'react'
+import { Link } from 'react-router-dom'
+&nbsp;
+import * as api from '../api'
+import * as hVis from '../helpers/visualisation'
+import * as h from '../helpers/retiredDrivers'
+import RaceOptions from './RaceOptions'
+&nbsp;
+class RunRace extends React.Component {
+<span class="fstat-no" title="function not covered" >  co</span>nstructor(props) {
+<span class="cstat-no" title="statement not covered" >    super(props)</span>
+<span class="cstat-no" title="statement not covered" >    this.getAndSetRaceInfo()</span>
+<span class="cstat-no" title="statement not covered" >    this.state = {</span>
+      lap: 1,
+      visualIsRunning: false
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tAndSetRaceInfo () {
+    let location = <span class="cstat-no" title="statement not covered" >this.props.location.pathname</span>
+    let pathArray = <span class="cstat-no" title="statement not covered" >location.split('/')</span>
+    let season = <span class="cstat-no" title="statement not covered" >pathArray[2]</span>
+    let raceId = <span class="cstat-no" title="statement not covered" >pathArray[3]</span>
+<span class="cstat-no" title="statement not covered" >    api.getRaceDetails(season, raceId, <span class="fstat-no" title="function not covered" >(r</span>aceInfo) =&gt; {</span>
+      let raceWinner = <span class="cstat-no" title="statement not covered" >raceInfo.results.filter(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        return result.position === 1</span>
+      })[0]
+<span class="cstat-no" title="statement not covered" >      this.setState({</span>
+        raceName: raceInfo.results[0].name,
+        raceYear: raceInfo.results[0].year,
+        results: raceInfo.results,
+        winner: {
+          winningDriver: raceWinner.surname,
+          driverId: raceWinner.driverId,
+          winningTime: raceWinner.milliseconds,
+          laps: raceWinner.laps
+         }
+      })
+    })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    api.getVisData (season, raceId, <span class="fstat-no" title="function not covered" >(r</span>aceData) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.setState({ raceData })</span>
+<span class="cstat-no" title="statement not covered" >      this.setRaceDetails()</span>
+    })
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  se</span>tRaceDetails () {
+    let allDrivers = <span class="cstat-no" title="statement not covered" >hVis.getAllDriversInRace(this.state.raceData)</span>
+    let maxLaps = <span class="cstat-no" title="statement not covered" >this.state.winner.laps</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.setState({</span>
+      allDrivers,
+      maxLaps
+    })
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tAndSetRaceInfo () {
+    let location = <span class="cstat-no" title="statement not covered" >this.props.location.pathname</span>
+    let pathArray = <span class="cstat-no" title="statement not covered" >location.split('/')</span>
+    let season = <span class="cstat-no" title="statement not covered" >pathArray[2]</span>
+    let raceId = <span class="cstat-no" title="statement not covered" >pathArray[3]</span>
+<span class="cstat-no" title="statement not covered" >    api.getRaceDetails(season, raceId, <span class="fstat-no" title="function not covered" >(r</span>aceInfo) =&gt; {</span>
+      let raceWinner = <span class="cstat-no" title="statement not covered" >raceInfo.results.filter(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        return result.position === 1</span>
+      })[0]
+<span class="cstat-no" title="statement not covered" >      this.setState({</span>
+        raceName: raceInfo.results[0].name,
+        raceYear: raceInfo.results[0].year,
+        results: raceInfo.results,
+        winner: {
+          winningDriver: raceWinner.surname,
+          driverId: raceWinner.driverId,
+          winningTime: raceWinner.milliseconds,
+          laps: raceWinner.laps
+         }
+      })
+    })
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    api.getVisData(season, raceId, <span class="fstat-no" title="function not covered" >(r</span>aceData) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      this.setState({ raceData })</span>
+<span class="cstat-no" title="statement not covered" >      this.setRaceDetails()</span>
+    })
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ca</span>lcWidth (driver, winner) {
+    var totalRaceTime = <span class="cstat-no" title="statement not covered" >this.state.winner.winningTime</span>
+<span class="cstat-no" title="statement not covered" >    if (driver == winner) {</span>
+<span class="cstat-no" title="statement not covered" >      return (this.state.allDrivers[winner] / totalRaceTime * 100) + (this.state.allDrivers[winner] / totalRaceTime * 100 / this.state.maxLaps)</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100) + ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100 / this.state.maxLaps)</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  fi</span>ndDistanceFromWinner (driver, winner) {
+    var totalRaceTime = <span class="cstat-no" title="statement not covered" >this.state.winner.winningTime</span>
+<span class="cstat-no" title="statement not covered" >    return this.state.allDrivers[winner] - this.state.allDrivers[driver]</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ge</span>tCurrentDriverLap (driver, lap) {
+    var toFind = <span class="cstat-no" title="statement not covered" >{lap: this.state.lap, surname: driver}</span>
+    var currentDriverLap = <span class="cstat-no" title="statement not covered" >this.state.raceData.filter(<span class="fstat-no" title="function not covered" >(l</span>ap) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      for(var key in toFind) {</span>
+<span class="cstat-no" title="statement not covered" >        if(lap[key] !== toFind[key]) {</span>
+<span class="cstat-no" title="statement not covered" >          return false</span>
+        }
+      }
+<span class="cstat-no" title="statement not covered" >      return true</span>
+    })
+<span class="cstat-no" title="statement not covered" >    return currentDriverLap[0] || { milliseconds: 0 }</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ne</span>xtRaceLink () {
+    let location = <span class="cstat-no" title="statement not covered" >this.props.location.pathname</span>
+    let pathArray = <span class="cstat-no" title="statement not covered" >location.split('/')</span>
+    let season = <span class="cstat-no" title="statement not covered" >pathArray[2]</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    pathArray[3] = Number(pathArray[3]) + 1</span>
+<span class="cstat-no" title="statement not covered" >    return `/season/${season}/${pathArray[3]}/${pathArray[4]}`</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  ha</span>ndleClick () {
+<span class="cstat-no" title="statement not covered" >    if (this.state.visualIsRunning) {</span>
+<span class="cstat-no" title="statement not covered" >      clearInterval(lapTicker)</span>
+<span class="cstat-no" title="statement not covered" >      console.log('this should be working')</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      this.setState({visualIsRunning: true})</span>
+      var lapTicker = <span class="cstat-no" title="statement not covered" >setInterval(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        if (this.state.lap &lt; this.state.maxLaps) {</span>
+          var newAllDrivers = <span class="cstat-no" title="statement not covered" >{}</span>
+<span class="cstat-no" title="statement not covered" >          for (var key in this.state.allDrivers) {</span>
+            var currentDriverLap = <span class="cstat-no" title="statement not covered" >this.getCurrentDriverLap(key, this.state.lap)</span>
+<span class="cstat-no" title="statement not covered" >            newAllDrivers[key] = this.state.allDrivers[key] + currentDriverLap.milliseconds</span>
+          }
+<span class="cstat-no" title="statement not covered" >          this.setState({</span>
+            allDrivers: newAllDrivers,
+            lap: this.state.lap + 1
+          })
+        } else {
+<span class="cstat-no" title="statement not covered" >          clearInterval(lapTicker)</span>
+        }
+      }, 150)
+&nbsp;
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  sh</span>owRace (data) {
+    var winner = <span class="cstat-no" title="statement not covered" >this.state.winner.winningDriver</span>
+    var totalRaceTime = <span class="cstat-no" title="statement not covered" >this.state.winner.winningTime</span>
+    var totalRaceLaps = <span class="cstat-no" title="statement not covered" >this.state.maxLaps</span>
+    let allDrivers = <span class="cstat-no" title="statement not covered" >this.state.allDrivers</span>
+    let lapData = <span class="cstat-no" title="statement not covered" >this.state.raceData.filter(<span class="fstat-no" title="function not covered" >(l</span>ap) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      return lap.lap === this.state.lap</span>
+    })
+&nbsp;
+    // DEAL WITH LAPPED DRIVERS
+    // 1. Find drivers where result.positionText != 'R'
+    let unretiredDrivers = <span class="cstat-no" title="statement not covered" >this.state.results.filter(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      return result.positionText != 'R'</span>
+    })
+    let lappedDrivers = <span class="cstat-no" title="statement not covered" >unretiredDrivers.filter(<span class="fstat-no" title="function not covered" >(r</span>esult) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      return result.laps &lt; this.state.maxLaps</span>
+    })
+<span class="cstat-no" title="statement not covered" >    lappedDrivers.forEach(<span class="fstat-no" title="function not covered" >(d</span>river) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (driver.laps &lt; this.state.lap) {</span>
+<span class="cstat-no" title="statement not covered" >        lapData.push(driver)</span>
+      }
+    }) + 1
+    var retiredDrivers = <span class="cstat-no" title="statement not covered" >h.findRetiredDrivers(lapData, this.state.results)</span>
+&nbsp;
+    // Add retired last laps to the lapData
+<span class="cstat-no" title="statement not covered" >    h.addRetiredLaps(lapData, retiredDrivers, this.state.lap)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (this.state.lap === this.state.maxLaps) {</span>
+<span class="cstat-no" title="statement not covered" >      lapData = this.state.results</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return lapData.map(<span class="fstat-no" title="function not covered" >(d</span>riverLap, i) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >      if (h.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !h.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {</span>
+<span class="cstat-no" title="statement not covered" >        if (this.state.lap &gt; this.state.maxLaps * .20) {</span>
+<span class="cstat-no" title="statement not covered" >          return (</span>
+            &lt;div key={i} className="driver"&gt;
+              &lt;div className={driverLap.surname, `driverBar`}&gt;
+                &lt;div className="vis-color" style={{
+                  width: this.calcWidth(driverLap.surname, this.state.winner.winningDriver, this.state.allDrivers) + '%'
+                }}&gt;{driverLap.position || driverLap.positionText}: {driverLap.surname}&lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          )
+        } else {
+<span class="cstat-no" title="statement not covered" >          return (</span>
+            &lt;div key={i} className="driver"&gt;
+              &lt;div className={driverLap.surname, `driverBar`}&gt;
+                {driverLap.position || driverLap.positionText}: {driverLap.surname}
+                &lt;div className="vis-color" style={{
+                  width: this.calcWidth(driverLap.surname, this.state.winner.winningDriver, this.state.allDrivers) + '%'
+                }}&gt;&amp;nbsp;&lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          )
+        }
+      } else <span class="cstat-no" title="statement not covered" >if (h.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {</span>
+<span class="cstat-no" title="statement not covered" >        if (driverLap.laps &lt; this.state.maxLaps * .40) {</span>
+<span class="cstat-no" title="statement not covered" >          return (</span>
+            &lt;div key={i} className="driver"&gt;
+              &lt;div className={'driverBar ' + driverLap.surname} &gt;
+                {driverLap.position || driverLap.positionOrder}: {driverLap.surname} - Lap {driverLap.laps}
+                &lt;div className="vis-color" style={{
+                  width: (this.state.allDrivers[driverLap.surname] / totalRaceTime) * 100 + '%', backgroundColor: 'red'
+                }}&gt;&amp;nbsp;&lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          )
+        } else {
+<span class="cstat-no" title="statement not covered" >          return (</span>
+            &lt;div key={i} className="driver"&gt;
+              &lt;div className={'driverBar ' + driverLap.surname} &gt;&lt;div className="vis-color" style={{
+                  width: (this.state.allDrivers[driverLap.surname] / totalRaceTime) * 100 + '%', backgroundColor: 'red'
+                }}&gt;{driverLap.position || driverLap.positionOrder}: {driverLap.surname} - Lap {driverLap.laps}&lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          )
+        }
+      }
+    })
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  re</span>nder () {
+<span class="cstat-no" title="statement not covered" >    if (this.state.raceData) {</span>
+<span class="cstat-no" title="statement not covered" >      return (</span>
+        &lt;div className="race"&gt;
+          &lt;h2&gt;{this.state.raceYear} {this.state.raceName}&lt;/h2&gt;
+          &lt;button onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >this.handleClick()}</span>&gt;Start visualisation&lt;/button&gt;
+          &lt;p className="beta"&gt;This feature is in beta.&lt;/p&gt;
+          &lt;h3&gt;Lap {this.state.lap} of {this.state.maxLaps}&lt;/h3&gt;
+          {this.state.allDrivers ? this.showRace(this.state.raceData) : '&lt;p&gt;Loading...&lt;/p&gt;'}
+          {/* &lt;p&gt;&lt;Link to={this.nextRaceLink()}&gt;Next Race&lt;/Link&gt;&lt;/p&gt; */}
+          &lt;div className="more-from"&gt;
+            &lt;RaceOptions key={this.state.results[0].raceId} race={this.state.results[0]} intro='More from' /&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      )
+    } else {
+<span class="cstat-no" title="statement not covered" >      return (</span>
+        &lt;div&gt;
+          Sorry. Visualisation isn't possible for this event. &lt;br/&gt;
+          This feature needs data that only started becoming available mid-2011.
+        &lt;/div&gt;
+      )
+    }
+  }
+}
+&nbsp;
+export default RunRace
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Dec 10 2017 03:27:09 GMT+1300 (NZDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
