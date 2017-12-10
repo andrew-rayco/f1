@@ -194,14 +194,13 @@ table {
 
 .driver {
   text-align: left;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  border-left: 1px solid #56bba7;
-  border-right: 4px solid #56bba7;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  border-left: 1px solid #eee;
+  border-right: 4px solid #eee;
   margin-bottom: .5em;
   overflow: hidden;
   z-index: 1;
-  /*border-radius: 4px;*/
 }
 
 .driverBar {
