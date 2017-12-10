@@ -10,11 +10,14 @@ import RaceOptions from './RaceOptions'
 class RunRace extends React.Component {
   constructor(props) {
     super(props)
-    this.getAndSetRaceInfo()
     this.state = {
       lap: 1,
       visualIsRunning: false
     }
+  }
+
+  componentWillMount() {
+    this.getAndSetRaceInfo()
   }
 
   getAndSetRaceInfo () {
@@ -41,7 +44,7 @@ class RunRace extends React.Component {
 
     api.getVisData (season, raceId, (raceData) => {
       this.setState({ raceData })
-      this.setRaceDetails()
+      raceData == 'no-laptime-data' ? null : this.setRaceDetails()
     })
   }
 
@@ -52,34 +55,6 @@ class RunRace extends React.Component {
     this.setState({
       allDrivers,
       maxLaps
-    })
-  }
-
-  getAndSetRaceInfo () {
-    let location = this.props.location.pathname
-    let pathArray = location.split('/')
-    let season = pathArray[2]
-    let raceId = pathArray[3]
-    api.getRaceDetails(season, raceId, (raceInfo) => {
-      let raceWinner = raceInfo.results.filter((result) => {
-        return result.position === 1
-      })[0]
-      this.setState({
-        raceName: raceInfo.results[0].name,
-        raceYear: raceInfo.results[0].year,
-        results: raceInfo.results,
-        winner: {
-          winningDriver: raceWinner.surname,
-          driverId: raceWinner.driverId,
-          winningTime: raceWinner.milliseconds,
-          laps: raceWinner.laps
-         }
-      })
-    })
-
-    api.getVisData(season, raceId, (raceData) => {
-      this.setState({ raceData })
-      this.setRaceDetails()
     })
   }
 
@@ -226,7 +201,7 @@ class RunRace extends React.Component {
   }
 
   render () {
-    if (this.state.raceData) {
+    if (this.state.raceData && this.state.raceData !== 'no-laptime-data') {
       return (
         <div className="race">
           <h2>{this.state.raceYear} {this.state.raceName}</h2>
@@ -240,12 +215,17 @@ class RunRace extends React.Component {
           </div>
         </div>
       )
-    } else {
+    } else if (this.state.raceData == 'no-laptime-data') {
       return (
         <div>
-          Sorry. Visualisation isn't possible for this event. <br/>
-          This feature needs data that only started becoming available mid-2011.
+          <p>Sorry. Visualisation isn't possible for this event. <br/>
+          This feature needs data that only started becoming available mid-2011.</p>
+          <RaceOptions key={this.state.results[0].raceId} race={this.state.results[0]} intro='See other info from' />
         </div>
+      )
+    } else {
+      return (
+        <p>Loading...</p>
       )
     }
   }
