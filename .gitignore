@@ -1,3 +1,4 @@
 node_modules
 dev.sqlite3
 f1db.sql
+coverage
