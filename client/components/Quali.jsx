@@ -34,7 +34,8 @@ export default class Quali extends React.Component {
   }
 
   render() {
-    if (this.state.qualifyingData) {
+    let qualiData = this.state.qualifyingData
+    if (qualiData && !qualiData.noData) {
       var quali = this.state.qualifyingData
       return (
         <div className="quali-results sub-section">
@@ -57,11 +58,13 @@ export default class Quali extends React.Component {
           </table>
         </div>
       )
-    } else {
+    } else if (qualiData && qualiData.noData) {
       return <div>
         <div className="no-data">Sorry, there is no data here. <br/>
         The event is either too old for the data to exist, or too new for this app that is manually updated by an ageing sloth-beast.</div>
       </div>
+    } else {
+      return <div>Loading...</div>
     }
   }
 }

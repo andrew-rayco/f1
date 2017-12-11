@@ -52,10 +52,11 @@ router.get('/season/:id/:raceId/qualifying', (req, res) => {
   var raceId = req.params.raceId
   dbFunctions.getQualifyingResults(db, season, raceId)
     .then((qualifyingData) => {
+      console.log(qualifyingData)
       if (qualifyingData[0]) {
         res.json({qualifyingData, raceName:qualifyingData[0].raceName})
       } else {
-        res.send('no-laptime-data')
+        res.json({ noData: true })
       }
     })
     .catch((err) => {
