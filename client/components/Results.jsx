@@ -2,6 +2,7 @@ import React from 'react'
 
 import * as api from '../api'
 import RaceOptions from './RaceOptions'
+import Loading from './Loading'
 
 export default class Results extends React.Component {
   constructor() {
@@ -22,10 +23,18 @@ export default class Results extends React.Component {
     return results.map((driverResult) => {
       return (
         <tr key={driverResult.resultId}>
-          <td><strong>{driverResult.position}</strong></td>
-          <td><a href={driverResult.driverUrl}>{driverResult.forename} {driverResult.surname}</a></td>
-          <td><a href={driverResult.constructorUrl}>{driverResult.constructorName}</a></td>
-          <td>{driverResult.raceTime ? driverResult.raceTime : `+ ${(this.state.results[0].laps - driverResult.laps)} laps`}</td>
+          <td>
+            <strong>{driverResult.position}</strong>
+          </td>
+          <td>
+            <a href={driverResult.driverUrl}>{driverResult.forename} {driverResult.surname}</a>
+          </td>
+          <td>
+            <a href={driverResult.constructorUrl}>{driverResult.constructorName}</a>
+          </td>
+          <td>{driverResult.raceTime
+              ? driverResult.raceTime
+              : `+ ${ (this.state.results[0].laps - driverResult.laps)} laps`}</td>
           <td>{this.highlightFastestLap(driverResult.fastestLapTime, fastestLap)}</td>
         </tr>
       )
@@ -56,34 +65,38 @@ export default class Results extends React.Component {
     }
   }
 
+  buildResultsTable() {
+    let results = this.state.results
+    return (
+      <div className="content">
+        <h2>{results[0].raceYear} {results[0].raceName}</h2>
+        <h3>Race results</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Driver</th>
+              <th>Team</th>
+              <th>Race Time</th>
+              <th>Fastest lap</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.listResults(results)}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
   render() {
-    if (this.state.results) {
-      let results = this.state.results
-      return (
-        <div className="results sub-section" id="unblur">
-          <div className="content">
-            <h2>{results[0].raceYear} {results[0].raceName}</h2>
-            <h3>Race results</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Position</th>
-                  <th>Driver</th>
-                  <th>Team</th>
-                  <th>Race Time</th>
-                  <th>Fastest lap</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.listResults(results)}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )
-    } else {
-      return <div></div>
-    }
+    return (
+      <div className="results sub-section" id="unblur">
+        {this.state.results
+          ? this.buildResultsTable()
+          : <Loading/>}
+      </div>
+    )
   }
 
 }

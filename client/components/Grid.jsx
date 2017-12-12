@@ -2,6 +2,7 @@ import React from 'react'
 
 import * as api from '../api'
 import RaceOptions from './RaceOptions'
+import Loading from './Loading'
 
 export default class Grid extends React.Component {
   constructor() {
@@ -72,7 +73,7 @@ export default class Grid extends React.Component {
       )
     } else {
       console.log('Renders an empty div before this.state.grid is defined. As expected.')
-      return <div></div>
+      return <Loading />
     }
   }
 
