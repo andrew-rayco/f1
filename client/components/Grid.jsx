@@ -3,7 +3,6 @@ import React from 'react'
 import * as api from '../api'
 import * as h from '../helpers/helpers'
 import RaceOptions from './RaceOptions'
-import Loading from './Loading'
 
 export default class Grid extends React.Component {
   constructor() {
