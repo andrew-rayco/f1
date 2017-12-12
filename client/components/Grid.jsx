@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
+import * as h from '../helpers/helpers'
 import RaceOptions from './RaceOptions'
 import Loading from './Loading'
 
@@ -70,9 +71,9 @@ export default class Grid extends React.Component {
   render() {
     return (
       <div className="grid sub-section">
-        {this.state.grid
+        {this.state.grid && !this.state.grid.noData
           ? this.buildGridTable()
-          : <Loading />}
+          : h.handleLoadingOrError(this.state.grid)}
       </div>
     )
   }

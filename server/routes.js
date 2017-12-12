@@ -74,7 +74,7 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
       if (gridData[0]) {
         res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
-        res.send('no-laptime-data')
+        res.json({ noData: true })
       }
     })
     .catch((err) => {

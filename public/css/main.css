@@ -173,10 +173,16 @@ table {
 }
 
 .no-data {
-  color: #3A3937;
-  padding: 1em;
+  /*color: #3A3937;*/
+  padding: 2em;
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+.no-data p {
+  text-transform: none;
   margin-bottom: 1em;
-  background: #E8C3CC;
+  letter-spacing: normal;
 }
 
 .center {
