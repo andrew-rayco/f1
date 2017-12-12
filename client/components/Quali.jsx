@@ -2,6 +2,7 @@ import React from 'react'
 
 import * as api from '../api'
 import RaceOptions from './RaceOptions'
+import Loading from './Loading'
 
 export default class Quali extends React.Component {
   constructor() {
@@ -64,7 +65,7 @@ export default class Quali extends React.Component {
         The event is either too old for the data to exist, or too new for this app that is manually updated by an ageing sloth-beast.</div>
       </div>
     } else {
-      return <div>Loading...</div>
+      return <Loading />
     }
   }
 }
