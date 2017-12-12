@@ -91,10 +91,10 @@ export default class Results extends React.Component {
 
   render() {
     return (
-      <div className="results sub-section" id="unblur">
+      <div className="results sub-section">
         {this.state.results
           ? this.buildResultsTable()
-          : <Loading/>}
+          : <Loading />}
       </div>
     )
   }

@@ -45,36 +45,36 @@ export default class Grid extends React.Component {
     })
   }
 
+  buildGridTable() {
+    let grid = this.state.grid.gridData
+    return (
+      <div className="content">
+        <h2>{grid[0].year} {grid[0].raceName}</h2>
+        <h3>Starting Grid</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Driver</th>
+              <th>Team</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.listGrid(grid)}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
   render() {
-    console.log('this.state:', this.state)
-    if (this.state.grid) {
-      let grid = this.state.grid.gridData
-      console.log('typeof this.state.grid.gridData:', typeof grid, '(should be an array!?)')
-      console.log('this.state.grid.gridData[0]:', this.state.grid.gridData[0])
-      return (
-        <div className="grid sub-section">
-          <div className="content">
-            <h2>{grid[0].year} {grid[0].raceName}</h2>
-            <h3>Starting Grid</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Position</th>
-                  <th>Driver</th>
-                  <th>Team</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.listGrid(grid)}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )
-    } else {
-      console.log('Renders an empty div before this.state.grid is defined. As expected.')
-      return <Loading />
-    }
+    return (
+      <div className="grid sub-section">
+        {this.state.grid
+          ? this.buildGridTable()
+          : <Loading />}
+      </div>
+    )
   }
 
 }
