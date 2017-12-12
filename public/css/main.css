@@ -132,6 +132,7 @@ table {
   background: #EBEDE7;
   margin-top: 1em;
   padding-top: 1em;
+  box-shadow: inset 0px 11px 20px -10px #ccc, inset 0 -11px 20px -10px #ccc;
 }
 
 .toggle-image {
@@ -165,6 +166,10 @@ table {
 .results {
   padding: 2em 0 1em;
   margin-bottom: 2em;
+}
+
+.content {
+  animation: fadeIn 1s;
 }
 
 .no-data {
@@ -246,4 +251,27 @@ table {
 
 .hidden {
   display: none;
+}
+
+
+/* Other  */
+.loading {
+  display: flex;
+  margin-top: -1em;
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
 }

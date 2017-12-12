@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
+import Loading from './Loading'
 
 export default class Circuits extends React.Component {
   constructor() {
@@ -30,24 +31,30 @@ export default class Circuits extends React.Component {
     })
   }
 
+  buildCircuitTable() {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Country</th>
+            <th>Circuit name</th>
+            <th>Locality</th>
+            <th>Map</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.listCircuits(this.state.circuits)}
+        </tbody>
+      </table>
+    )
+  }
+
   render() {
     return (
       <div className="circuit-list">
         <h2>Circuits</h2>
         <h3>Every circuit in the history of Formula 1</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Country</th>
-              <th>Circuit name</th>
-              <th>Locality</th>
-              <th>Map</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.circuits ? this.listCircuits(this.state.circuits) : <tr><td>Loading...</td></tr> }
-          </tbody>
-        </table>
+        {this.state.circuits ? this.buildCircuitTable() : <Loading /> }
       </div>
     )
   }

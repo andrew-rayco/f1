@@ -3,7 +3,7 @@ import React from 'react'
 const Loading = () => {
   return (
     <div className="loading">
-      <p>Loading</p>
+      <img className="center" src="/images/rolling.svg" alt="loading icon"/>
     </div>
   )
 }

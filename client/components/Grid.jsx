@@ -52,20 +52,22 @@ export default class Grid extends React.Component {
       console.log('this.state.grid.gridData[0]:', this.state.grid.gridData[0])
       return (
         <div className="grid sub-section">
-          <h2>{grid[0].year} {grid[0].raceName}</h2>
-          <h3>Starting Grid</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Driver</th>
-                <th>Team</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.listGrid(grid)}
-            </tbody>
-          </table>
+          <div className="content">
+            <h2>{grid[0].year} {grid[0].raceName}</h2>
+            <h3>Starting Grid</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Position</th>
+                  <th>Driver</th>
+                  <th>Team</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.listGrid(grid)}
+              </tbody>
+            </table>
+          </div>
         </div>
       )
     } else {

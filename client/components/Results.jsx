@@ -10,10 +10,6 @@ export default class Results extends React.Component {
   }
 
   componentWillMount() {
-    // let location = this.props.location.pathname
-    // let pathArray = location.split('/')
-    // let season = pathArray[2]
-    // let raceId = pathArray[3]
     let season = this.props.season
     let raceId = this.props.raceId
     api.getRaceResults(season, raceId, (results) => {
@@ -60,29 +56,29 @@ export default class Results extends React.Component {
     }
   }
 
-
-
   render() {
     if (this.state.results) {
       let results = this.state.results
       return (
         <div className="results sub-section" id="unblur">
-          <h2>{results[0].raceYear} {results[0].raceName}</h2>
-          <h3>Race results</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Driver</th>
-                <th>Team</th>
-                <th>Race Time</th>
-                <th>Fastest lap</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.listResults(results)}
-            </tbody>
-          </table>
+          <div className="content">
+            <h2>{results[0].raceYear} {results[0].raceName}</h2>
+            <h3>Race results</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Position</th>
+                  <th>Driver</th>
+                  <th>Team</th>
+                  <th>Race Time</th>
+                  <th>Fastest lap</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.listResults(results)}
+              </tbody>
+            </table>
+          </div>
         </div>
       )
     } else {

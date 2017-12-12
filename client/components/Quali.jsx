@@ -40,23 +40,25 @@ export default class Quali extends React.Component {
       var quali = this.state.qualifyingData
       return (
         <div className="quali-results sub-section">
-          <h2>{quali.qualifyingData[0].year} {quali.raceName}</h2>
-          <h3>Qualifying results</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Driver</th>
-                <th>Team</th>
-                <th>Q1</th>
-                <th>Q2</th>
-                <th>Q3</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.listResults(quali)}
-            </tbody>
-          </table>
+          <div className="content">
+            <h2>{quali.qualifyingData[0].year} {quali.raceName}</h2>
+            <h3>Qualifying results</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Position</th>
+                  <th>Driver</th>
+                  <th>Team</th>
+                  <th>Q1</th>
+                  <th>Q2</th>
+                  <th>Q3</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.listResults(quali)}
+              </tbody>
+            </table>
+          </div>
         </div>
       )
     } else if (qualiData && qualiData.noData) {
