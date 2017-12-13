@@ -147,9 +147,9 @@ class RunRace extends React.Component {
     // Add retired last laps to the lapData
     hRet.addRetiredLaps(lapData, retiredDrivers, this.state.lap)
 
-    if (this.state.lap === this.state.maxLaps) {
-      lapData = this.state.results
-    }
+    // if (this.state.lap === this.state.maxLaps) {
+    //   lapData = this.state.results
+    // }
 
     return lapData.map((driverLap, i) => {
       if (hRet.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !hRet.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
@@ -203,15 +203,16 @@ class RunRace extends React.Component {
 
   render () {
     let raceData = this.state.raceData
+    let st = this.state
     if (raceData && !raceData.noData) {
       let race = this.state.results[0]
       return (
         <div className="race">
-          <h2>{this.state.raceYear} {this.state.raceName}</h2>
+          <h2>{st.raceYear} {st.raceName}</h2>
           <button onClick={() => this.handleClick()}>Start visualisation</button>
           <p className="beta">This feature is in beta.</p>
-          <h3>Lap {this.state.lap} of {this.state.maxLaps}</h3>
-          {this.state.allDrivers ? this.showRace(raceData) : <Loading />}
+          <h3>Lap {st.lap} of {st.maxLaps}</h3>
+          {st.allDrivers ? this.showRace(raceData) : <Loading />}
           {/* <p><Link to={this.nextRaceLink()}>Next Race</Link></p> */}
           <div className="more-from">
             <RaceOptions key={race.raceId} race={race} intro='More from' />
