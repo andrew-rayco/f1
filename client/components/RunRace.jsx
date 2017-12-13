@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 
 import * as api from '../api'
 import * as hVis from '../helpers/visualisation'
-import * as h from '../helpers/retiredDrivers'
+import * as hRet from '../helpers/retiredDrivers'
 import RaceOptions from './RaceOptions'
+import Loading from './Loading'
 
 class RunRace extends React.Component {
   constructor(props) {
@@ -58,32 +59,32 @@ class RunRace extends React.Component {
     })
   }
 
-  calcWidth (driver, winner) {
-    var totalRaceTime = this.state.winner.winningTime
-    if (driver == winner) {
-      return (this.state.allDrivers[winner] / totalRaceTime * 100) + (this.state.allDrivers[winner] / totalRaceTime * 100 / this.state.maxLaps)
-    } else {
-      return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100) + ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100 / this.state.maxLaps)
-    }
-  }
+  // calcWidth (driver, winner) {
+  //   var totalRaceTime = this.state.winner.winningTime
+  //   if (driver == winner) {
+  //     return (this.state.allDrivers[winner] / totalRaceTime * 100) + (this.state.allDrivers[winner] / totalRaceTime * 100 / this.state.maxLaps)
+  //   } else {
+  //     return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100) + ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100 / this.state.maxLaps)
+  //   }
+  // }
 
-  findDistanceFromWinner (driver, winner) {
-    var totalRaceTime = this.state.winner.winningTime
-    return this.state.allDrivers[winner] - this.state.allDrivers[driver]
-  }
+  // findDistanceFromWinner (driver, winner) {
+  //   var totalRaceTime = this.state.winner.winningTime
+  //   return this.state.allDrivers[winner] - this.state.allDrivers[driver]
+  // }
 
-  getCurrentDriverLap (driver, lap) {
-    var toFind = {lap: this.state.lap, surname: driver}
-    var currentDriverLap = this.state.raceData.filter((lap) => {
-      for(var key in toFind) {
-        if(lap[key] !== toFind[key]) {
-          return false
-        }
-      }
-      return true
-    })
-    return currentDriverLap[0] || { milliseconds: 0 }
-  }
+  // getCurrentDriverLap (driver, lap) {
+  //   var toFind = {lap: this.state.lap, surname: driver}
+  //   var currentDriverLap = this.state.raceData.filter((lap) => {
+  //     for(var key in toFind) {
+  //       if(lap[key] !== toFind[key]) {
+  //         return false
+  //       }
+  //     }
+  //     return true
+  //   })
+  //   return currentDriverLap[0] || { milliseconds: 0 }
+  // }
 
   nextRaceLink () {
     let location = this.props.location.pathname
@@ -104,7 +105,7 @@ class RunRace extends React.Component {
         if (this.state.lap < this.state.maxLaps) {
           var newAllDrivers = {}
           for (var key in this.state.allDrivers) {
-            var currentDriverLap = this.getCurrentDriverLap(key, this.state.lap)
+            var currentDriverLap = hVis.getCurrentDriverLap(key, this.state.lap, this.state.raceData)
             newAllDrivers[key] = this.state.allDrivers[key] + currentDriverLap.milliseconds
           }
           this.setState({
@@ -141,23 +142,23 @@ class RunRace extends React.Component {
         lapData.push(driver)
       }
     }) + 1
-    var retiredDrivers = h.findRetiredDrivers(lapData, this.state.results)
+    var retiredDrivers = hRet.findRetiredDrivers(lapData, this.state.results)
 
     // Add retired last laps to the lapData
-    h.addRetiredLaps(lapData, retiredDrivers, this.state.lap)
+    hRet.addRetiredLaps(lapData, retiredDrivers, this.state.lap)
 
     if (this.state.lap === this.state.maxLaps) {
       lapData = this.state.results
     }
 
     return lapData.map((driverLap, i) => {
-      if (h.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !h.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
+      if (hRet.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !hRet.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
         if (this.state.lap > this.state.maxLaps * .20) {
           return (
             <div key={i} className="driver">
               <div className={driverLap.surname, `driverBar`}>
                 <div className="vis-color" style={{
-                  width: this.calcWidth(driverLap.surname, this.state.winner.winningDriver, this.state.allDrivers) + '%'
+                  width: hVis.calcWidth(driverLap.surname, this.state.winner.winningDriver, this.state.allDrivers, this.state.winner.winningTime, this.state.maxLaps) + '%'
                 }}>{driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
               </div>
             </div>
@@ -168,13 +169,13 @@ class RunRace extends React.Component {
               <div className={driverLap.surname, `driverBar`}>
                 {driverLap.position || driverLap.positionText}: {driverLap.surname}
                 <div className="vis-color" style={{
-                  width: this.calcWidth(driverLap.surname, this.state.winner.winningDriver, this.state.allDrivers) + '%'
+                  width: hVis.calcWidth(driverLap.surname, this.state.winner.winningDriver, this.state.allDrivers, this.state.winner.winningTime, this.state.maxLaps) + '%'
                 }}>&nbsp;</div>
               </div>
             </div>
           )
         }
-      } else if (h.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
+      } else if (hRet.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
         if (driverLap.laps < this.state.maxLaps * .40) {
           return (
             <div key={i} className="driver">
@@ -225,7 +226,7 @@ class RunRace extends React.Component {
       )
     } else {
       return (
-        <p>Loading...</p>
+        <Loading />
       )
     }
   }

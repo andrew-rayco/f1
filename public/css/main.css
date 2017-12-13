@@ -1,10 +1,25 @@
+@font-face {
+  font-family: 'Martel-Regular';
+  src: url('/fonts/Martel-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto-Condensed-Light';
+  src: url('/fonts/RobotoCondensed-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
 h1, h2, h3, h4, h5 {
   color: #272623;
-  font-family: 'Martel';
+  font-family: 'Martel-Regular', serif;
   font-weight: 300;
   line-height: 52px;
   margin-bottom: 48px;
   text-align: center;
+  animation: fadeIn 0.5s;
 }
 
 h1 {
@@ -31,9 +46,9 @@ h5 {
 
 p {
   color: #272623;
-  font-family: 'Roboto Condensed';
+  font-family: 'Roboto-Condensed-Light', sans-serif;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 24px;
   letter-spacing: 3px;
   margin-bottom: 48px;
@@ -128,10 +143,15 @@ table {
   background: #F0F1ED;
 }
 
+.selected > div {
+  animation: fadeIn 0.7s;
+}
+
 .sub-section {
   background: #EBEDE7;
   margin-top: 1em;
   padding-top: 1em;
+  box-shadow: inset 0px 11px 20px -10px #ccc, inset 0 -11px 20px -10px #ccc;
 }
 
 .toggle-image {
@@ -167,11 +187,21 @@ table {
   margin-bottom: 2em;
 }
 
+.content {
+  animation: fadeIn 1s;
+}
+
 .no-data {
-  color: #3A3937;
-  padding: 1em;
+  /*color: #3A3937;*/
+  padding: 2em;
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+.no-data p {
+  text-transform: none;
   margin-bottom: 1em;
-  background: #E8C3CC;
+  letter-spacing: normal;
 }
 
 .center {
@@ -222,6 +252,7 @@ table {
 
 .race {
   text-align: center;
+  animation: fadeIn 1s
 }
 
 .race h3 {
@@ -246,4 +277,27 @@ table {
 
 .hidden {
   display: none;
+}
+
+
+/* Other  */
+.loading {
+  display: flex;
+  margin-top: -1em;
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
 }

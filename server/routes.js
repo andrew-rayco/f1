@@ -52,10 +52,11 @@ router.get('/season/:id/:raceId/qualifying', (req, res) => {
   var raceId = req.params.raceId
   dbFunctions.getQualifyingResults(db, season, raceId)
     .then((qualifyingData) => {
+      console.log(qualifyingData)
       if (qualifyingData[0]) {
         res.json({qualifyingData, raceName:qualifyingData[0].raceName})
       } else {
-        res.send('no-laptime-data')
+        res.json({ noData: true })
       }
     })
     .catch((err) => {
@@ -73,7 +74,7 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
       if (gridData[0]) {
         res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
-        res.send('no-laptime-data')
+        res.json({ noData: true })
       }
     })
     .catch((err) => {
@@ -126,8 +127,12 @@ router.get('/season/:id/:raceId/results', (req, res) => {
   var raceId = req.params.raceId
     dbFunctions.getRaceResults(db, id, raceId)
     .then((results) => {
-      let newResults = functions.cleanResults(results)
-      res.json(newResults)
+      if (results[0]) {
+        let newResults = functions.cleanResults(results)
+        res.json(newResults)
+      } else {
+        res.json({ noData: true })
+      }
     })
     .catch((err) => {
       res.status(500).send('DATABASE ERROR: ' + err.message)

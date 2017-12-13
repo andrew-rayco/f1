@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
+import * as h from '../helpers/helpers'
 import RaceOptions from './RaceOptions'
 
 export default class Results extends React.Component {
@@ -10,10 +11,6 @@ export default class Results extends React.Component {
   }
 
   componentWillMount() {
-    // let location = this.props.location.pathname
-    // let pathArray = location.split('/')
-    // let season = pathArray[2]
-    // let raceId = pathArray[3]
     let season = this.props.season
     let raceId = this.props.raceId
     api.getRaceResults(season, raceId, (results) => {
@@ -26,10 +23,18 @@ export default class Results extends React.Component {
     return results.map((driverResult) => {
       return (
         <tr key={driverResult.resultId}>
-          <td><strong>{driverResult.position}</strong></td>
-          <td><a href={driverResult.driverUrl}>{driverResult.forename} {driverResult.surname}</a></td>
-          <td><a href={driverResult.constructorUrl}>{driverResult.constructorName}</a></td>
-          <td>{driverResult.raceTime ? driverResult.raceTime : `+ ${(this.state.results[0].laps - driverResult.laps)} laps`}</td>
+          <td>
+            <strong>{driverResult.position}</strong>
+          </td>
+          <td>
+            <a href={driverResult.driverUrl}>{driverResult.forename} {driverResult.surname}</a>
+          </td>
+          <td>
+            <a href={driverResult.constructorUrl}>{driverResult.constructorName}</a>
+          </td>
+          <td>{driverResult.raceTime
+              ? driverResult.raceTime
+              : `+ ${ (this.state.results[0].laps - driverResult.laps)} laps`}</td>
           <td>{this.highlightFastestLap(driverResult.fastestLapTime, fastestLap)}</td>
         </tr>
       )
@@ -60,34 +65,38 @@ export default class Results extends React.Component {
     }
   }
 
-
+  buildResultsTable() {
+    let results = this.state.results
+    return (
+      <div className="content">
+        <h2>{results[0].raceYear} {results[0].raceName}</h2>
+        <h3>Race results</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Driver</th>
+              <th>Team</th>
+              <th>Race Time</th>
+              <th>Fastest lap</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.listResults(results)}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
 
   render() {
-    if (this.state.results) {
-      let results = this.state.results
-      return (
-        <div className="results sub-section" id="unblur">
-          <h2>{results[0].raceYear} {results[0].raceName}</h2>
-          <h3>Race results</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Driver</th>
-                <th>Team</th>
-                <th>Race Time</th>
-                <th>Fastest lap</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.listResults(results)}
-            </tbody>
-          </table>
-        </div>
-      )
-    } else {
-      return <div></div>
-    }
+    return (
+      <div className="results sub-section">
+        {this.state.results && !this.state.results.noData
+          ? this.buildResultsTable()
+          : h.handleLoadingOrError(this.state.results)}
+      </div>
+    )
   }
 
 }

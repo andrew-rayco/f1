@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
+import * as h from '../helpers/helpers'
 import RaceOptions from './RaceOptions'
 
 export default class Quali extends React.Component {
@@ -33,35 +34,39 @@ export default class Quali extends React.Component {
     })
   }
 
-  render() {
-    if (this.state.qualifyingData) {
-      var quali = this.state.qualifyingData
-      return (
-        <div className="quali-results sub-section">
-          <h2>{quali.qualifyingData[0].year} {quali.raceName}</h2>
-          <h3>Qualifying results</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Driver</th>
-                <th>Team</th>
-                <th>Q1</th>
-                <th>Q2</th>
-                <th>Q3</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.listResults(quali)}
-            </tbody>
-          </table>
-        </div>
-      )
-    } else {
-      return <div>
-        <div className="no-data">Sorry, there is no data here. <br/>
-        The event is either too old for the data to exist, or too new for this app that is manually updated by an ageing sloth-beast.</div>
+  buildQualiTable() {
+    let quali = this.state.qualifyingData
+    return (
+      <div className="content">
+        <h2>{quali.qualifyingData[0].year} {quali.raceName}</h2>
+        <h3>Qualifying results</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Driver</th>
+              <th>Team</th>
+              <th>Q1</th>
+              <th>Q2</th>
+              <th>Q3</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.listResults(quali)}
+          </tbody>
+        </table>
       </div>
-    }
+    )
+  }
+
+  render() {
+    let qualiData = this.state.qualifyingData
+    return (
+      <div className="quali-results sub-section">
+        {qualiData && !qualiData.noData
+          ? this.buildQualiTable()
+          : h.handleLoadingOrError(qualiData)}
+      </div>
+    )
   }
 }

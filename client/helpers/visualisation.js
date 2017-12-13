@@ -8,11 +8,31 @@ export function getAllDriversInRace(raceData) {
   return allDrivers
 }
 
-export function calcWidth(driver, winner) {
-  var totalRaceTime = this.state.winner.winningTime
+export function calcWidth(driver, winner, allDrivers, totalRaceTime, maxLaps) {
+  let winnersCurrentTime = allDrivers[winner]
+  let driversCurrentTime = allDrivers[driver]
+  let distanceFromWinner = findDistanceFromWinner(driversCurrentTime, winnersCurrentTime)
+
   if (driver == winner) {
-    return (this.state.allDrivers[winner] / totalRaceTime * 100) + (this.state.allDrivers[winner] / totalRaceTime * 100 / this.state.maxLaps)
+    return (winnersCurrentTime / totalRaceTime * 100) + (winnersCurrentTime / totalRaceTime * 100 / maxLaps)
   } else {
-    return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100) + ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100 / this.state.maxLaps)
+    return ((winnersCurrentTime + distanceFromWinner) / totalRaceTime * 100) + ((winnersCurrentTime + distanceFromWinner) / totalRaceTime * 100 / maxLaps)
   }
 }
+
+function findDistanceFromWinner (driver, winner) {
+  return winner - driver
+}
+
+export function getCurrentDriverLap (driver, lap, raceData) {
+    var toFind = {lap: lap, surname: driver}
+    var currentDriverLap = raceData.filter((lap) => {
+      for(var key in toFind) {
+        if(lap[key] !== toFind[key]) {
+          return false
+        }
+      }
+      return true
+    })
+    return currentDriverLap[0] || { milliseconds: 0 }
+  }

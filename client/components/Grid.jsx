@@ -1,6 +1,7 @@
 import React from 'react'
 
 import * as api from '../api'
+import * as h from '../helpers/helpers'
 import RaceOptions from './RaceOptions'
 
 export default class Grid extends React.Component {
@@ -44,34 +45,36 @@ export default class Grid extends React.Component {
     })
   }
 
+  buildGridTable() {
+    let grid = this.state.grid.gridData
+    return (
+      <div className="content">
+        <h2>{grid[0].year} {grid[0].raceName}</h2>
+        <h3>Starting Grid</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Position</th>
+              <th>Driver</th>
+              <th>Team</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.listGrid(grid)}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
   render() {
-    console.log('this.state:', this.state)
-    if (this.state.grid) {
-      let grid = this.state.grid.gridData
-      console.log('typeof this.state.grid.gridData:', typeof grid, '(should be an array!?)')
-      console.log('this.state.grid.gridData[0]:', this.state.grid.gridData[0])
-      return (
-        <div className="grid sub-section">
-          <h2>{grid[0].year} {grid[0].raceName}</h2>
-          <h3>Starting Grid</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Position</th>
-                <th>Driver</th>
-                <th>Team</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.listGrid(grid)}
-            </tbody>
-          </table>
-        </div>
-      )
-    } else {
-      console.log('Renders an empty div before this.state.grid is defined. As expected.')
-      return <div></div>
-    }
+    return (
+      <div className="grid sub-section">
+        {this.state.grid && !this.state.grid.noData
+          ? this.buildGridTable()
+          : h.handleLoadingOrError(this.state.grid)}
+      </div>
+    )
   }
 
 }
