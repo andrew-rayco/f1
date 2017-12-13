@@ -82,7 +82,6 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
     })
 })
 
-// react route - Use this for race visualisation!
 // make the race happen!
 router.get('/season/:id/:raceId/visualise', (req, res) => {
   var db = req.app.get('db')
@@ -99,7 +98,7 @@ router.get('/season/:id/:raceId/visualise', (req, res) => {
         res.status(500).send('DATABASE ERROR: ' + err.message)
       })
   } else {
-    res.send('no-laptime-data')
+    res.json({ noData: true })
   }
 })
 
