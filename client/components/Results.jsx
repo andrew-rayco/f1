@@ -1,8 +1,8 @@
 import React from 'react'
 
 import * as api from '../api'
+import * as h from '../helpers/helpers'
 import RaceOptions from './RaceOptions'
-import Loading from './Loading'
 
 export default class Results extends React.Component {
   constructor() {
@@ -92,9 +92,9 @@ export default class Results extends React.Component {
   render() {
     return (
       <div className="results sub-section">
-        {this.state.results
+        {this.state.results && !this.state.results.noData
           ? this.buildResultsTable()
-          : <Loading />}
+          : h.handleLoadingOrError(this.state.results)}
       </div>
     )
   }

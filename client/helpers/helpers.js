@@ -3,7 +3,6 @@ import React from 'react'
 import Loading from '../components/Loading'
 
 export const handleLoadingOrError = (data) => {
-  console.log(data)
   if (data && data.noData) {
     return (
       <div className="no-data">

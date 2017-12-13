@@ -127,8 +127,12 @@ router.get('/season/:id/:raceId/results', (req, res) => {
   var raceId = req.params.raceId
     dbFunctions.getRaceResults(db, id, raceId)
     .then((results) => {
-      let newResults = functions.cleanResults(results)
-      res.json(newResults)
+      if (results[0]) {
+        let newResults = functions.cleanResults(results)
+        res.json(newResults)
+      } else {
+        res.json({ noData: true })
+      }
     })
     .catch((err) => {
       res.status(500).send('DATABASE ERROR: ' + err.message)
