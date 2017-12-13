@@ -6,6 +6,7 @@ import * as api from '../api'
 import * as hVis from '../helpers/visualisation'
 import * as hRet from '../helpers/retiredDrivers'
 import RaceOptions from './RaceOptions'
+import Loading from './Loading'
 
 class RunRace extends React.Component {
   constructor(props) {
@@ -225,7 +226,7 @@ class RunRace extends React.Component {
       )
     } else {
       return (
-        <p>Loading...</p>
+        <Loading />
       )
     }
   }
