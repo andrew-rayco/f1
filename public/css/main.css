@@ -1,10 +1,25 @@
+@font-face {
+  font-family: 'Martel-Regular';
+  src: url('/fonts/Martel-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto-Condensed-Light';
+  src: url('/fonts/RobotoCondensed-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
 h1, h2, h3, h4, h5 {
   color: #272623;
-  font-family: 'Martel';
+  font-family: 'Martel-Regular', serif;
   font-weight: 300;
   line-height: 52px;
   margin-bottom: 48px;
   text-align: center;
+  animation: fadeIn 0.5s;
 }
 
 h1 {
@@ -31,9 +46,9 @@ h5 {
 
 p {
   color: #272623;
-  font-family: 'Roboto Condensed';
+  font-family: 'Roboto-Condensed-Light', sans-serif;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 24px;
   letter-spacing: 3px;
   margin-bottom: 48px;
