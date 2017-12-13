@@ -45,7 +45,7 @@ class RunRace extends React.Component {
 
     api.getVisData (season, raceId, (raceData) => {
       this.setState({ raceData })
-      raceData == 'no-laptime-data' ? null : this.setRaceDetails()
+      raceData.noData ? null : this.setRaceDetails()
     })
   }
 
@@ -97,7 +97,7 @@ class RunRace extends React.Component {
 
   handleClick () {
     if (this.state.visualIsRunning) {
-      clearInterval(lapTicker)
+      clearInterval(this.lapTicker)
       console.log('this should be working')
     } else {
       this.setState({visualIsRunning: true})
@@ -202,26 +202,29 @@ class RunRace extends React.Component {
   }
 
   render () {
-    if (this.state.raceData && this.state.raceData !== 'no-laptime-data') {
+    let raceData = this.state.raceData
+    if (raceData && !raceData.noData) {
+      let race = this.state.results[0]
       return (
         <div className="race">
           <h2>{this.state.raceYear} {this.state.raceName}</h2>
           <button onClick={() => this.handleClick()}>Start visualisation</button>
           <p className="beta">This feature is in beta.</p>
           <h3>Lap {this.state.lap} of {this.state.maxLaps}</h3>
-          {this.state.allDrivers ? this.showRace(this.state.raceData) : '<p>Loading...</p>'}
+          {this.state.allDrivers ? this.showRace(raceData) : <Loading />}
           {/* <p><Link to={this.nextRaceLink()}>Next Race</Link></p> */}
           <div className="more-from">
-            <RaceOptions key={this.state.results[0].raceId} race={this.state.results[0]} intro='More from' />
+            <RaceOptions key={race.raceId} race={race} intro='More from' />
           </div>
         </div>
       )
-    } else if (this.state.raceData == 'no-laptime-data') {
+    } else if (raceData && raceData.noData && this.state.results) {
+      let race = this.state.results[0]
       return (
         <div>
           <p>Sorry. Visualisation isn't possible for this event. <br/>
           This feature needs data that only started becoming available mid-2011.</p>
-          <RaceOptions key={this.state.results[0].raceId} race={this.state.results[0]} intro='See other info from' />
+          <RaceOptions key={race.raceId} race={race} intro='See other info from' />
         </div>
       )
     } else {
