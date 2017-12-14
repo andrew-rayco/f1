@@ -1,4 +1,3 @@
-// Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -13,7 +12,8 @@ class RunRace extends React.Component {
     super(props)
     this.state = {
       lap: 1,
-      visualIsRunning: false
+      visualIsRunning: false,
+      visualIsComplete: false
     }
     this.handleClick = this.handleClick.bind(this)
   }
@@ -70,10 +70,11 @@ class RunRace extends React.Component {
   // }
 
   handleClick () {
-    if (!this.state.visualIsRunning) {
+    console.log('running', this.state.visualIsRunning, 'complete', this.state.visualIsComplete)
+    if (!this.state.visualIsRunning || this.state.visualIsComplete) {
       this.setState({visualIsRunning: true})
       var lapTicker = setInterval(() => {
-        if (this.state.lap < this.state.maxLaps) {
+        if (this.state.lap < this.state.maxLaps && this.state.visualIsRunning) {
           var newAllDrivers = {}
           for (var key in this.state.allDrivers) {
             var currentDriverLap = hVis.getCurrentDriverLap(key, this.state.lap, this.state.raceData)
@@ -83,12 +84,18 @@ class RunRace extends React.Component {
             allDrivers: newAllDrivers,
             lap: this.state.lap + 1
           })
+        } else if (this.state.lap == this.state.maxLaps) {
+          this.setState({
+            visualIsRunning: false,
+            visualIsComplete: true })
+          clearInterval(lapTicker)
         } else {
+          this.setState({ visualIsRunning: false })
           clearInterval(lapTicker)
         }
       }, 150)
     } else {
-      clearInterval(lapTicker)
+      this.setState({ visualIsRunning: false })
       console.log('this should be working')
     }
   }
@@ -190,7 +197,7 @@ class RunRace extends React.Component {
       return (
         <div className="race">
           <h2>{st.raceYear} {st.raceName}</h2>
-          <button onClick={this.handleClick}>Start visualisation</button>
+          <button onClick={this.handleClick}>{this.state.visualIsRunning ? 'Pause ' : 'Start '} visualisation</button>
           <p className="beta">This feature is in beta.</p>
           <h3>Lap {st.lap} of {st.maxLaps}</h3>
           {st.allDrivers ? this.showRace(raceData) : <Loading />}
