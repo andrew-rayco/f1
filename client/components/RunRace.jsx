@@ -93,35 +93,18 @@ class RunRace extends React.Component {
     }
   }
 
-
-
   showRace (data) {
-    var winner = this.state.winner.winningDriver
-    var totalRaceTime = this.state.winner.winningTime
-    var totalRaceLaps = this.state.maxLaps
+    let winner = this.state.winner.winningDriver
+    let winningTime = this.state.winner.winningTime
+    let maxLaps = this.state.maxLaps
     let allDrivers = this.state.allDrivers
-    let lapData = this.state.raceData.filter((lap) => {
-      return lap.lap === this.state.lap
-    })
 
-    // DEAL WITH LAPPED DRIVERS
-    // 1. Find drivers where result.positionText != 'R'
-    let unretiredDrivers = this.state.results.filter((result) => {
-      return parseInt(result.positionText) < 50
-    })
+    let lapData = hVis.buildLapData(this.state.raceData, maxLaps, this.state.lap, this.state.results)
 
-    let lappedDrivers = unretiredDrivers.filter((result) => {
-      return result.laps < this.state.maxLaps
-    })
-
-    lappedDrivers.forEach((driver) => {
-      if (driver.laps < this.state.lap) {
-        lapData.push(driver)
-      }
-    })
+    // Find retired drivers to ultimately add to lapData
     let retiredDrivers = hRet.findRetiredDrivers(lapData, this.state.results)
 
-    // Add retired last laps to the lapData
+    // Add retired drivers last laps to the lapData
     lapData = hRet.addRetiredLaps(lapData, retiredDrivers, this.state.lap)
 
     // Add 'did not starts' to the lapData
@@ -138,40 +121,49 @@ class RunRace extends React.Component {
     }
 
     return lapData.map((driverLap, i) => {
-      if (driverLap.surname === 'Button') {
-        console.log(this.state.results)
-      }
-      if (hRet.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !hRet.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
-        if (this.state.lap > this.state.maxLaps * .20) {
+      let driverSurname = driverLap.surname
+
+      if (hRet.driverDoesNotRetire(driverSurname, retiredDrivers) || !hRet.hasDriverRetiredYet(driverSurname, retiredDrivers, this.state.lap)) {
+        if (this.state.lap > maxLaps * .20) {
           return (
             <div key={i} className="driver">
-              <div className={driverLap.surname, `driverBar`}>
+              <div className={driverSurname, `driverBar`}>
                 <div className="vis-color" style={{
-                  width: hVis.calcWidth(driverLap.surname, this.state.winner.winningDriver, this.state.allDrivers, this.state.winner.winningTime, this.state.maxLaps) + '%'
-                }}>{driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
+                  width: hVis.calcWidth(
+                    driverSurname,
+                    winner,
+                    allDrivers,
+                    winningTime,
+                    maxLaps) + '%'
+                }}>{driverLap.position || driverLap.positionText}: {driverSurname}</div>
               </div>
             </div>
           )
         } else {
           return (
             <div key={i} className="driver">
-              <div className={driverLap.surname, `driverBar`}>
-                {driverLap.position || driverLap.positionText}: {driverLap.surname}
+              <div className={driverSurname, `driverBar`}>
+                {driverLap.position || driverLap.positionText}: {driverSurname}
                 <div className="vis-color" style={{
-                  width: hVis.calcWidth(driverLap.surname, this.state.winner.winningDriver, this.state.allDrivers, this.state.winner.winningTime, this.state.maxLaps) + '%'
+                  width: hVis.calcWidth(
+                    driverSurname,
+                    winner,
+                    allDrivers,
+                    winningTime,
+                    maxLaps) + '%'
                 }}>&nbsp;</div>
               </div>
             </div>
           )
         }
-      } else if (hRet.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
-        if (driverLap.laps < this.state.maxLaps * .40) {
+      } else if (hRet.hasDriverRetiredYet(driverSurname, retiredDrivers, this.state.lap)) {
+        if (driverLap.laps < maxLaps * .40) {
           return (
             <div key={i} className="driver">
-              <div className={'driverBar ' + driverLap.surname} >
-                {driverLap.position || driverLap.positionOrder}: {driverLap.surname} - Lap {driverLap.laps}
+              <div className={'driverBar ' + driverSurname} >
+                {driverLap.position || driverLap.positionOrder}: {driverSurname} - Lap {driverLap.laps}
                 <div className="vis-color" style={{
-                  width: (this.state.allDrivers[driverLap.surname] / totalRaceTime) * 100 + '%', backgroundColor: 'red'
+                  width: (this.state.allDrivers[driverSurname] / winningTime) * 100 + '%', backgroundColor: 'red'
                 }}>&nbsp;</div>
               </div>
             </div>
@@ -179,9 +171,9 @@ class RunRace extends React.Component {
         } else {
           return (
             <div key={i} className="driver">
-              <div className={'driverBar ' + driverLap.surname} ><div className="vis-color" style={{
-                  width: (this.state.allDrivers[driverLap.surname] / totalRaceTime) * 100 + '%', backgroundColor: 'red'
-                }}>{driverLap.position || driverLap.positionOrder}: {driverLap.surname} - Lap {driverLap.laps}</div>
+              <div className={'driverBar ' + driverSurname} ><div className="vis-color" style={{
+                  width: (this.state.allDrivers[driverSurname] / winningTime) * 100 + '%', backgroundColor: 'red'
+                }}>{driverLap.position || driverLap.positionOrder}: {driverSurname} - Lap {driverLap.laps}</div>
               </div>
             </div>
           )
