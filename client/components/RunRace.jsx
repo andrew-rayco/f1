@@ -15,6 +15,7 @@ class RunRace extends React.Component {
       lap: 1,
       visualIsRunning: false
     }
+    this.handleClick = this.handleClick.bind(this)
   }
 
   componentWillMount() {
@@ -59,47 +60,17 @@ class RunRace extends React.Component {
     })
   }
 
-  // calcWidth (driver, winner) {
-  //   var totalRaceTime = this.state.winner.winningTime
-  //   if (driver == winner) {
-  //     return (this.state.allDrivers[winner] / totalRaceTime * 100) + (this.state.allDrivers[winner] / totalRaceTime * 100 / this.state.maxLaps)
-  //   } else {
-  //     return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100) + ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100 / this.state.maxLaps)
-  //   }
+  // nextRaceLink () {
+  //   let location = this.props.location.pathname
+  //   let pathArray = location.split('/')
+  //   let season = pathArray[2]
+  //
+  //   pathArray[3] = Number(pathArray[3]) + 1
+  //   return `/season/${season}/${pathArray[3]}/${pathArray[4]}`
   // }
-
-  // findDistanceFromWinner (driver, winner) {
-  //   var totalRaceTime = this.state.winner.winningTime
-  //   return this.state.allDrivers[winner] - this.state.allDrivers[driver]
-  // }
-
-  // getCurrentDriverLap (driver, lap) {
-  //   var toFind = {lap: this.state.lap, surname: driver}
-  //   var currentDriverLap = this.state.raceData.filter((lap) => {
-  //     for(var key in toFind) {
-  //       if(lap[key] !== toFind[key]) {
-  //         return false
-  //       }
-  //     }
-  //     return true
-  //   })
-  //   return currentDriverLap[0] || { milliseconds: 0 }
-  // }
-
-  nextRaceLink () {
-    let location = this.props.location.pathname
-    let pathArray = location.split('/')
-    let season = pathArray[2]
-
-    pathArray[3] = Number(pathArray[3]) + 1
-    return `/season/${season}/${pathArray[3]}/${pathArray[4]}`
-  }
 
   handleClick () {
-    if (this.state.visualIsRunning) {
-      clearInterval(this.lapTicker)
-      console.log('this should be working')
-    } else {
+    if (!this.state.visualIsRunning) {
       this.setState({visualIsRunning: true})
       var lapTicker = setInterval(() => {
         if (this.state.lap < this.state.maxLaps) {
@@ -116,9 +87,13 @@ class RunRace extends React.Component {
           clearInterval(lapTicker)
         }
       }, 150)
-
+    } else {
+      clearInterval(lapTicker)
+      console.log('this should be working')
     }
   }
+
+
 
   showRace (data) {
     var winner = this.state.winner.winningDriver
@@ -132,26 +107,40 @@ class RunRace extends React.Component {
     // DEAL WITH LAPPED DRIVERS
     // 1. Find drivers where result.positionText != 'R'
     let unretiredDrivers = this.state.results.filter((result) => {
-      return result.positionText != 'R'
+      return parseInt(result.positionText) < 50
     })
+
     let lappedDrivers = unretiredDrivers.filter((result) => {
       return result.laps < this.state.maxLaps
     })
+
     lappedDrivers.forEach((driver) => {
       if (driver.laps < this.state.lap) {
         lapData.push(driver)
       }
-    }) + 1
-    var retiredDrivers = hRet.findRetiredDrivers(lapData, this.state.results)
+    })
+    let retiredDrivers = hRet.findRetiredDrivers(lapData, this.state.results)
 
     // Add retired last laps to the lapData
-    hRet.addRetiredLaps(lapData, retiredDrivers, this.state.lap)
+    lapData = hRet.addRetiredLaps(lapData, retiredDrivers, this.state.lap)
 
-    // if (this.state.lap === this.state.maxLaps) {
-    //   lapData = this.state.results
-    // }
+    // Add 'did not starts' to the lapData
+    if (lapData.length < this.state.results.length) {
+      this.state.results.forEach((result) => {
+        if (isNaN(parseInt(result.positionText)) && result.positionText != 'R') {
+          lapData.push({
+            surname: result.surname,
+            positionText: result.positionText,
+            positionOrder: result.positionOrder
+          })
+        }
+      })
+    }
 
     return lapData.map((driverLap, i) => {
+      if (driverLap.surname === 'Button') {
+        console.log(this.state.results)
+      }
       if (hRet.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !hRet.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
         if (this.state.lap > this.state.maxLaps * .20) {
           return (
@@ -209,7 +198,7 @@ class RunRace extends React.Component {
       return (
         <div className="race">
           <h2>{st.raceYear} {st.raceName}</h2>
-          <button onClick={() => this.handleClick()}>Start visualisation</button>
+          <button onClick={this.handleClick}>Start visualisation</button>
           <p className="beta">This feature is in beta.</p>
           <h3>Lap {st.lap} of {st.maxLaps}</h3>
           {st.allDrivers ? this.showRace(raceData) : <Loading />}

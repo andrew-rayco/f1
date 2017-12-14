@@ -11,7 +11,7 @@ export function getAllDriversInRace(raceData) {
 export function calcWidth(driver, winner, allDrivers, totalRaceTime, maxLaps) {
   let winnersCurrentTime = allDrivers[winner]
   let driversCurrentTime = allDrivers[driver]
-  let distanceFromWinner = findDistanceFromWinner(driversCurrentTime, winnersCurrentTime)
+  let distanceFromWinner = findDistanceFromWinner(winnersCurrentTime, driversCurrentTime)
 
   if (driver == winner) {
     return (winnersCurrentTime / totalRaceTime * 100) + (winnersCurrentTime / totalRaceTime * 100 / maxLaps)
@@ -20,8 +20,8 @@ export function calcWidth(driver, winner, allDrivers, totalRaceTime, maxLaps) {
   }
 }
 
-function findDistanceFromWinner (driver, winner) {
-  return winner - driver
+function findDistanceFromWinner (winnerTime, driverTime) {
+  return winnerTime - driverTime
 }
 
 export function getCurrentDriverLap (driver, lap, raceData) {
