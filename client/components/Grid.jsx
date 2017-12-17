@@ -31,7 +31,7 @@ export default class Grid extends React.Component {
     return fullGrid.map((driver) => {
       return (
         <tr key={driver.resultId}>
-          <td>
+          <td className="position">
             <strong>{driver.positionOrder}</strong>
           </td>
           <td>
@@ -54,7 +54,10 @@ export default class Grid extends React.Component {
         <table>
           <thead>
             <tr>
-              <th>Position</th>
+              <th className="position">{
+                document.body.clientWidth < 450
+                  ? 'Pos' : 'Position'
+                }</th>
               <th>Driver</th>
               <th>Team</th>
             </tr>

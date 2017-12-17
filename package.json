@@ -9,8 +9,10 @@
   "scripts": {
     "test": "jest --watch --coverage",
     "start": "node server/index.js",
-    "dev": "nodemon server/index.js & webpack --watch",
-    "knex": "knex"
+    "dev": "nodemon server/index.js & webpack --watch & npm run watch-css",
+    "knex": "knex",
+    "build-css": "node-sass -o public/css public/css",
+    "watch-css": "nodemon -e sass -x \"npm run build-css\""
   },
   "babel": {
     "presets": [
@@ -50,6 +52,7 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-15": "^1.0.5",
     "jest": "^21.2.1",
+    "node-sass": "^4.7.2",
     "nodemon": "^1.11.0",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",

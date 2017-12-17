@@ -23,7 +23,7 @@ export default class Results extends React.Component {
     return results.map((driverResult) => {
       return (
         <tr key={driverResult.resultId}>
-          <td>
+          <td className="position">
             <strong>{driverResult.position}</strong>
           </td>
           <td>
@@ -35,7 +35,7 @@ export default class Results extends React.Component {
           <td>{driverResult.raceTime
               ? driverResult.raceTime
               : `+ ${ (this.state.results[0].laps - driverResult.laps)} laps`}</td>
-          <td>{this.highlightFastestLap(driverResult.fastestLapTime, fastestLap)}</td>
+          <td className="optional">{this.highlightFastestLap(driverResult.fastestLapTime, fastestLap)}</td>
         </tr>
       )
     })
@@ -74,11 +74,14 @@ export default class Results extends React.Component {
         <table>
           <thead>
             <tr>
-              <th>Position</th>
+              <th className="position">{
+                document.body.clientWidth < 450
+                  ? 'Pos' : 'Position'
+                }</th>
               <th>Driver</th>
               <th>Team</th>
               <th>Race Time</th>
-              <th>Fastest lap</th>
+              <th className="optional">Fastest lap</th>
             </tr>
           </thead>
           <tbody>
