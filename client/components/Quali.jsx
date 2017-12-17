@@ -23,12 +23,13 @@ export default class Quali extends React.Component {
     return allResults.map((driverResult) => {
       return (
         <tr key={driverResult.qualifyId}>
-          <td><strong>{driverResult.position}</strong></td>
+          <td className="position"><strong>{driverResult.position}</strong></td>
           <td><a href={driverResult.driverUrl}>{driverResult.forename} {driverResult.surname}</a></td>
           <td><a href={driverResult.constructorUrl}>{driverResult.constructorName}</a></td>
           <td className="optional">{driverResult.q1}</td>
           <td className="optional">{driverResult.q2}</td>
           <td className="optional">{driverResult.q3}</td>
+          <td className="alternative">{driverResult.q3 || driverResult.q2 || driverResult.q1}</td>
         </tr>
       )
     })
@@ -43,12 +44,16 @@ export default class Quali extends React.Component {
         <table>
           <thead>
             <tr>
-              <th>Position</th>
+              <th className="position">{
+                document.body.clientWidth < 450
+                  ? 'Pos' : 'Position'
+                }</th>
               <th>Driver</th>
               <th>Team</th>
               <th className="optional">Q1</th>
               <th className="optional">Q2</th>
               <th className="optional">Q3</th>
+              <th className="alternative">Time</th>
             </tr>
           </thead>
           <tbody>

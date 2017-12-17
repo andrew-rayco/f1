@@ -72,6 +72,9 @@ table {
   color: #56bba7;
   transition: .15s color ease-in; }
 
+.alternative {
+  display: none; }
+
 @media screen and (max-width: 450px) {
   h1 {
     font-size: 36px;
@@ -93,13 +96,21 @@ table {
     text-transform: none; }
   p > a {
     letter-spacing: 1px; }
+  table {
+    margin: 0 auto; }
   th,
   td {
-    font-size: 12px; }
+    font-size: 12px;
+    padding: .5em .7em;
+    max-width: 25vw; }
   td > a {
     letter-spacing: 0; }
   .optional {
-    display: none; } }
+    display: none; }
+  .alternative {
+    display: inline-block; }
+  .position {
+    text-align: center; } }
 
 /* Home */
 .seasons {
@@ -198,6 +209,11 @@ table {
 
 .center {
   margin: 2em auto; }
+
+@media screen and (max-width: 450px) {
+  .home h3 {
+    font-size: 26px;
+    margin: 1em 0 .5em; } }
 
 /* Circuits */
 .circuit-list {
