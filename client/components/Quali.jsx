@@ -26,9 +26,9 @@ export default class Quali extends React.Component {
           <td><strong>{driverResult.position}</strong></td>
           <td><a href={driverResult.driverUrl}>{driverResult.forename} {driverResult.surname}</a></td>
           <td><a href={driverResult.constructorUrl}>{driverResult.constructorName}</a></td>
-          <td>{driverResult.q1}</td>
-          <td>{driverResult.q2}</td>
-          <td>{driverResult.q3}</td>
+          <td className="optional">{driverResult.q1}</td>
+          <td className="optional">{driverResult.q2}</td>
+          <td className="optional">{driverResult.q3}</td>
         </tr>
       )
     })
@@ -46,9 +46,9 @@ export default class Quali extends React.Component {
               <th>Position</th>
               <th>Driver</th>
               <th>Team</th>
-              <th>Q1</th>
-              <th>Q2</th>
-              <th>Q3</th>
+              <th className="optional">Q1</th>
+              <th className="optional">Q2</th>
+              <th className="optional">Q3</th>
             </tr>
           </thead>
           <tbody>

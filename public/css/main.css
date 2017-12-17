@@ -72,6 +72,35 @@ table {
   color: #56bba7;
   transition: .15s color ease-in; }
 
+@media screen and (max-width: 450px) {
+  h1 {
+    font-size: 36px;
+    margin-bottom: .3em; }
+  h2 {
+    font-size: 26px;
+    line-height: 1.5em; }
+  .content > h2 {
+    font-size: 20px; }
+  h3 {
+    font-size: 18px;
+    line-height: 1em; }
+  h4 a {
+    font-size: 20px;
+    letter-spacing: 0px; }
+  p {
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: none; }
+  p > a {
+    letter-spacing: 1px; }
+  th,
+  td {
+    font-size: 12px; }
+  td > a {
+    letter-spacing: 0; }
+  .optional {
+    display: none; } }
+
 /* Home */
 .seasons {
   display: flex;
