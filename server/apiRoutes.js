@@ -5,18 +5,19 @@
 var request = require('superagent')
 
 function getData(callback) {
+  console.log('hitting the api call')
   request
-    .get('http://ergast.com/api/f1/seasons')
+    .get('http://ergast.com/api/f1/seasons.json')
     .end((err, result) => {
       if(err) {
         console.log(err)
       } else {
+        console.log(result.body)
         callback(result.body)
       }
   })
 }
 
-getData(console.log)
 
 // example json api
 // router.get('/', (req, res) => {
@@ -29,4 +30,4 @@ getData(console.log)
 // })
 
 
-// module.exports = router
+module.exports = {getData}

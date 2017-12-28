@@ -4,6 +4,7 @@ var moment = require('moment')
 
 var dbFunctions = require('./db/db-functions')
 var functions = require('./functions')
+var apiRoutes = require('./apiRoutes')
 
 router.get('/', (req, res) => {
   var db = req.app.get('db')
@@ -17,7 +18,6 @@ router.get('/', (req, res) => {
     })
 })
 
-
 router.get('/circuits', (req, res) => {
   var db = req.app.get('db')
   db('circuits')
@@ -28,9 +28,7 @@ router.get('/circuits', (req, res) => {
     .catch((err) => {
       res.status(500).send('DATABASE ERROR: ' + err.message)
     })
-
 })
-
 
 // show all races in selected season
 router.get('/season/:id', (req, res) => {
@@ -74,6 +72,9 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
         res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
         console.log('here is where I want to do it')
+        apiRoutes.getData((data) => {
+          console.log('data is', data)
+        })
         res.json({ noData: true })
       }
     })
@@ -151,6 +152,5 @@ router.get('/season/:id/:raceId/race-details', (req, res) => {
       res.status(500).send('DATABASE ERROR: ' + err.message)
     })
 })
-
 
 module.exports = router
