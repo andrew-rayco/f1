@@ -73,6 +73,7 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
       if (gridData[0]) {
         res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
+        console.log('here is where I want to do it')
         res.json({ noData: true })
       }
     })
