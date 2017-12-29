@@ -13,7 +13,6 @@ export default class Grid extends React.Component {
   componentWillMount() {
     let season, raceId, round
     if (this.props.season) {
-      console.log(this.props.round)
       season = this.props.season
       raceId = this.props.raceId
       round = this.props.round

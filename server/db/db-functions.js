@@ -43,7 +43,7 @@ function getGrid (db, raceId) {
     .join('races', 'races.raceId', '=', 'results.raceId')
     .join('constructors', 'results.constructorId', '=', 'constructors.constructorId')
     .where('results.raceId', raceId)
-    .orderBy('positionOrder', 'asc')
+    .orderBy('grid', 'asc')
 }
 
 function visualise (db, season, raceId) {

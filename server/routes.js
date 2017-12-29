@@ -69,6 +69,7 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
   var raceId = req.params.raceId
   dbFunctions.getGrid(db, raceId)
     .then((gridData) => {
+      console.log(gridData)
       if (gridData[0]) {
         res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
