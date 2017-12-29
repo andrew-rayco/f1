@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
   db('seasons')
     .orderBy('year', 'asc')
     .then((seasons) => {
-      // seasons[0] 
+      // seasons[0]
       //   ? res.json(seasons)
       //   : apiRoutes.getSeasons()
       apiRoutes.getSeasons((seasons) => {
@@ -93,6 +93,13 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
         res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
         apiRoutes.getGrid(season, req.headers.raceround, (data) => {
+          console.log(data.gridData);
+          data.gridData.map((result) => {
+            if (result.grid == 0) {
+              result.grid = 99
+            }
+          })
+          data.gridData.sort(functions.compareGridPos)
           res.json(data)
         })
         // res.json({ noData: true })
