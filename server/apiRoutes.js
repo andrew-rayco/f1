@@ -4,6 +4,8 @@
 
 let request = require('superagent')
 
+let functions = require('./functions')
+
 const url = 'http://ergast.com/api/f1/'
 
 function getData(callback) {
@@ -21,8 +23,7 @@ function getData(callback) {
 }
 
 function getGrid(season, raceRound, callback) {
-  console.log('hitting the api call')
-  // e.g. http://ergast.com/api/f1/2017/15/results
+  // e.g. http://ergast.com/api/f1/2017/15/results.json
   request
     .get(url + season + '/' + raceRound + '/results.json?limit=60')
     .end((err, result) => {
@@ -43,20 +44,7 @@ function getGrid(season, raceRound, callback) {
           })
         })
 
-        function compareGridPos(a, b) {
-          const gridA = Number(a.grid)
-          const gridB = Number(b.grid)
-
-          let comparison = 0
-          if (gridA > gridB) {
-            comparison = 1
-          } else {
-            comparison = -1
-          }
-          return comparison
-        }
-
-        strippedResults.sort(compareGridPos)
+        strippedResults.sort(functions.compareGridPos)
 
         let cleanData = {
           raceName: data.raceName,
