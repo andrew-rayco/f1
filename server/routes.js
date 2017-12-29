@@ -11,7 +11,20 @@ router.get('/', (req, res) => {
   db('seasons')
     .orderBy('year', 'asc')
     .then((seasons) => {
-      res.json(seasons)
+      // seasons[0] 
+      //   ? res.json(seasons)
+      //   : apiRoutes.getSeasons()
+      apiRoutes.getSeasons((seasons) => {
+        let allSeasons = seasons.MRData.SeasonTable.Seasons
+        let renamedSeasons = []
+        allSeasons.map((season) => {
+          renamedSeasons.push({
+            year: season.season,
+            url: season.url
+          })
+        })
+        res.json(renamedSeasons)
+      })
     })
     .catch((err) => {
       res.status(500).send('DATABASE ERROR: ' + err.message)

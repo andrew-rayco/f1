@@ -16,6 +16,7 @@ export default class FullSeason extends React.Component {
     var pathArray = location.split('/')
     var thisSeason = pathArray[2]
     api.getRaces(thisSeason, (races) => {
+      console.log(races)
       this.setState({races})
     })
   }

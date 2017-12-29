@@ -8,15 +8,14 @@ let functions = require('./functions')
 
 const url = 'http://ergast.com/api/f1/'
 
-function getData(callback) {
+function getSeasons(callback) {
   console.log('hitting the api call')
   request
-    .get('http://ergast.com/api/f1/seasons.json')
+    .get('http://ergast.com/api/f1/seasons.json?limit=80')
     .end((err, result) => {
       if(err) {
         console.log(err)
       } else {
-        // console.log(result.body)
         callback(result.body)
       }
   })
@@ -58,6 +57,6 @@ function getGrid(season, raceRound, callback) {
 }
 
 module.exports = {
-  getData,
+  getSeasons,
   getGrid
 }

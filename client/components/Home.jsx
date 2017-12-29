@@ -17,6 +17,7 @@ export default class Home extends React.Component {
   }
 
   listSeasons(seasons) {
+    console.log(seasons);
     return seasons.map(({year}) => {
       return <ListSeason year={year} key={year}/>
     })
