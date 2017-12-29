@@ -63,6 +63,7 @@ router.get('/season/:id/:raceId/qualifying', (req, res) => {
 
 // display starting grid
 router.get('/season/:id/:raceId/grid', (req, res) => {
+  console.log(req.headers.raceround)
   var db = req.app.get('db')
   var season = req.params.id
   var raceId = req.params.raceId
@@ -72,10 +73,10 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
         res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
         console.log('here is where I want to do it')
-        apiRoutes.getData((data) => {
-          console.log('data is', data)
+        apiRoutes.getGrid(season, req.headers.raceround, (data) => {
+          res.json(data)
         })
-        res.json({ noData: true })
+        // res.json({ noData: true })
       }
     })
     .catch((err) => {

@@ -11,18 +11,19 @@ export default class Grid extends React.Component {
   }
 
   componentWillMount() {
-    let season,
-      raceId
+    let season, raceId, round
     if (this.props.season) {
+      console.log(this.props.round)
       season = this.props.season
       raceId = this.props.raceId
+      round = this.props.round
     } else {
       let location = this.props.location.pathname
       let pathArray = location.split('/')
       season = pathArray[2]
       raceId = pathArray[3]
     }
-    api.getGrid(season, raceId, (grid) => {
+    api.getGrid(season, raceId, round, (grid) => {
       this.setState({grid})
     })
   }
@@ -30,9 +31,9 @@ export default class Grid extends React.Component {
   listGrid(fullGrid) {
     return fullGrid.map((driver) => {
       return (
-        <tr key={driver.resultId}>
+        <tr key={driver.surname}>
           <td className="position">
-            <strong>{driver.positionOrder}</strong>
+            <strong>{driver.grid}</strong>
           </td>
           <td>
             <a href={driver.driverUrl}>{driver.forename} {driver.surname}</a>

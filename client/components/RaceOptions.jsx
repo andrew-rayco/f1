@@ -56,7 +56,7 @@ export default class RaceOptions extends React.Component {
             }
             <p><a onClick={(e) => this.handleClick(e, 'gridVisible')} href="#" className="togglable">Starting grid <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>
             {(this.state.gridVisible) ?
-              <Grid season={race.year} raceId={race.raceId} /> :
+              <Grid season={race.year} raceId={race.raceId} round={race.round} /> :
               null
             }
 
