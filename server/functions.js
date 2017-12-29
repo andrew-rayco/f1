@@ -115,6 +115,16 @@ function cleanResults(results) {
   return finishedResults.concat(dnfResults)
 }
 
+// Re-sort so grid entry of 0 (for DNQ or similar) aren't first in list
+function sortGrid(gridData) {
+  gridData.map((result) => {
+    if (result.grid == 0) {
+      result.grid = 99
+    }
+  })
+  gridData.sort(compareGridPos)
+}
+
 function compareGridPos(a, b) {
   const gridA = Number(a.grid)
   const gridB = Number(b.grid)
@@ -129,8 +139,10 @@ function compareGridPos(a, b) {
 }
 
 
+
 module.exports = {
   prepareRaceData,
   cleanResults,
-  compareGridPos
+  compareGridPos,
+  sortGrid
 }

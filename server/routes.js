@@ -83,12 +83,13 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
     .then((gridData) => {
       if (gridData[0]) {
         // Re-sort so grid entry of 0 (for DNQ or similar) aren't first in list
-        gridData.map((result) => {
-          if (result.grid == 0) {
-            result.grid = 99
-          }
-        })
-        gridData.sort(functions.compareGridPos)
+        functions.sortGrid(gridData)
+        // gridData.map((result) => {
+        //   if (result.grid == 0) {
+        //     result.grid = 99
+        //   }
+        // })
+        // gridData.sort(functions.compareGridPos)
 
         res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
