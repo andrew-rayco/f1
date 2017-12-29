@@ -115,8 +115,22 @@ function cleanResults(results) {
   return finishedResults.concat(dnfResults)
 }
 
+function compareGridPos(a, b) {
+  const gridA = Number(a.grid)
+  const gridB = Number(b.grid)
+
+  let comparison = 0
+  if (gridA > gridB) {
+    comparison = 1
+  } else {
+    comparison = -1
+  }
+  return comparison
+}
+
 
 module.exports = {
   prepareRaceData,
-  cleanResults
+  cleanResults,
+  compareGridPos
 }

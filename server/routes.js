@@ -63,17 +63,22 @@ router.get('/season/:id/:raceId/qualifying', (req, res) => {
 
 // display starting grid
 router.get('/season/:id/:raceId/grid', (req, res) => {
-  console.log(req.headers.raceround)
   var db = req.app.get('db')
   var season = req.params.id
   var raceId = req.params.raceId
   dbFunctions.getGrid(db, raceId)
     .then((gridData) => {
-      console.log(gridData)
       if (gridData[0]) {
+        // Re-sort so grid entry of 0 (for DNQ or similar) aren't first in list
+        gridData.map((result) => {
+          if (result.grid == 0) {
+            result.grid = 99
+          }
+        })
+        gridData.sort(functions.compareGridPos)
+
         res.json({gridData, raceName:gridData[0].raceName, raceYear:gridData[0].year})
       } else {
-        console.log('here is where I want to do it')
         apiRoutes.getGrid(season, req.headers.raceround, (data) => {
           res.json(data)
         })
