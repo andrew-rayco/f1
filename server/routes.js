@@ -25,7 +25,6 @@ router.get('/', (req, res) => {
           res.json(renamedSeasons)
         })
       })
-
     .catch((err) => {
       res.status(500).send('DATABASE ERROR: ' + err.message)
     })
@@ -67,10 +66,8 @@ router.get('/season/:id/:raceId/qualifying', (req, res) => {
         res.json({qualifyingData, raceName:qualifyingData[0].raceName})
       } else {
         apiRoutes.getQualifying(season, req.headers.raceround, (data) => {
-          // console.log(data)
           res.json(data)
         })
-        // res.json({ noData: true })
       }
     })
     .catch((err) => {
@@ -93,7 +90,6 @@ router.get('/season/:id/:raceId/grid', (req, res) => {
           functions.sortGrid(data.gridData)
           res.json(data)
         })
-        // res.json({ noData: true })
       }
     })
     .catch((err) => {
@@ -152,7 +148,6 @@ router.get('/season/:id/:raceId/results', (req, res) => {
         apiRoutes.getResults(season, req.headers.raceround, (data) => {
           res.json(data)
         })
-        // res.json({ noData: true })
       }
     })
     .catch((err) => {

@@ -1,6 +1,4 @@
 function prepareRaceData (laptimes) {
-  // console.log(laptimes)
-
   // Get all driver Surnames in race
   var driversInRace = []
   laptimes.map((lap) => {
@@ -37,8 +35,6 @@ function prepareRaceData (laptimes) {
     count++
   }
 
-  // console.log(lapsByLapNumber)
-  // Only take driver surname, lap num, time and milliseconds
   var cleanRaceData = []
   lapsByLapNumber.map((lap) => {
     for (var i = 0; i < maxLaps; i++) {
@@ -55,16 +51,12 @@ function prepareRaceData (laptimes) {
     }
   })
 
-
-  //experimenting
   var count = 1;
   var lapCounter = setInterval(function() {
     if (count <= maxLaps) {
-      // console.log(count)
       count++
       return count
     } else {
-      // console.log('race is over');
       clearInterval(lapCounter)
     }
   }, 50)
@@ -72,8 +64,7 @@ function prepareRaceData (laptimes) {
   return cleanRaceData
 }
 
-// Add human friendly classification titles and ensure classified runners are
-// listed ahead of others in results table
+// Add human friendly classification titles
 function cleanResults(results) {
   let newResults = [...results]
   newResults.forEach((result) => {

@@ -1,7 +1,3 @@
-// part of the great api experiment of 1 July, 2017
-// var express = require('express')
-// var router = express.Router()
-
 let request = require('superagent')
 
 let functions = require('./functions')
