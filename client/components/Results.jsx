@@ -23,7 +23,7 @@ export default class Results extends React.Component {
     let fastestLap = this.findFastestLap(results)
     return results.map((driverResult) => {
       return (
-        <tr key={driverResult.surname}>
+        <tr key={driverResult.surname + driverResult.position}>
           <td className="position">
             <strong>{driverResult.position}</strong>
           </td>
@@ -33,8 +33,8 @@ export default class Results extends React.Component {
           <td>
             <a href={driverResult.constructorUrl}>{driverResult.constructorName}</a>
           </td>
-          <td>{driverResult.raceTime
-              ? driverResult.raceTime
+          <td>{driverResult.positionText != 'R'
+              ? driverResult.raceTime || driverResult.status
               : `${driverResult.status} (${driverResult.laps})`}</td>
           <td className="optional">{this.highlightFastestLap(driverResult.fastestLapTime, fastestLap)}</td>
         </tr>

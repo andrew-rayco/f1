@@ -29,28 +29,32 @@ function getGrid(season, raceRound, callback) {
         console.log(err)
       } else {
         let data = result.body.MRData.RaceTable.Races[0]
-        let strippedResults = []
-        data.Results.map((result) => {
-          // Take only what we need from each result and add to strippedResults
-          strippedResults.push({
-            grid: result.grid,
-            driverUrl: result.Driver.url,
-            forename: result.Driver.givenName,
-            surname: result.Driver.familyName,
-            constructorUrl: result.Constructor.url,
-            constructorName: result.Constructor.name
+        if (data) {
+          let strippedResults = []
+          data.Results.map((result) => {
+            // Take only what we need from each result and add to strippedResults
+            strippedResults.push({
+              grid: result.grid,
+              driverUrl: result.Driver.url,
+              forename: result.Driver.givenName,
+              surname: result.Driver.familyName,
+              constructorUrl: result.Constructor.url,
+              constructorName: result.Constructor.name
+            })
           })
-        })
 
-        strippedResults.sort(functions.compareGridPos)
+          strippedResults.sort(functions.compareGridPos)
 
-        let cleanData = {
-          raceName: data.raceName,
-          year: data.season,
-          gridData: strippedResults
+          let cleanData = {
+            raceName: data.raceName,
+            year: data.season,
+            gridData: strippedResults
+          }
+
+          callback(cleanData)
+        } else {
+          callback({ noData: true })
         }
-
-        callback(cleanData)
       }
   })
 }
@@ -64,28 +68,32 @@ function getQualifying(season, raceRound, callback) {
         console.log(err)
       } else {
         let data = result.body.MRData.RaceTable.Races[0]
-        let qualiResults = []
-        data.QualifyingResults.map((result) => {
-          qualiResults.push({
-            position: result.position,
-            driverUrl: result.Driver.url,
-            forename: result.Driver.givenName,
-            surname: result.Driver.familyName,
-            constructorUrl: result.Constructor.url,
-            constructorName: result.Constructor.name,
-            q1: result.Q1,
-            q2: result.Q2,
-            q3: result.Q3
+        if (data) {
+          let qualiResults = []
+          data.QualifyingResults.map((result) => {
+            qualiResults.push({
+              position: result.position,
+              driverUrl: result.Driver.url,
+              forename: result.Driver.givenName,
+              surname: result.Driver.familyName,
+              constructorUrl: result.Constructor.url,
+              constructorName: result.Constructor.name,
+              q1: result.Q1,
+              q2: result.Q2,
+              q3: result.Q3
+            })
           })
-        })
 
-        let cleanQualiData = {
-          raceName: data.raceName,
-          year: data.season,
-          qualifyingData: qualiResults
+          let cleanQualiData = {
+            raceName: data.raceName,
+            year: data.season,
+            qualifyingData: qualiResults
+          }
+
+          callback(cleanQualiData)
+        } else {
+          callback({ noData: true })
         }
-
-        callback(cleanQualiData)
       }
     })
 }
@@ -99,29 +107,34 @@ function getResults(season, raceRound, callback) {
         console.log(err)
       } else {
         let data = result.body.MRData.RaceTable.Races[0]
-        let resultData = []
-        data.Results.map((result) => {
-          resultData.push({
-            position: result.position,
-            driverUrl: result.Driver.url,
-            forename: result.Driver.givenName,
-            surname: result.Driver.familyName,
-            constructorUrl: result.Constructor.url,
-            constructorName: result.Constructor.name,
-            raceTime: result.Time ? result.Time.time : result.status,
-            laps: result.laps,
-            fastestLapTime: result.FastestLap ? result.FastestLap.Time.time : '-',
-            status: result.status
+        if (data) {
+          let resultData = []
+          data.Results.map((result) => {
+            resultData.push({
+              position: result.position,
+              driverUrl: result.Driver.url,
+              forename: result.Driver.givenName,
+              surname: result.Driver.familyName,
+              constructorUrl: result.Constructor.url,
+              constructorName: result.Constructor.name,
+              raceTime: result.Time ? result.Time.time : result.status,
+              laps: result.laps,
+              fastestLapTime: result.FastestLap ? result.FastestLap.Time.time : '-',
+              status: result.status,
+              positionText: result.positionText
+            })
           })
-        })
 
-        let cleanResultsData = {
-          raceYear: season,
-          raceName: data.raceName,
-          results: resultData
+          let cleanResultsData = {
+            raceYear: season,
+            raceName: data.raceName,
+            results: resultData
+          }
+
+          callback(cleanResultsData)
+        } else {
+          callback({ noData: true })
         }
-
-        callback(cleanResultsData)
       }
     })
 }

@@ -91,6 +91,7 @@ function getRaceResults (db, season, raceId) {
       'results.positionOrder as positionOrder',
       'results.positionText as positionText',
       'results.laps as laps',
+      'results.resultId as resultId',
       'results.fastestLapTime as fastestLapTime',
       'status.status as status'
     )
