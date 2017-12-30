@@ -67,8 +67,8 @@ router.get('/season/:id/:raceId/qualifying', (req, res) => {
         res.json({qualifyingData, raceName:qualifyingData[0].raceName})
       } else {
         apiRoutes.getQualifying(season, req.headers.raceround, (data) => {
-          console.log(data)
-          // res.json(data)
+          // console.log(data)
+          res.json(data)
         })
         // res.json({ noData: true })
       }

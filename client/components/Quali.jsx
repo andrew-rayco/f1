@@ -23,7 +23,7 @@ export default class Quali extends React.Component {
     let allResults = qualiData.qualifyingData
     return allResults.map((driverResult) => {
       return (
-        <tr key={driverResult.qualifyId}>
+        <tr key={driverResult.surname}>
           <td className="position"><strong>{driverResult.position}</strong></td>
           <td><a href={driverResult.driverUrl}>{driverResult.forename} {driverResult.surname}</a></td>
           <td><a href={driverResult.constructorUrl}>{driverResult.constructorName}</a></td>
@@ -40,7 +40,7 @@ export default class Quali extends React.Component {
     let quali = this.state.qualifyingData
     return (
       <div className="content">
-        <h2>{quali.qualifyingData[0].year} {quali.raceName}</h2>
+        <h2>{quali.year} {quali.raceName}</h2>
         <h3>Qualifying results</h3>
         <table>
           <thead>

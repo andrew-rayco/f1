@@ -57,19 +57,41 @@ function getGrid(season, raceRound, callback) {
 
 function getQualifying(season, raceRound, callback) {
   // e.g. http://ergast.com/api/f1/2017/10/qualifying.json
-  console.log('hitting the api route')
   request
     .get(url + season + '/' + raceRound + '/qualifying.json?limit=60')
     .end((err, result) => {
       if(err) {
         console.log(err);
       } else {
-        console.log(result)
+        let data = result.body.MRData.RaceTable.Races[0]
+        let qualiResults = []
+        data.QualifyingResults.map((result) => {
+          qualiResults.push({
+            position: result.position,
+            driverUrl: result.Driver.url,
+            forename: result.Driver.givenName,
+            surname: result.Driver.familyName,
+            constructorUrl: result.Constructor.url,
+            constructorName: result.Constructor.name,
+            q1: result.Q1,
+            q2: result.Q2,
+            q3: result.Q3
+          })
+        })
+
+        let cleanQualiData = {
+          raceName: data.raceName,
+          year: data.season,
+          qualifyingData: qualiResults
+        }
+
+        callback(cleanQualiData)
       }
     })
 }
 
 module.exports = {
   getSeasons,
-  getGrid
+  getGrid,
+  getQualifying
 }
