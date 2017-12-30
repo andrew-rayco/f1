@@ -101,22 +101,22 @@ function cleanResults(results) {
     }
   })
 
-  // create array of finished drivers
-  let finishedResults = newResults.filter((result) => {
-    return (typeof result.position == 'number')
-  })
-
-  // create array of drivers who failed to finish
-  let dnfResults = results.filter((result) => {
-    return (typeof result.position == 'string')
-  })
-
-  // combine two above arrays with unclassified drivers after classified drivers
-  let allResults = finishedResults.concat(dnfResults)
+  // // create array of finished drivers
+  // let finishedResults = newResults.filter((result) => {
+  //   return (typeof result.position == 'number')
+  // })
+  //
+  // // create array of drivers who failed to finish
+  // let dnfResults = results.filter((result) => {
+  //   return (typeof result.position == 'string')
+  // })
+  //
+  // // combine two above arrays with unclassified drivers after classified drivers
+  // let allResults = finishedResults.concat(dnfResults)
   let finalResults = {
-    raceName: allResults[0].raceName,
-    raceYear: allResults[0].raceYear,
-    results: allResults
+    raceName: newResults[0].raceName,
+    raceYear: newResults[0].raceYear,
+    results: newResults
   }
 
   return finalResults
