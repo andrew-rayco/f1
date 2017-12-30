@@ -112,7 +112,14 @@ function cleanResults(results) {
   })
 
   // combine two above arrays with unclassified drivers after classified drivers
-  return finishedResults.concat(dnfResults)
+  let allResults = finishedResults.concat(dnfResults)
+  let finalResults = {
+    raceName: allResults[0].raceName,
+    raceYear: allResults[0].raceYear,
+    results: allResults
+  }
+
+  return finalResults
 }
 
 // Re-sort so grid entry of 0 (for DNQ or similar) aren't first in list

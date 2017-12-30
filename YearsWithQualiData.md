@@ -8,6 +8,24 @@
 2008
 + all good.
 
+// Results
+{
+  raceYear
+  raceName
+  results: [{
+    position,
+    driverUrl
+    forename,
+    surname,
+    constructorUrl,
+    constructorName,
+    raceTime,
+    laps,
+    fastestLapTime,
+    status
+    }]
+}
+
 // Quali
 {
   raceName,
