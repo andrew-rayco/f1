@@ -61,7 +61,7 @@ function getQualifying(season, raceRound, callback) {
     .get(url + season + '/' + raceRound + '/qualifying.json?limit=60')
     .end((err, result) => {
       if(err) {
-        console.log(err);
+        console.log(err)
       } else {
         let data = result.body.MRData.RaceTable.Races[0]
         let qualiResults = []
@@ -90,8 +90,45 @@ function getQualifying(season, raceRound, callback) {
     })
 }
 
+function getResults(season, raceRound, callback) {
+  // e.g. http://ergast.com/api/f1/2017/15/results.json
+  request
+    .get(url + season + '/' + raceRound + '/results.json?limit=60')
+    .end((err, result) => {
+      if(err) {
+        console.log(err)
+      } else {
+        let data = result.body.MRData.RaceTable.Races[0]
+        let resultData = []
+        data.Results.map((result) => {
+          resultData.push({
+            position: result.position,
+            driverUrl: result.Driver.url,
+            forename: result.Driver.givenName,
+            surname: result.Driver.familyName,
+            constructorUrl: result.Constructor.url,
+            constructorName: result.Constructor.name,
+            raceTime: result.Time ? result.Time.time : result.status,
+            laps: result.laps,
+            fastestLapTime: result.FastestLap ? result.FastestLap.Time.time : '-',
+            status: result.status
+          })
+        })
+
+        let cleanResultsData = {
+          raceYear: season,
+          raceName: data.raceName,
+          results: resultData
+        }
+
+        callback(cleanResultsData)
+      }
+    })
+}
+
 module.exports = {
   getSeasons,
   getGrid,
-  getQualifying
+  getQualifying,
+  getResults
 }

@@ -141,15 +141,18 @@ router.get('/season/:id/:raceId/laptimes', (req, res) => {
 // show race results
 router.get('/season/:id/:raceId/results', (req, res) => {
   var db = req.app.get('db')
-  var id = req.params.id
+  var season = req.params.id
   var raceId = req.params.raceId
-    dbFunctions.getRaceResults(db, id, raceId)
+    dbFunctions.getRaceResults(db, season, raceId)
     .then((results) => {
       if (results[0]) {
         let newResults = functions.cleanResults(results)
         res.json(newResults)
       } else {
-        res.json({ noData: true })
+        apiRoutes.getResults(season, req.headers.raceround, (data) => {
+          res.json(data)
+        })
+        // res.json({ noData: true })
       }
     })
     .catch((err) => {

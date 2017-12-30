@@ -64,7 +64,7 @@ export default class RaceOptions extends React.Component {
 
             <p><a onClick={(e) => this.handleClick(e, 'resultsVisible')} href="#" className="togglable">Results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>
             {(this.state.resultsVisible) ?
-              <Results season={race.year} raceId={race.raceId} /> :
+              <Results season={race.year} raceId={race.raceId} round={race.round} /> :
               null
             }
             <p><a href={race.raceUrl || race.url}>{race.year} {race.raceName || race.name} on Wikipedia</a></p>

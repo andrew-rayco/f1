@@ -13,7 +13,8 @@ export default class Results extends React.Component {
   componentWillMount() {
     let season = this.props.season
     let raceId = this.props.raceId
-    api.getRaceResults(season, raceId, (results) => {
+    let round = this.props.round
+    api.getRaceResults(season, raceId, round, (results) => {
       this.setState({results})
     })
   }
@@ -22,7 +23,7 @@ export default class Results extends React.Component {
     let fastestLap = this.findFastestLap(results)
     return results.map((driverResult) => {
       return (
-        <tr key={driverResult.resultId}>
+        <tr key={driverResult.surname}>
           <td className="position">
             <strong>{driverResult.position}</strong>
           </td>
@@ -69,7 +70,7 @@ export default class Results extends React.Component {
     let results = this.state.results
     return (
       <div className="content">
-        <h2>{results[0].raceYear} {results[0].raceName}</h2>
+        <h2>{results.raceYear} {results.raceName}</h2>
         <h3>Race results</h3>
         <table>
           <thead>
@@ -85,7 +86,7 @@ export default class Results extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.listResults(results)}
+            {this.listResults(results.results)}
           </tbody>
         </table>
       </div>
