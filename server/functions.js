@@ -79,7 +79,7 @@ function cleanResults(results) {
   newResults.forEach((result) => {
     switch (result.positionText) {
       case "R":
-        result.position = 'Retired'
+        result.position = result.positionOrder
         break
       case "W":
         result.position = 'Withdrawn'
@@ -144,8 +144,6 @@ function compareGridPos(a, b) {
   }
   return comparison
 }
-
-
 
 module.exports = {
   prepareRaceData,

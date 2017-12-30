@@ -82,16 +82,24 @@ function getRaceResults (db, season, raceId) {
       'races.year as raceYear',
       'races.url as raceUrl',
       'drivers.url as driverUrl',
+      'drivers.surname as surname',
+      'drivers.forename as forename',
       'constructors.url as constructorUrl',
       'constructors.name as constructorName',
       'results.time as raceTime',
-      '*'
+      'results.position as position',
+      'results.positionOrder as positionOrder',
+      'results.positionText as positionText',
+      'results.laps as laps',
+      'results.fastestLapTime as fastestLapTime',
+      'status.status as status'
     )
     .where('results.raceId', raceId)
     .join('drivers', 'results.driverId', '=', 'drivers.driverId')
     .join('races', 'results.raceId', '=', 'races.raceId')
     .join('constructors', 'constructors.constructorId', '=', 'results.constructorId')
-    .orderBy('position', 'asc')
+    .join('status', 'results.statusId', '=', 'status.statusId')
+    .orderBy('positionOrder', 'asc')
 }
 
 function getRaceInfo (db, season, raceId) {

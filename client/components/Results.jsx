@@ -35,7 +35,7 @@ export default class Results extends React.Component {
           </td>
           <td>{driverResult.raceTime
               ? driverResult.raceTime
-              : `+ ${ (this.state.results.results[0].laps - driverResult.laps)} laps`}</td>
+              : `${driverResult.status} (${driverResult.laps})`}</td>
           <td className="optional">{this.highlightFastestLap(driverResult.fastestLapTime, fastestLap)}</td>
         </tr>
       )
