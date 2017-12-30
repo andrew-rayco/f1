@@ -1,6 +1,4 @@
 function prepareRaceData (laptimes) {
-  // console.log(laptimes)
-
   // Get all driver Surnames in race
   var driversInRace = []
   laptimes.map((lap) => {
@@ -37,8 +35,6 @@ function prepareRaceData (laptimes) {
     count++
   }
 
-  // console.log(lapsByLapNumber)
-  // Only take driver surname, lap num, time and milliseconds
   var cleanRaceData = []
   lapsByLapNumber.map((lap) => {
     for (var i = 0; i < maxLaps; i++) {
@@ -55,16 +51,12 @@ function prepareRaceData (laptimes) {
     }
   })
 
-
-  //experimenting
   var count = 1;
   var lapCounter = setInterval(function() {
     if (count <= maxLaps) {
-      // console.log(count)
       count++
       return count
     } else {
-      // console.log('race is over');
       clearInterval(lapCounter)
     }
   }, 50)
@@ -72,14 +64,13 @@ function prepareRaceData (laptimes) {
   return cleanRaceData
 }
 
-// Add human friendly classification titles and ensure classified runners are
-// listed ahead of others in results table
+// Add human friendly classification titles
 function cleanResults(results) {
   let newResults = [...results]
   newResults.forEach((result) => {
     switch (result.positionText) {
       case "R":
-        result.position = 'Retired'
+        result.position = result.positionOrder
         break
       case "W":
         result.position = 'Withdrawn'
@@ -101,22 +92,40 @@ function cleanResults(results) {
     }
   })
 
-  // create array of finished drivers
-  let finishedResults = newResults.filter((result) => {
-    return (typeof result.position == 'number')
-  })
+  let finalResults = {
+    raceName: newResults[0].raceName,
+    raceYear: newResults[0].raceYear,
+    results: newResults
+  }
 
-  // create array of drivers who failed to finish
-  let dnfResults = results.filter((result) => {
-    return (typeof result.position == 'string')
-  })
-
-  // combine two above arrays with unclassified drivers after classified drivers
-  return finishedResults.concat(dnfResults)
+  return finalResults
 }
 
+// Re-sort so grid entry of 0 (for DNQ or similar) aren't first in list
+function sortGrid(gridData) {
+  gridData.map((result) => {
+    if (result.grid == 0) {
+      result.grid = 99
+    }
+  })
+  gridData.sort(compareGridPos)
+}
+
+function compareGridPos(a, b) {
+  const gridA = Number(a.grid)
+  const gridB = Number(b.grid)
+
+  let comparison = 0
+  if (gridA > gridB) {
+    comparison = 1
+  } else {
+    comparison = -1
+  }
+  return comparison
+}
 
 module.exports = {
   prepareRaceData,
-  cleanResults
+  cleanResults,
+  sortGrid
 }

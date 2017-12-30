@@ -24,17 +24,19 @@ export function getRaces(id, callback) {
     })
 }
 
-export function getQuali(seasonId, raceId, callback) {
+export function getQuali(seasonId, raceId, round, callback) {
   request
     .get(`/api-v1/season/${seasonId}/${raceId}/qualifying`)
+    .set({ raceround: round })
     .end((err, res) => {
       err ? callback(err) : callback(res.body)
     })
 }
 
-export function getGrid(seasonId, raceId, callback) {
+export function getGrid(seasonId, raceId, round, callback) {
   request
     .get(`/api-v1/season/${seasonId}/${raceId}/grid`)
+    .set({ raceround: round })
     .end((err, res) => {
       err ? callback(err) : callback(res.body)
     })
@@ -56,9 +58,10 @@ export function getRaceDetails(seasonId, raceId, callback) {
     })
 }
 
-export function getRaceResults(seasonId, raceId, callback) {
+export function getRaceResults(seasonId, raceId, round, callback) {
   request
     .get(`/api-v1/season/${seasonId}/${raceId}/results`)
+    .set({ raceround: round })
     .end((err, res) => {
       err ? callback(err) : callback(res.body)
     })
