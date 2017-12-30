@@ -13,7 +13,8 @@ export default class Quali extends React.Component {
   componentWillMount() {
     let season = this.props.season
     let raceId = this.props.raceId
-    api.getQuali(season, raceId, (qualifyingData) => {
+    let round = this.props.round
+    api.getQuali(season, raceId, round, (qualifyingData) => {
       this.setState({qualifyingData})
     })
   }

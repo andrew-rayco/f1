@@ -9,7 +9,6 @@ let functions = require('./functions')
 const url = 'http://ergast.com/api/f1/'
 
 function getSeasons(callback) {
-  console.log('hitting the api call')
   request
     .get('http://ergast.com/api/f1/seasons.json?limit=80')
     .end((err, result) => {
@@ -54,6 +53,20 @@ function getGrid(season, raceRound, callback) {
         callback(cleanData)
       }
   })
+}
+
+function getQualifying(season, raceRound, callback) {
+  // e.g. http://ergast.com/api/f1/2017/10/qualifying.json
+  console.log('hitting the api route')
+  request
+    .get(url + season + '/' + raceRound + '/qualifying.json?limit=60')
+    .end((err, result) => {
+      if(err) {
+        console.log(err);
+      } else {
+        console.log(result)
+      }
+    })
 }
 
 module.exports = {

@@ -11,21 +11,21 @@ router.get('/', (req, res) => {
   db('seasons')
     .orderBy('year', 'asc')
     .then((seasons) => {
-      // seasons[0]
-      //   ? res.json(seasons)
-      //   : apiRoutes.getSeasons()
-      apiRoutes.getSeasons((seasons) => {
-        let allSeasons = seasons.MRData.SeasonTable.Seasons
-        let renamedSeasons = []
-        allSeasons.map((season) => {
-          renamedSeasons.push({
-            year: season.season,
-            url: season.url
+      seasons[0]
+        ? res.json(seasons)
+        : apiRoutes.getSeasons((seasons) => {
+          let allSeasons = seasons.MRData.SeasonTable.Seasons
+          let renamedSeasons = []
+          allSeasons.map((season) => {
+            renamedSeasons.push({
+              year: season.season,
+              url: season.url
+            })
           })
+          res.json(renamedSeasons)
         })
-        res.json(renamedSeasons)
       })
-    })
+
     .catch((err) => {
       res.status(500).send('DATABASE ERROR: ' + err.message)
     })
@@ -66,7 +66,11 @@ router.get('/season/:id/:raceId/qualifying', (req, res) => {
       if (qualifyingData[0]) {
         res.json({qualifyingData, raceName:qualifyingData[0].raceName})
       } else {
-        res.json({ noData: true })
+        apiRoutes.getQualifying(season, req.headers.raceround, (data) => {
+          console.log(data)
+          // res.json(data)
+        })
+        // res.json({ noData: true })
       }
     })
     .catch((err) => {

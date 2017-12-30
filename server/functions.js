@@ -143,6 +143,5 @@ function compareGridPos(a, b) {
 module.exports = {
   prepareRaceData,
   cleanResults,
-  compareGridPos,
   sortGrid
 }

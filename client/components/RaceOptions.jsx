@@ -51,7 +51,7 @@ export default class RaceOptions extends React.Component {
             <p>{moment(race.date).format('MMMM Do YYYY')}</p>
             <p><a onClick={(e) => this.handleClick(e, 'qualiVisible')} href="#" className="togglable">Qualifying results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>
             {(this.state.qualiVisible) ?
-              <Quali season={race.year} raceId={race.raceId} /> :
+              <Quali season={race.year} raceId={race.raceId} round={race.round} /> :
               null
             }
             <p><a onClick={(e) => this.handleClick(e, 'gridVisible')} href="#" className="togglable">Starting grid <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>

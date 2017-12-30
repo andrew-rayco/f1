@@ -24,9 +24,10 @@ export function getRaces(id, callback) {
     })
 }
 
-export function getQuali(seasonId, raceId, callback) {
+export function getQuali(seasonId, raceId, round, callback) {
   request
     .get(`/api-v1/season/${seasonId}/${raceId}/qualifying`)
+    .set({ raceround: round })
     .end((err, res) => {
       err ? callback(err) : callback(res.body)
     })
