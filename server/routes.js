@@ -6,29 +6,44 @@ var dbFunctions = require('./db/db-functions')
 var functions = require('./functions')
 var apiRoutes = require('./apiRoutes')
 
+// router.get('/', (req, res) => {
+//   var db = req.app.get('db')
+//   db('seasons')
+//     .orderBy('year', 'asc')
+//     .then((seasons) => {
+//       seasons[0]
+//         ? res.json(seasons)
+//         : apiRoutes.getSeasons((seasons) => {
+//           let allSeasons = seasons.MRData.SeasonTable.Seasons
+//           let renamedSeasons = []
+//           allSeasons.map((season) => {
+//             renamedSeasons.push({
+//               year: season.season,
+//               url: season.url
+//             })
+//           })
+//           res.json(renamedSeasons)
+//         })
+//       })
+//     .catch((err) => {
+//       res.status(500).send('DATABASE ERROR: ' + err.message)
+//     })
+// })
+
 router.get('/', (req, res) => {
-  var db = req.app.get('db')
-  db('seasons')
-    .orderBy('year', 'asc')
-    .then((seasons) => {
-      seasons[0]
-        ? res.json(seasons)
-        : apiRoutes.getSeasons((seasons) => {
-          let allSeasons = seasons.MRData.SeasonTable.Seasons
-          let renamedSeasons = []
-          allSeasons.map((season) => {
-            renamedSeasons.push({
-              year: season.season,
-              url: season.url
-            })
-          })
-          res.json(renamedSeasons)
+  apiRoutes.getSeasons((seasons) => {
+      let allSeasons = seasons.MRData.SeasonTable.Seasons
+      let renamedSeasons = []
+      allSeasons.map((season) => {
+        renamedSeasons.push({
+          year: season.season,
+          url: season.url
         })
       })
-    .catch((err) => {
-      res.status(500).send('DATABASE ERROR: ' + err.message)
+      res.json(renamedSeasons)
     })
 })
+
 
 router.get('/circuits', (req, res) => {
   var db = req.app.get('db')

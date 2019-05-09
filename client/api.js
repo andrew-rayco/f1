@@ -4,6 +4,7 @@ export function getSeasons(callback) {
   request
     .get('/api-v1/')
     .end((err, res) => {
+        console.log(res.body);
       err ? callback(err) : callback(res.body)
     })
 }
