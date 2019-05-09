@@ -1,6 +1,6 @@
 import React from 'react'
 
-import * as api from '../api'
+import * as apiRoutes from '../../server/apiRoutes'
 import ListSeason from './ListSeason'
 import Loading from './Loading'
 
@@ -11,14 +11,14 @@ export default class Home extends React.Component {
   }
 
   componentWillMount() {
-    api.getSeasons((seasons) => {
+    apiRoutes.getSeasons((seasons) => {
       this.setState({seasons})
     })
   }
 
   listSeasons(seasons) {
-    return seasons.map(({year}) => {
-      return <ListSeason year={year} key={year}/>
+    return seasons.map(({season}) => {
+      return <ListSeason year={season} key={season}/>
     })
   }
 
