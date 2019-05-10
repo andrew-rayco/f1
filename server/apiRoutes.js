@@ -67,12 +67,12 @@ function getGrid(season, raceRound, callback) {
                         })
                     })
 
-                    strippedResults.sort(functions.compareGridPos)
+                    const sortedResults = functions.sortGrid(strippedResults)
 
                     let cleanData = {
                         raceName: data.raceName,
                         year: data.season,
-                        gridData: strippedResults
+                        gridData: sortedResults
                     }
 
                     callback(cleanData)

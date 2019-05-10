@@ -80,7 +80,7 @@ export default class RaceOptions extends React.Component {
 
                             {
                                 this.state.qualiVisible
-                                ? <Quali season={race.season} raceId={race.round} round={race.round} />
+                                ? <Quali season={race.season} round={race.round} />
                                 : null
                             }
 
@@ -96,7 +96,7 @@ export default class RaceOptions extends React.Component {
 
                             {
                                 this.state.gridVisible
-                                ? <Grid season={race.year} raceId={race.raceId} round={race.round} />
+                                ? <Grid season={race.season} round={race.round} />
                                 : null
                             }
 
@@ -118,11 +118,11 @@ export default class RaceOptions extends React.Component {
 
                                 {
                                     this.state.resultsVisible
-                                    ? <Results season={race.year} raceId={race.raceId} round={race.round} />
+                                    ? <Results season={race.season} round={race.round} />
                                     : null
                                 }
 
-                                <p><a href={race.raceUrl || race.url}>{race.year} {race.raceName || race.name} on Wikipedia</a></p>
+                                <p><a href={race.url}>{race.season} {race.raceName} on Wikipedia</a></p>
                                 <div className="separator"></div>
                             </div>
                         </div>

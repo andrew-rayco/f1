@@ -1,6 +1,6 @@
 import React from 'react'
 
-import * as api from '../api'
+import * as apiRoutes from '../../server/apiRoutes'
 import * as h from '../helpers/helpers'
 import RaceOptions from './RaceOptions'
 
@@ -22,7 +22,7 @@ export default class Grid extends React.Component {
             season = pathArray[2]
             raceId = pathArray[3]
         }
-        api.getGrid(season, raceId, round, (grid) => {
+        apiRoutes.getGrid(season, round, (grid) => {
             this.setState({ grid })
         })
     }
