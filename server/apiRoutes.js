@@ -21,7 +21,12 @@ function getSingleSeason(year, callback) {
     request
         .get(urlConcat)
         .end((err, result) => {
-            err ? console.log(err) : callback(result.body)
+            if (!err) {
+                const season = result.body.MRData.RaceTable.Races
+                callback(season)
+            } else {
+                console.log(err);
+            }
         })
 }
 
