@@ -44,7 +44,6 @@ export default class RaceOptions extends React.Component {
         let race = this.props.race
         const raceDate = new Date(race.date + ' ' + race.time)
         const todayDate = new Date()
-        console.log(raceDate > todayDate);
 
         // Check if race is in past or future. If future, disable selection
         if (raceDate > todayDate) {
@@ -71,12 +70,17 @@ export default class RaceOptions extends React.Component {
                         <div id={race.round} className={`toggle hidden`}>
                             <p>{moment(race.date).format('MMMM Do YYYY')}</p>
                             <p>
-                                <a onClick={(e) => this.handleClick(e, 'qualiVisible')} href="#" className="togglable">Qualifying results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a>
+                                <a
+                                    onClick={(e) => this.handleClick(e, 'qualiVisible')} href="#"
+                                    className="togglable"
+                                >
+                                    Qualifying results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/>
+                                </a>
                             </p>
 
                             {
                                 this.state.qualiVisible
-                                ? <Quali season={race.year} raceId={race.raceId} round={race.round} />
+                                ? <Quali season={race.season} raceId={race.round} round={race.round} />
                                 : null
                             }
 
@@ -85,47 +89,45 @@ export default class RaceOptions extends React.Component {
                                     onClick={(e) => this.handleClick(e, 'gridVisible')}
                                     href="#"
                                     className="togglable"
+                                >
+                                        Starting grid <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/>
+                                </a>
+                            </p>
+
+                            {
+                                this.state.gridVisible
+                                ? <Grid season={race.year} raceId={race.raceId} round={race.round} />
+                                : null
+                            }
+
+                            {
+                                this.props.intro
+                                ? null
+                                : this.visualise(race)
+                            }
+
+                            <p>
+                                <a
+                                    onClick={(e) => this.handleClick(e, 'resultsVisible')}
+                                    href="#"
+                                    className="togglable"
                                     >
-                                        Starting grid
-                                        <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/>
+                                        Results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/>
                                     </a>
                                 </p>
 
                                 {
-                                    this.state.gridVisible
-                                    ? <Grid season={race.year} raceId={race.raceId} round={race.round} />
+                                    this.state.resultsVisible
+                                    ? <Results season={race.year} raceId={race.raceId} round={race.round} />
                                     : null
                                 }
 
-                                {
-                                    this.props.intro
-                                    ? null
-                                    : this.visualise(race)
-                                }
-
-                                <p>
-                                    <a
-                                        onClick={(e) => this.handleClick(e, 'resultsVisible')}
-                                        href="#"
-                                        className="togglable"
-                                        >
-                                            Results
-                                            <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/>
-                                        </a>
-                                    </p>
-
-                                    {
-                                        this.state.resultsVisible
-                                        ? <Results season={race.year} raceId={race.raceId} round={race.round} />
-                                        : null
-                                    }
-
-                                    <p><a href={race.raceUrl || race.url}>{race.year} {race.raceName || race.name} on Wikipedia</a></p>
-                                    <div className="separator"></div>
-                                </div>
+                                <p><a href={race.raceUrl || race.url}>{race.year} {race.raceName || race.name} on Wikipedia</a></p>
+                                <div className="separator"></div>
                             </div>
                         </div>
-                    )
+                    </div>
+                )
             }
     }
 }

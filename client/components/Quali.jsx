@@ -1,6 +1,6 @@
 import React from 'react'
 
-import * as api from '../api'
+import * as apiRoutes from '../../server/apiRoutes'
 import * as h from '../helpers/helpers'
 import RaceOptions from './RaceOptions'
 
@@ -14,7 +14,7 @@ export default class Quali extends React.Component {
         let season = this.props.season
         let raceId = this.props.raceId
         let round = this.props.round
-        api.getQuali(season, raceId, round, (qualifyingData) => {
+        apiRoutes.getQualifying(season, round, (qualifyingData) => {
             this.setState({ qualifyingData })
         })
     }
