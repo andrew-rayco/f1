@@ -1,6 +1,6 @@
 import React from 'react'
 
-import * as api from '../api'
+import * as apiRoutes from '../../server/apiRoutes'
 import Loading from './Loading'
 
 export default class Circuits extends React.Component {
@@ -12,7 +12,7 @@ export default class Circuits extends React.Component {
     }
 
     componentWillMount() {
-        api.getCircuits((circuits) => {
+        apiRoutes.getCircuits((circuits) => {
             this.setState({ circuits })
         })
     }
@@ -20,22 +20,23 @@ export default class Circuits extends React.Component {
     listCircuits(circuitsObj) {
         let circuits = Array.from(circuitsObj)
         return circuits.map((track) => {
+            const location = track.Location
             return (
                 <tr key={track.circuitId}>
-                    <td>{track.country}</td>
+                    <td>{location.country}</td>
                     <td>
-                        <a href={track.url}>{track.name}</a>
+                        <a href={track.url}>{track.circuitName}</a>
                     </td>
-                    <td>{track.location}</td>
+                    <td>{location.locality}</td>
                     <td>
-                        <a href={`https://www.google.co.nz/maps/@${track.lat},${track.lng},3916m/data=!3m1!1e3?hl=en`}>View</a>
+                        <a href={`https://www.google.co.nz/maps/@?api=1&map_action=map&center=${location.lat},${location.long}&zoom=15&basemap=satellite`}>View</a>
                     </td>
                 </tr>
             )
         })
     }
 
-    buildCircuitTable() {
+    renderCircuitTable() {
         return (
             <table>
                 <thead>
@@ -57,10 +58,10 @@ export default class Circuits extends React.Component {
         return (
             <div className="circuit-list">
                 <h2>Circuits</h2>
-                <h3>Every circuit in the history of Formula 1</h3>
+                <h4>Every circuit in the history of Formula 1</h4>
                 {
                     this.state.circuits
-                    ? this.buildCircuitTable()
+                    ? this.renderCircuitTable()
                     : <Loading />
                 }
             </div>

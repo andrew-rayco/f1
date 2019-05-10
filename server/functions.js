@@ -124,8 +124,22 @@ function compareGridPos(a, b) {
   return comparison
 }
 
+// Comparison function to aid in sorting circuit list by country
+function compareCircuits(a, b) {
+    const aCountry = a.Location.country
+    const bCountry = b.Location.country
+    if (aCountry < bCountry) {
+        return -1
+    }
+    if (aCountry > bCountry) {
+        return 1
+    }
+    return 0
+}
+
 module.exports = {
   prepareRaceData,
   cleanResults,
-  sortGrid
+  sortGrid,
+  compareCircuits
 }

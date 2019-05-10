@@ -6,7 +6,7 @@ const url = 'http://ergast.com/api/f1/'
 
 function getSeasons(callback) {
     request
-        .get('http://ergast.com/api/f1/seasons.json?limit=80')
+        .get(`${url}seasons.json?limit=80`)
         .end((err, result) => {
             if (err) {
                 console.log(err)
@@ -22,6 +22,20 @@ function getSingleSeason(year, callback) {
         .get(urlConcat)
         .end((err, result) => {
             err ? console.log(err) : callback(result.body)
+        })
+}
+
+function getCircuits(callback) {
+    const urlConcat = `${url}circuits.json`
+    request
+        .get(urlConcat)
+        .end((err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                const circuits = result.body.MRData.CircuitTable.Circuits
+                callback(circuits.sort(functions.compareCircuits))
+            }
         })
 }
 
@@ -146,8 +160,9 @@ function getResults(season, raceRound, callback) {
 
 module.exports = {
     getSeasons,
+    getSingleSeason,
+    getCircuits,
     getGrid,
     getQualifying,
     getResults,
-    getSingleSeason,
 }

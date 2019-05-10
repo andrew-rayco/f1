@@ -6,19 +6,19 @@ var dbFunctions = require('./db/db-functions')
 var functions = require('./functions')
 var apiRoutes = require('./apiRoutes')
 
-router.get('/', (req, res) => {
-    apiRoutes.getSeasons((seasons) => {
-        let allSeasons = seasons.MRData.SeasonTable.Seasons
-        let renamedSeasons = []
-        allSeasons.map((season) => {
-            renamedSeasons.push({
-                year: season.season,
-                url: season.url
-            })
-        })
-        res.json(renamedSeasons)
-    })
-})
+// router.get('/', (req, res) => {
+//     apiRoutes.getSeasons((seasons) => {
+//         let allSeasons = seasons.MRData.SeasonTable.Seasons
+//         let renamedSeasons = []
+//         allSeasons.map((season) => {
+//             renamedSeasons.push({
+//                 year: season.season,
+//                 url: season.url
+//             })
+//         })
+//         res.json(renamedSeasons)
+//     })
+// })
 
 
 router.get('/circuits', (req, res) => {
