@@ -1,6 +1,6 @@
 import React from 'react'
 
-import * as api from '../api'
+import * as apiRoutes from '../../server/apiRoutes'
 import * as h from '../helpers/helpers'
 import RaceOptions from './RaceOptions'
 
@@ -12,9 +12,8 @@ export default class Results extends React.Component {
 
     componentWillMount() {
         let season = this.props.season
-        let raceId = this.props.raceId
         let round = this.props.round
-        api.getRaceResults(season, raceId, round, (results) => {
+        apiRoutes.getResults(season, round, (results) => {
             this.setState({ results })
         })
     }
@@ -22,30 +21,50 @@ export default class Results extends React.Component {
     listResults(results) {
         let fastestLap = this.findFastestLap(results)
         return results.map((driverResult) => {
+            const {
+                surname,
+                forename,
+                position,
+                driverUrl,
+                constructorUrl,
+                constructorName,
+                positionText,
+                raceTime,
+                status,
+                laps,
+                fastestLapTime,
+                fastestLapNumber
+            } = driverResult
             return (
-                <tr key={driverResult.surname + driverResult.position}>
+                <tr key={surname + position}>
                     <td className="position">
-                        <strong>{driverResult.position}</strong>
+                        <strong>{position}</strong>
                     </td>
                     <td>
-                        <a href={driverResult.driverUrl}>{driverResult.forename} {driverResult.surname}</a>
+                        <a href={driverUrl}>{forename} {surname}</a>
                     </td>
                     <td>
-                        <a href={driverResult.constructorUrl}>{driverResult.constructorName}</a>
+                        <a href={constructorUrl}>{constructorName}</a>
                     </td>
                     <td>
                         {
-                            driverResult.positionText != 'R'
-                                ? driverResult.raceTime || driverResult.status
-                                : `${driverResult.status} (${driverResult.laps})`
+                            positionText != 'R'
+                                ? raceTime || status
+                                : <div>{status}<span className="muted sub-text">{Number(laps)+1}</span></div>
                         }
                     </td>
                     <td className="optional">
-                        {this.highlightFastestLap(driverResult.fastestLapTime, fastestLap)}
+                        {this.highlightFastestLap(fastestLapTime, fastestLap)}
+                        {/* show fastestLapNumber next to fastest lap */}
+                        <span className="muted sub-text">{fastestLapNumber && `${fastestLapNumber}`}</span>
                     </td>
                 </tr>
             )
         })
+    }
+
+    statusResult(status, laps) {
+        return <div>{status}<span className="muted sub-text">{laps}</span></div>
     }
 
     findFastestLap(results) {
@@ -73,11 +92,13 @@ export default class Results extends React.Component {
     }
 
     buildResultsTable() {
-        let results = this.state.results
+        const resultsState = this.state.results
+        const { raceYear, raceName, results } = resultsState
         return (
             <div className="content">
-                <h2>{results.raceYear} {results.raceName}</h2>
+                <h2>{raceYear} {raceName}</h2>
                 <h3>Race results</h3>
+                <p>{results[0].laps} laps</p>
                 <table>
                     <thead>
                     <tr>
@@ -95,7 +116,7 @@ export default class Results extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                        {this.listResults(results.results)}
+                        {this.listResults(results)}
                     </tbody>
                 </table>
             </div>
@@ -103,12 +124,13 @@ export default class Results extends React.Component {
     }
 
     render() {
+        const results = this.state.results
         return (
             <div className="results sub-section">
                 {
-                    this.state.results && !this.state.results.noData
+                    results && !results.noData
                         ? this.buildResultsTable()
-                        : h.handleLoadingOrError(this.state.results)
+                        : h.handleLoadingOrError(results)
                 }
           </div>
         )

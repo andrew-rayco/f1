@@ -35,7 +35,7 @@ export default class RaceOptions extends React.Component {
     visualise(race) {
         return (
             <p>
-                <a href={`/#/season/${race.year}/${race.raceId}/visualise`}>Visualise</a>
+                <a href={`/#/season/${race.season}/${race.round}/visualise`}>Visualise</a>
             </p>
         )
     }
@@ -50,7 +50,7 @@ export default class RaceOptions extends React.Component {
             return (
                 <div key={race.round} className="row single-round">
                     <div className={`twelve columns round ${race.round}`}>
-                        <h4 className="disabled">{`${race.round} - ${race.raceName || race.name}`}</h4>
+                        <h4 className="muted">{`${race.round} - ${race.raceName || race.name}`}</h4>
                     </div>
                 </div>
             )

@@ -134,18 +134,30 @@ function getResults(season, raceRound, callback) {
                 if (data) {
                     let resultData = []
                     data.Results.map((result) => {
+                        const {
+                            position,
+                            Driver,
+                            Constructor,
+                            Time,
+                            status,
+                            FastestLap,
+                            positionText,
+                            laps
+                        } = result
                         resultData.push({
-                            position: result.position,
-                            driverUrl: result.Driver.url,
-                            forename: result.Driver.givenName,
-                            surname: result.Driver.familyName,
-                            constructorUrl: result.Constructor.url,
-                            constructorName: result.Constructor.name,
-                            raceTime: result.Time ? result.Time.time : result.status,
-                            laps: result.laps,
-                            fastestLapTime: result.FastestLap ? result.FastestLap.Time.time : '-',
-                            status: result.status,
-                            positionText: result.positionText
+                            position: position,
+                            driverUrl: Driver.url,
+                            forename: Driver.givenName,
+                            surname: Driver.familyName,
+                            constructorUrl: Constructor.url,
+                            constructorName: Constructor.name,
+                            raceTime: Time ? Time.time : status,
+                            laps: laps,
+                            fastestLapTime: FastestLap ? FastestLap.Time.time : '-',
+                            fastestLapSpeed: FastestLap ? FastestLap.AverageSpeed.speed : null,
+                            fastestLapNumber: FastestLap ? FastestLap.lap : null,
+                            status: status,
+                            positionText: positionText
                         })
                     })
 
