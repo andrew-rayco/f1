@@ -7,14 +7,20 @@ import RaceOptions from './RaceOptions'
 export default class Results extends React.Component {
     constructor() {
         super(),
-            this.state = {}
+            this.state = {
+                lapTimesExist: false
+            }
     }
 
     componentWillMount() {
         let season = this.props.season
         let round = this.props.round
         apiRoutes.getResults(season, round, (results) => {
-            this.setState({ results })
+            let lapTimesExist = false
+            if (results.results[0].fastestLapTime && results.results[0].fastestLapTime !== '-') {
+                lapTimesExist = true
+            }
+            this.setState({ results, lapTimesExist })
         })
     }
 
@@ -35,6 +41,7 @@ export default class Results extends React.Component {
                 fastestLapTime,
                 fastestLapNumber
             } = driverResult
+
             return (
                 <tr key={surname + position}>
                     <td className="position">
@@ -53,11 +60,13 @@ export default class Results extends React.Component {
                                 : <div>{status}<span className="muted sub-text">{Number(laps)+1}</span></div>
                         }
                     </td>
-                    <td className="optional">
-                        {this.highlightFastestLap(fastestLapTime, fastestLap)}
-                        {/* show fastestLapNumber next to fastest lap */}
-                        <span className="muted sub-text">{fastestLapNumber && `${fastestLapNumber}`}</span>
-                    </td>
+                    {this.state.lapTimesExist && (
+                        <td className="optional">
+                            {this.highlightFastestLap(fastestLapTime, fastestLap)}
+                            {/* show fastestLapNumber next to fastest lap */}
+                            <span className="muted sub-text">{fastestLapNumber && `${fastestLapNumber}`}</span>
+                        </td>
+                    )}
                 </tr>
             )
         })
@@ -112,7 +121,10 @@ export default class Results extends React.Component {
                         <th>Driver</th>
                         <th>Team</th>
                         <th>Race Time</th>
-                        <th className="optional">Fastest lap</th>
+                        {this.state.lapTimesExist
+                            ? <th className="optional">Fastest lap</th>
+                            : null
+                        }
                     </tr>
                     </thead>
                     <tbody>
