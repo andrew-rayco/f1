@@ -66,9 +66,12 @@ describe('Home component', () => {
     })
 
     it('renders seasons if given data and does not render Loading component', () => {
-        wrapper.setState({ seasons: data })
         const component = wrapper.find('ul')
-        expect(component.children().length).toBe(10)
-        expect(component.contains('<Loading />')).toBeFalsy()
+        expect(component.children().length).toEqual(1)
+        expect(component.children().text()).toEqual('<Loading />')
+        wrapper.setState({ seasons: data })
+        const component2 = wrapper.find('ul')
+        expect(component2.children().length).toBe(10)
+        expect(component2.contains('<Loading />')).toBeFalsy()
     })
 })

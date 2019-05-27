@@ -22,15 +22,15 @@ export default class Grid extends React.Component {
             season = pathArray[2]
             raceId = pathArray[3]
         }
-        apiRoutes.getGrid(season, round, (grid) => {
+        apiRoutes.getGrid(season, raceId, (grid) => {
             this.setState({ grid })
         })
     }
 
     listGrid(fullGrid) {
-        return fullGrid.map((driver) => {
+        return fullGrid.map((driver, i) => {
             return (
-                <tr key={driver.surname}>
+                <tr key={driver.surname || i}>
                     <td className="position">
                         <strong>{driver.grid}</strong>
                     </td>
@@ -56,7 +56,7 @@ export default class Grid extends React.Component {
                         <tr>
                             <th className="position">
                                 {
-                                document.body.clientWidth < 450
+                                window.innerWidth < 450
                                   ? 'Pos'
                                   : 'Position'
                                 }
