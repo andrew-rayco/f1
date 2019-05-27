@@ -28,7 +28,7 @@ export default class Home extends React.Component {
         return (
             <div className="row">
                 <div className="twelve columns home">
-                    <h3>Seasons</h3>
+                    <h3 data-test="heading-seasons">Seasons</h3>
                     <ul className="seasons">
                     {
                         seasons.length > 0
@@ -37,7 +37,7 @@ export default class Home extends React.Component {
                     }
                     </ul>
 
-                    <h3>Circuits</h3>
+                    <h3 data-test="heading-circuits">Circuits</h3>
                     <div className="circuits">
                         <a href="/#/circuits">See all the circuits</a>
                     </div>

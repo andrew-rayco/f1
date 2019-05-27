@@ -239,6 +239,7 @@ class RunRace extends React.Component {
             )
         } else if (raceData && raceData.noData && this.state.results) {
             let race = this.state.results[0]
+            console.log(race);
             return (
                 <div>
                     <p>Sorry. Visualisation isn't possible for this event. <br/>
