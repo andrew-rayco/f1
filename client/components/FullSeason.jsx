@@ -53,7 +53,7 @@ export default class FullSeason extends React.Component {
             )
         } else {
             return (
-                <div>
+                <div className="load-error">
                     {
                         this.state.renderLoading
                         ? <Loading />

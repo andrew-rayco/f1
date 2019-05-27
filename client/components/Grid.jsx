@@ -6,8 +6,8 @@ import RaceOptions from './RaceOptions'
 
 export default class Grid extends React.Component {
     constructor() {
-        super(),
-            this.state = {}
+        super()
+        this.state = {}
     }
 
     componentWillMount() {
@@ -22,6 +22,7 @@ export default class Grid extends React.Component {
             season = pathArray[2]
             raceId = pathArray[3]
         }
+        if (!raceId) raceId = round
         apiRoutes.getGrid(season, raceId, (grid) => {
             this.setState({ grid })
         })

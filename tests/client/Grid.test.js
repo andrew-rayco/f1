@@ -32,4 +32,22 @@ describe('Grid component', () => {
     it('renders returned data', () => {
         expect(wrapper.find('tr').length).toEqual(3)
     })
+
+    it('renders Loading component if no data', () => {
+        wrapper.setState({ grid: null })
+        expect(wrapper.text()).toMatch(/<Loading \/>/)
+    })
+
+    it('uses props if passed props', () => {
+        const wrapperWithProps = shallow(
+            <Grid
+                location={ location }
+                season={'2015'}
+                raceId={2}
+                round={2}
+            />)
+        // what to test here?
+        // fail test on purpose to pick up where I left off
+        expect(3).toEqual(2)
+    })
 })

@@ -62,11 +62,20 @@ describe('Circuits', () => {
 
     it('contains the `circuit-list` div', () => {
         expect(wrapper.find('.circuit-list').exists()).toBe(true)
+        expect(wrapper.find('.circuit-list').length).toEqual(1)
+    })
+
+    it('renders an h2 heading and h4 subheading', () => {
+        expect(wrapper.find('h2').text()).toEqual('Circuits')
+        expect(wrapper.find('h4').text()).toMatch(/Every circuit/)
     })
 
     it('has a tbody with multiple children', () => {
         expect(wrapper.find('tr').length).toEqual(5)
     })
 
-
+    it('renders loading component if no data', () => {
+        wrapper.setState({ circuits: null })
+        expect(wrapper.find('.circuit-list').text()).toMatch(/<Loading \/>/)
+    })
 })
