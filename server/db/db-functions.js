@@ -1,4 +1,4 @@
-function getRacesInSeason (db, id) {
+function getRacesInSeason(db, id) {
   return db('races')
     .select(
       'races.year as season-year',
@@ -11,7 +11,7 @@ function getRacesInSeason (db, id) {
     .orderBy('round', 'asc')
 }
 
-function getQualifyingResults (db, season, raceId) {
+function getQualifyingResults(db, season, raceId) {
   return db('qualifying')
     .select(
       'constructors.name as constructorName',
@@ -25,11 +25,16 @@ function getQualifyingResults (db, season, raceId) {
     )
     .join('drivers', 'qualifying.driverId', '=', 'drivers.driverId')
     .join('races', 'races.raceId', '=', 'qualifying.raceId')
-    .join('constructors', 'qualifying.constructorId', '=', 'constructors.constructorId')
+    .join(
+      'constructors',
+      'qualifying.constructorId',
+      '=',
+      'constructors.constructorId'
+    )
     .where('qualifying.raceId', raceId)
-  }
+}
 
-function getGrid (db, raceId) {
+function getGrid(db, raceId) {
   return db('results')
     .select(
       'races.name as raceName',
@@ -41,12 +46,17 @@ function getGrid (db, raceId) {
     )
     .join('drivers', 'drivers.driverId', '=', 'results.driverId')
     .join('races', 'races.raceId', '=', 'results.raceId')
-    .join('constructors', 'results.constructorId', '=', 'constructors.constructorId')
+    .join(
+      'constructors',
+      'results.constructorId',
+      '=',
+      'constructors.constructorId'
+    )
     .where('results.raceId', raceId)
     .orderBy('grid', 'asc')
 }
 
-function visualise (db, season, raceId) {
+function visualise(db, season, raceId) {
   return db('laptimes')
     .select(
       'laptimes.raceId',
@@ -60,14 +70,15 @@ function visualise (db, season, raceId) {
       'drivers.driverId',
       'drivers.forename',
       'drivers.surname',
-      'drivers.url as driverUrl')
+      'drivers.url as driverUrl'
+    )
     .where('laptimes.raceId', raceId)
     .join('drivers', 'laptimes.driverId', '=', 'drivers.driverId')
     .join('races', 'laptimes.raceId', '=', 'races.raceId')
     .orderBy('position', 'asc')
 }
 
-function getAllLaptimes (db, season, raceId) {
+function getAllLaptimes(db, season, raceId) {
   return db('laptimes')
     .select('*')
     .where('laptimes.raceId', raceId)
@@ -75,7 +86,7 @@ function getAllLaptimes (db, season, raceId) {
     .orderBy('lap', 'asc')
 }
 
-function getRaceResults (db, season, raceId) {
+function getRaceResults(db, season, raceId) {
   return db('results')
     .select(
       'races.name as raceName',
@@ -98,12 +109,17 @@ function getRaceResults (db, season, raceId) {
     .where('results.raceId', raceId)
     .join('drivers', 'results.driverId', '=', 'drivers.driverId')
     .join('races', 'results.raceId', '=', 'races.raceId')
-    .join('constructors', 'constructors.constructorId', '=', 'results.constructorId')
+    .join(
+      'constructors',
+      'constructors.constructorId',
+      '=',
+      'results.constructorId'
+    )
     .join('status', 'results.statusId', '=', 'status.statusId')
     .orderBy('positionOrder', 'asc')
 }
 
-function getRaceInfo (db, season, raceId) {
+function getRaceInfo(db, season, raceId) {
   return db('races')
     .select('races.url as raceUrl', '*')
     .where('races.raceId', raceId)

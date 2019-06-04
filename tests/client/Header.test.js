@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import Header from '../../client/components/Header'
 
 describe('Header', () => {
-  let props = { location: {pathname:"/season/2014"}}
+  let props = { location: { pathname: '/season/2014' } }
   const app = shallow(<Header {...props} />)
 
   it('renders correctly', () => {

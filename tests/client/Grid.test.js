@@ -17,7 +17,8 @@ describe('Grid component', () => {
                 year: 1985,
                 raceName: 'Australian Grand Prix',
                 resultId: 9998
-            }, {
+            },
+            {
                 year: 1986,
                 raceName: 'Brazilian Grand Prix',
                 resultId: 9999
