@@ -18,11 +18,9 @@ export default class Quali extends React.Component {
     })
   }
 
-  listResults(qualiData) {
+  listResults(qualiData, smallDisplay) {
     let allResults = qualiData.qualifyingData
     return allResults.map(driverResult => {
-      console.log(driverResult)
-
       return (
         <tr key={driverResult.surname + driverResult.forename}>
           <td className="position">
@@ -38,7 +36,7 @@ export default class Quali extends React.Component {
               {driverResult.constructorName}
             </a>
           </td>
-          {driverResult.q3 ? (
+          {!smallDisplay ? (
             <React.Fragment>
               <td className="optional">{driverResult.q1}</td>
               <td className="optional">{driverResult.q2}</td>
@@ -71,13 +69,18 @@ export default class Quali extends React.Component {
               </th>
               <th>Driver</th>
               <th>Team</th>
-              <th className="optional">Q1</th>
-              <th className="optional">Q2</th>
-              <th className="optional">Q3</th>
-              <th className="alternative">Time</th>
+              {smallDisplay ? (
+                <th className="alternative">Time</th>
+              ) : (
+                <React.Fragment>
+                  <th className="optional">Q1</th>
+                  <th className="optional">Q2</th>
+                  <th className="optional">Q3</th>
+                </React.Fragment>
+              )}
             </tr>
           </thead>
-          <tbody>{this.listResults(quali)}</tbody>
+          <tbody>{this.listResults(quali, smallDisplay)}</tbody>
         </table>
       </div>
     )
