@@ -1,8 +1,8 @@
-export function getAllDriversInRace(raceData) {
+export function getAllDriversInRace(results) {
   var allDrivers = {}
-  raceData.forEach(lap => {
-    if (allDrivers[lap.surname] === undefined) {
-      allDrivers[lap.surname] = 0
+  results.forEach(lap => {
+    if (allDrivers[lap.Driver.familyName] === undefined) {
+      allDrivers[lap.Driver.familyName] = 0
     }
   })
   return allDrivers

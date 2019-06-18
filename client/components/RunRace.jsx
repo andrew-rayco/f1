@@ -1,13 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
-import * as api from '../api'
 import * as apiRoutes from '../../server/apiRoutes'
 import * as hVis from '../helpers/visualisation'
 import * as hRet from '../helpers/retiredDrivers'
 import RaceOptions from './RaceOptions'
 import Loading from './Loading'
-import templateBuilder from '@babel/template'
 
 class RunRace extends React.Component {
   constructor(props) {
@@ -25,8 +22,9 @@ class RunRace extends React.Component {
   }
 
   componentDidUpdate() {
-    // ensure getAndSetRaceInfo is complete before runnign setRaceDetails
+    // ensure getAndSetRaceInfo is complete before running setRaceDetails
     if (
+      this.state.raceData &&
       !this.state.raceData.noData &&
       this.state.winner &&
       !this.state.maxLaps
@@ -40,6 +38,7 @@ class RunRace extends React.Component {
     let pathArray = location.split('/')
     let season = pathArray[2]
     let raceRound = pathArray[3]
+
     apiRoutes.getRaceDetails(
       season,
       raceRound,
@@ -65,7 +64,7 @@ class RunRace extends React.Component {
   }
 
   setRaceDetails() {
-    let allDrivers = hVis.getAllDriversInRace(this.state.raceData)
+    let allDrivers = hVis.getAllDriversInRace(this.state.results)
     let maxLaps = this.state.winner.laps
 
     this.setState({
@@ -255,9 +254,9 @@ class RunRace extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     let raceData = this.state.raceData
     let st = this.state
+
     if (raceData && !raceData.noData && this.state.results) {
       let race = this.state.results[0]
       return (
