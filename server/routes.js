@@ -79,6 +79,7 @@ router.get('/season/:id/:raceId/visualise', (req, res) => {
   var db = req.app.get('db')
   var id = req.params.id
   var raceId = req.params.raceId
+
   if (raceId < 972 && raceId > 840) {
     dbFunctions
       .visualise(db, id, raceId)

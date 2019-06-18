@@ -171,11 +171,41 @@ function getResults(season, raceRound, callback) {
     })
 }
 
+function getVisData(season, raceRound, callback) {
+  // e.g. https://ergast.com/api/f1/2011/5/laps.json
+  // currently only getting 1 lap for development (to not kill the api)
+  request
+    .get(`${url}${season}/${raceRound}/laps/1.json?limit=2000`)
+    .end((err, result) => {
+      if (err) {
+        console.log(err)
+      } else {
+        const data = result.body.MRData.RaceTable.Races[0].Laps
+        callback(data)
+      }
+    })
+}
+
+function getRaceDetails(season, raceRound, callback) {
+  // e.g. http://ergast.com/api/f1/2019/7/results.json
+  request
+    .get(`${url}${season}/${raceRound}/results.json`)
+    .end((err, result) => {
+      if (err) {
+        console.log(err)
+      } else {
+        callback(result.body.MRData.RaceTable.Races[0])
+      }
+    })
+}
+
 module.exports = {
   getSeasons,
   getSingleSeason,
   getCircuits,
   getGrid,
   getQualifying,
-  getResults
+  getResults,
+  getVisData,
+  getRaceDetails
 }

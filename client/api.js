@@ -1,27 +1,21 @@
 import request from 'superagent'
 
 export function getSeasons(callback) {
-  request
-    .get('/api-v1/')
-    .end((err, res) => {
-      err ? callback(err) : callback(res.body)
-    })
+  request.get('/api-v1/').end((err, res) => {
+    err ? callback(err) : callback(res.body)
+  })
 }
 
 export function getCircuits(callback) {
-  request
-    .get('/api-v1/circuits')
-    .end((err, res) => {
-      err ? callback(err) : callback(res.body)
-    })
+  request.get('/api-v1/circuits').end((err, res) => {
+    err ? callback(err) : callback(res.body)
+  })
 }
 
 export function getRaces(id, callback) {
-  request
-    .get(`/api-v1/season/${id}`)
-    .end((err, res) => {
-      err ? callback(err) : callback(res.body)
-    })
+  request.get(`/api-v1/season/${id}`).end((err, res) => {
+    err ? callback(err) : callback(res.body)
+  })
 }
 
 export function getQuali(seasonId, raceId, round, callback) {
@@ -46,6 +40,8 @@ export function getVisData(seasonId, raceId, callback) {
   request
     .get(`/api-v1/season/${seasonId}/${raceId}/visualise`)
     .end((err, res) => {
+      console.log(res)
+
       err ? callback(res.text) : callback(res.body || res.text)
     })
 }
