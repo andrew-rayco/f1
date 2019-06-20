@@ -74,31 +74,28 @@ class RunRace extends React.Component {
   }
 
   handleClick() {
-    console.log(
-      'running',
-      this.state.visualIsRunning,
-      'complete',
-      this.state.visualIsComplete
-    )
-    if (!this.state.visualIsRunning || this.state.visualIsComplete) {
+    const st = this.state
+    console.log('running', st.visualIsRunning, 'complete', st.visualIsComplete)
+
+    if (!st.visualIsRunning || st.visualIsComplete) {
       this.setState({ visualIsRunning: true })
+
       var lapTicker = setInterval(() => {
-        if (this.state.lap < this.state.maxLaps && this.state.visualIsRunning) {
-          var newAllDrivers = {}
-          for (var key in this.state.allDrivers) {
+        if (st.lap < st.maxLaps && st.visualIsRunning) {
+          let newAllDrivers = st.allDrivers
+          for (var key in st.allDrivers) {
             var currentDriverLap = hVis.getCurrentDriverLap(
               key,
-              this.state.lap,
-              this.state.raceData
+              st.lap,
+              st.raceData
             )
-            newAllDrivers[key] =
-              this.state.allDrivers[key] + currentDriverLap.milliseconds
+            newAllDrivers[key].raceMilliseconds += currentDriverLap.milliseconds
           }
           this.setState({
             allDrivers: newAllDrivers,
-            lap: this.state.lap + 1
+            lap: st.lap + 1
           })
-        } else if (this.state.lap == this.state.maxLaps) {
+        } else if (st.lap == st.maxLaps) {
           this.setState({
             visualIsRunning: false,
             visualIsComplete: true
@@ -256,6 +253,7 @@ class RunRace extends React.Component {
   render() {
     let raceData = this.state.raceData
     let st = this.state
+    console.log(st)
 
     if (raceData && !raceData.noData && this.state.results) {
       let race = this.state.results[0]

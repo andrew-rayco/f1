@@ -1,4 +1,5 @@
 let request = require('superagent')
+let devData = require('../client/devData')
 
 let functions = require('./functions')
 
@@ -118,72 +119,78 @@ function getQualifying(season, raceRound, callback) {
 
 function getResults(season, raceRound, callback) {
   // e.g. http://ergast.com/api/f1/2017/15/results.json
-  request
-    .get(url + season + '/' + raceRound + '/results.json?limit=60')
-    .end((err, result) => {
-      if (err) {
-        console.log(err)
-      } else {
-        let data = result.body.MRData.RaceTable.Races[0]
-        if (data) {
-          let resultData = []
-          data.Results.map(result => {
-            const {
-              position,
-              Driver,
-              Constructor,
-              Time,
-              status,
-              FastestLap,
-              positionText,
-              laps
-            } = result
-            resultData.push({
-              position: position,
-              driverUrl: Driver.url,
-              forename: Driver.givenName,
-              surname: Driver.familyName,
-              constructorUrl: Constructor.url,
-              constructorName: Constructor.name,
-              raceTime: Time ? Time.time : status,
-              laps: laps,
-              fastestLapTime: FastestLap ? FastestLap.Time.time : '-',
-              fastestLapSpeed: FastestLap
-                ? FastestLap.AverageSpeed.speed
-                : null,
-              fastestLapNumber: FastestLap ? FastestLap.lap : null,
-              status: status,
-              positionText: positionText
-            })
-          })
+  // request
+  //   .get(url + season + '/' + raceRound + '/results.json?limit=60')
+  //   .end((err, result) => {
+  //     if (err) {
+  //       console.log(err)
+  //     } else {
+  //       let data = result.body.MRData.RaceTable.Races[0]
+  //       if (data) {
+  //         let resultData = []
+  //         data.Results.map(result => {
+  //           const {
+  //             position,
+  //             Driver,
+  //             Constructor,
+  //             Time,
+  //             status,
+  //             FastestLap,
+  //             positionText,
+  //             laps
+  //           } = result
+  //           resultData.push({
+  //             position: position,
+  //             driverUrl: Driver.url,
+  //             forename: Driver.givenName,
+  //             surname: Driver.familyName,
+  //             constructorUrl: Constructor.url,
+  //             constructorName: Constructor.name,
+  //             raceTime: Time ? Time.time : status,
+  //             laps: laps,
+  //             fastestLapTime: FastestLap ? FastestLap.Time.time : '-',
+  //             fastestLapSpeed: FastestLap
+  //               ? FastestLap.AverageSpeed.speed
+  //               : null,
+  //             fastestLapNumber: FastestLap ? FastestLap.lap : null,
+  //             status: status,
+  //             positionText: positionText
+  //           })
+  //         })
 
-          let cleanResultsData = {
-            raceYear: season,
-            raceName: data.raceName,
-            results: resultData
-          }
+  //         let cleanResultsData = {
+  //           raceYear: season,
+  //           raceName: data.raceName,
+  //           results: resultData
+  //         }
 
-          callback(cleanResultsData)
-        } else {
-          callback({ noData: true })
-        }
-      }
-    })
+  //         callback(cleanResultsData)
+  //       } else {
+  //         callback({ noData: true })
+  //       }
+  //     }
+  //   })
+
+  callback(devData.results)
 }
 
 function getVisData(season, raceRound, callback) {
   // e.g. https://ergast.com/api/f1/2011/5/laps.json
   // currently only getting 1 lap for development (to not kill the api)
-  request
-    .get(`${url}${season}/${raceRound}/laps/1.json?limit=2000`)
-    .end((err, result) => {
-      if (err) {
-        console.log(err)
-      } else {
-        const data = result.body.MRData.RaceTable.Races[0].Laps
-        callback(data)
-      }
-    })
+  // request
+  //   .get(`${url}${season}/${raceRound}/laps.json?limit=2000`)
+  //   .end((err, result) => {
+  //     if (err) {
+  //       console.log(err)
+  //     } else {
+  //       const data = result.body.MRData.RaceTable.Races[0].Laps
+  //       callback(data)
+  //     }
+  //   })
+
+  // temp data to not kill the api (and avoid wait times in development)
+
+  callback(devData.raceData)
 }
 
 function getRaceDetails(season, raceRound, callback) {
