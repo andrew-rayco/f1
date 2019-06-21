@@ -75,45 +75,62 @@ class RunRace extends React.Component {
 
   handleClick() {
     const st = this.state
-    console.log('running', st.visualIsRunning, 'complete', st.visualIsComplete)
-
     if (!st.visualIsRunning || st.visualIsComplete) {
       // this.setState({ visualIsRunning: true })
-      this.ticker()
-    } else {
+      if (st.visualIsComplete) {
+        this.setState(
+          {
+            lap: 1,
+            visualIsComplete: false,
+            visualIsRunning: true
+          },
+          this.ticker
+        )
+      } else {
+        this.setState(
+          {
+            visualIsRunning: true
+          },
+          this.ticker
+        )
+      }
+    } else if (st.visualIsRunning) {
       this.setState({ visualIsRunning: false })
-      console.log('this should be working')
+      console.log('######### this should be working')
     }
   }
 
   ticker() {
     const st = this.state
     var lapTicker = setInterval(() => {
-      if (this.state.lap < this.state.maxLaps) {
-        let newAllDrivers = this.state.allDrivers
-        for (var key in this.state.allDrivers) {
-          var currentDriverLap = hVis.getCurrentDriverLap(
-            key,
-            this.state.lap,
-            this.state.raceData
-          )
-          newAllDrivers[key].raceMilliseconds += currentDriverLap.milliseconds
+      if (st.visualIsRunning) {
+        if (this.state.lap < this.state.maxLaps) {
+          let newAllDrivers = this.state.allDrivers
+          for (var key in this.state.allDrivers) {
+            var currentDriverLap = hVis.getCurrentDriverLap(
+              key,
+              this.state.lap,
+              this.state.raceData
+            )
+            newAllDrivers[key].raceMilliseconds += currentDriverLap.milliseconds
+          }
+          this.setState({
+            visualIsRunning: true,
+            allDrivers: newAllDrivers,
+            lap: this.state.lap + 1
+          })
+        } else if (st.lap == st.maxLaps) {
+          this.setState({
+            visualIsRunning: false,
+            visualIsComplete: true
+          })
+          clearInterval(lapTicker)
+        } else {
+          this.setState({ visualIsRunning: false })
+          clearInterval(lapTicker)
         }
-        this.setState({
-          allDrivers: newAllDrivers,
-          lap: this.state.lap + 1
-        })
-      } else if (st.lap == st.maxLaps) {
-        this.setState({
-          visualIsRunning: false,
-          visualIsComplete: true
-        })
-        clearInterval(lapTicker)
-      } else {
-        this.setState({ visualIsRunning: false })
-        clearInterval(lapTicker)
       }
-    }, 150)
+    }, 50)
   }
 
   showRace(data) {
