@@ -78,38 +78,42 @@ class RunRace extends React.Component {
     console.log('running', st.visualIsRunning, 'complete', st.visualIsComplete)
 
     if (!st.visualIsRunning || st.visualIsComplete) {
-      this.setState({ visualIsRunning: true })
-
-      var lapTicker = setInterval(() => {
-        if (st.lap < st.maxLaps && st.visualIsRunning) {
-          let newAllDrivers = st.allDrivers
-          for (var key in st.allDrivers) {
-            var currentDriverLap = hVis.getCurrentDriverLap(
-              key,
-              st.lap,
-              st.raceData
-            )
-            newAllDrivers[key].raceMilliseconds += currentDriverLap.milliseconds
-          }
-          this.setState({
-            allDrivers: newAllDrivers,
-            lap: st.lap + 1
-          })
-        } else if (st.lap == st.maxLaps) {
-          this.setState({
-            visualIsRunning: false,
-            visualIsComplete: true
-          })
-          clearInterval(lapTicker)
-        } else {
-          this.setState({ visualIsRunning: false })
-          clearInterval(lapTicker)
-        }
-      }, 150)
+      // this.setState({ visualIsRunning: true })
+      this.ticker()
     } else {
       this.setState({ visualIsRunning: false })
       console.log('this should be working')
     }
+  }
+
+  ticker() {
+    const st = this.state
+    var lapTicker = setInterval(() => {
+      if (this.state.lap < this.state.maxLaps) {
+        let newAllDrivers = this.state.allDrivers
+        for (var key in this.state.allDrivers) {
+          var currentDriverLap = hVis.getCurrentDriverLap(
+            key,
+            this.state.lap,
+            this.state.raceData
+          )
+          newAllDrivers[key].raceMilliseconds += currentDriverLap.milliseconds
+        }
+        this.setState({
+          allDrivers: newAllDrivers,
+          lap: this.state.lap + 1
+        })
+      } else if (st.lap == st.maxLaps) {
+        this.setState({
+          visualIsRunning: false,
+          visualIsComplete: true
+        })
+        clearInterval(lapTicker)
+      } else {
+        this.setState({ visualIsRunning: false })
+        clearInterval(lapTicker)
+      }
+    }, 150)
   }
 
   showRace(data) {

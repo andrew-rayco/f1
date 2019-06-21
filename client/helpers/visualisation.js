@@ -45,25 +45,30 @@ function findDistanceFromWinner(winnerTime, driverTime) {
 export function getCurrentDriverLap(driver, lap, raceData) {
   const thisLap = raceData.find(l => l.number == lap)
   const driverLap = thisLap.Timings.find(l => l.driverId === driver)
-  const laptime = driverLap.time
 
-  // convert laptime to millseconds
-  // Surely moment.js can convert "1:20.816" to milliseconds without needing this??
-  const minSplit = laptime.split(':')
-  const secSplit = minSplit[1].split('.')
-  const minutes = minSplit[0]
-  const seconds = secSplit[0]
-  const milliseconds = secSplit[1]
+  if (driverLap) {
+    const laptime = driverLap.time
 
-  const lapInMilliseconds = moment
-    .duration({
-      minutes,
-      seconds,
-      milliseconds
-    })
-    .asMilliseconds()
+    // convert laptime to millseconds
+    // Surely moment.js can convert "1:20.816" to milliseconds without needing this??
+    const minSplit = laptime.split(':')
+    const secSplit = minSplit[1].split('.')
+    const minutes = minSplit[0]
+    const seconds = secSplit[0]
+    const milliseconds = secSplit[1]
 
-  return { milliseconds: lapInMilliseconds }
+    const lapInMilliseconds = moment
+      .duration({
+        minutes,
+        seconds,
+        milliseconds
+      })
+      .asMilliseconds()
+
+    return { milliseconds: lapInMilliseconds }
+  } else {
+    return { milliseconds: 0 }
+  }
 
   // "1:20.816"
   // this is the old way. Kept here because I'm not sure
