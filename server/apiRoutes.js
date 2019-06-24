@@ -28,7 +28,7 @@ function getSingleSeason(year, callback) {
 }
 
 function getCircuits(callback) {
-  const urlConcat = `${url}circuits.json`
+  const urlConcat = `${url}circuits.json?limit=100`
   request.get(urlConcat).end((err, result) => {
     if (err) {
       console.log(err)
