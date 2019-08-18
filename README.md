@@ -25,5 +25,3 @@ npm run dev
 
 -   Currently each component that needs data is hitting the api and adding to its own state. Probably better to set up an onclick in the parent component and pass the data as props? (prior to redux version) - ANSWER: YES, pass it down as props.
 -   To avoid hitting undefined errors before component state is populated with data, render methods include an if statement checking if state.whatever exists. There's no doubt a better way to do this.
-
-[giftest](https://media.giphy.com/media/mFdnWF1RTI7fi/giphy.gif)
