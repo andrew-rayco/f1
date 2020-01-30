@@ -12,7 +12,7 @@ export default class Results extends React.Component {
             }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         let season = this.props.season
         let round = this.props.round
         apiRoutes.getResults(season, round, (results) => {

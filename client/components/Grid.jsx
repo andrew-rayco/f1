@@ -10,7 +10,7 @@ export default class Grid extends React.Component {
         this.state = {}
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         let season, raceId, round
         if (this.props.season) {
             season = this.props.season

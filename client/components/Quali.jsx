@@ -9,7 +9,7 @@ export default class Quali extends React.Component {
     super(), (this.state = {})
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     let season = this.props.season
     let raceId = this.props.raceId
     let round = this.props.round

@@ -11,7 +11,7 @@ export default class Circuits extends React.Component {
         }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         apiRoutes.getCircuits((circuits) => {
             this.setState({ circuits })
         })

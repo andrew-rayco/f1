@@ -16,7 +16,7 @@ export default class FullSeason extends React.Component {
         this.interval = null
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         var location = this.props.location.pathname
         var pathArray = location.split('/')
         var thisSeason = pathArray[2]

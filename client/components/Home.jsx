@@ -10,7 +10,7 @@ export default class Home extends React.Component {
         this.state = { seasons: [] }
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         apiRoutes.getSeasons((seasons) => {
             this.setState({ seasons })
         })
