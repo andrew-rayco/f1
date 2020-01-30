@@ -43,8 +43,6 @@ class RunRace extends React.Component {
             season,
             raceRound,
             raceInfo => {
-                console.log(raceInfo);
-
                 let raceWinner = raceInfo.Results.filter(result => {
                     return result.position === "1";
                 })[0];

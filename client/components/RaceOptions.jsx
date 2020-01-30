@@ -67,7 +67,7 @@ export default class RaceOptions extends React.Component {
                             <a href="#">
                                 {this.props.intro
                                     ? `${this.props.intro} the ${
-                                          race.year
+                                          race.season
                                       } ${race.raceName || race.name}`
                                     : `${race.round} - ${race.raceName ||
                                           race.name}`}
@@ -93,7 +93,10 @@ export default class RaceOptions extends React.Component {
                             </p>
 
                             {this.state.qualiVisible ? (
-                                <Quali season={race.year} round={race.round} />
+                                <Quali
+                                    season={race.season}
+                                    round={race.round}
+                                />
                             ) : null}
 
                             <p>
@@ -114,7 +117,7 @@ export default class RaceOptions extends React.Component {
                             </p>
 
                             {this.state.gridVisible ? (
-                                <Grid season={race.year} round={race.round} />
+                                <Grid season={race.season} round={race.round} />
                             ) : null}
 
                             {this.props.intro ? null : this.visualise(race)}
@@ -138,14 +141,14 @@ export default class RaceOptions extends React.Component {
 
                             {this.state.resultsVisible ? (
                                 <Results
-                                    season={race.year}
+                                    season={race.season}
                                     round={race.round}
                                 />
                             ) : null}
 
                             <p>
                                 <a href={race.url}>
-                                    {race.year} {race.raceName} on Wikipedia
+                                    {race.season} {race.raceName} on Wikipedia
                                 </a>
                             </p>
                             <div className="separator" />
