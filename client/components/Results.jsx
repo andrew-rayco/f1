@@ -1,32 +1,35 @@
-import React from 'react'
+import React from "react";
 
-import * as apiRoutes from '../../server/apiRoutes'
-import * as h from '../helpers/helpers'
-import RaceOptions from './RaceOptions'
+import * as apiRoutes from "../../server/apiRoutes";
+import * as h from "../helpers/helpers";
+import RaceOptions from "./RaceOptions";
 
 export default class Results extends React.Component {
     constructor() {
         super(),
-            this.state = {
+            (this.state = {
                 lapTimesExist: false
-            }
+            });
     }
 
     UNSAFE_componentWillMount() {
-        let season = this.props.season
-        let round = this.props.round
-        apiRoutes.getResults(season, round, (results) => {
-            let lapTimesExist = false
-            if (results.results[0].fastestLapTime && results.results[0].fastestLapTime !== '-') {
-                lapTimesExist = true
+        let season = this.props.season;
+        let round = this.props.round;
+        apiRoutes.getResults(season, round, results => {
+            let lapTimesExist = false;
+            if (
+                results.results[0].fastestLapTime &&
+                results.results[0].fastestLapTime !== "-"
+            ) {
+                lapTimesExist = true;
             }
-            this.setState({ results, lapTimesExist })
-        })
+            this.setState({ results, lapTimesExist });
+        });
     }
 
     listResults(results) {
-        let fastestLap = this.findFastestLap(results)
-        return results.map((driverResult) => {
+        let fastestLap = this.findFastestLap(results);
+        return results.map(driverResult => {
             const {
                 surname,
                 forename,
@@ -40,7 +43,7 @@ export default class Results extends React.Component {
                 laps,
                 fastestLapTime,
                 fastestLapNumber
-            } = driverResult
+            } = driverResult;
 
             return (
                 <tr key={surname + position}>
@@ -48,103 +51,118 @@ export default class Results extends React.Component {
                         <strong>{position}</strong>
                     </td>
                     <td>
-                        <a href={driverUrl}>{forename} {surname}</a>
+                        <a href={driverUrl}>
+                            {forename} {surname}
+                        </a>
                     </td>
                     <td>
                         <a href={constructorUrl}>{constructorName}</a>
                     </td>
                     <td>
-                        {
-                            positionText != 'R'
-                                ? raceTime || status
-                                : <div>{status}<span className="muted sub-text">{Number(laps)+1}</span></div>
-                        }
+                        {positionText != "R" ? (
+                            raceTime || status
+                        ) : (
+                            <div>
+                                {status}
+                                <span className="muted sub-text">
+                                    {Number(laps) + 1}
+                                </span>
+                            </div>
+                        )}
                     </td>
                     {this.state.lapTimesExist && (
                         <td className="optional">
-                            {this.highlightFastestLap(fastestLapTime, fastestLap)}
+                            {this.highlightFastestLap(
+                                fastestLapTime,
+                                fastestLap
+                            )}
                             {/* show fastestLapNumber next to fastest lap */}
-                            <span className="muted sub-text">{fastestLapNumber && `${fastestLapNumber}`}</span>
+                            <span className="muted sub-text">
+                                {fastestLapNumber && `${fastestLapNumber}`}
+                            </span>
                         </td>
                     )}
                 </tr>
-            )
-        })
+            );
+        });
     }
 
     statusResult(status, laps) {
-        return <div>{status}<span className="muted sub-text">{laps}</span></div>
+        return (
+            <div>
+                {status}
+                <span className="muted sub-text">{laps}</span>
+            </div>
+        );
     }
 
     findFastestLap(results) {
-        let fastestLapTime
-        let fastestLapSpeed = 0
-        results.map((result) => {
-            if (result.fastestLapSpeed && result.fastestLapSpeed >= fastestLapSpeed) {
-                fastestLapSpeed = result.fastestLapSpeed
-                fastestLapTime = result.fastestLapTime
+        let fastestLapTime;
+        let fastestLapSpeed = 0;
+        results.map(result => {
+            if (
+                result.fastestLapSpeed &&
+                result.fastestLapSpeed >= fastestLapSpeed
+            ) {
+                fastestLapSpeed = result.fastestLapSpeed;
+                fastestLapTime = result.fastestLapTime;
             }
-        })
-        return fastestLapTime
+        });
+        return fastestLapTime;
     }
 
     highlightFastestLap(laptime, fastestLap) {
         if (laptime) {
             if (laptime != fastestLap) {
-                return laptime
+                return laptime;
             } else {
-                return <strong>{laptime}</strong>
+                return <strong>{laptime}</strong>;
             }
         } else {
-            return '-'
+            return "-";
         }
     }
 
     buildResultsTable() {
-        const resultsState = this.state.results
-        const { raceYear, raceName, results } = resultsState
+        const resultsState = this.state.results;
+        const { raceYear, raceName, results } = resultsState;
         return (
             <div className="content">
-                <h2>{raceYear} {raceName}</h2>
+                <h2>
+                    {raceYear} {raceName}
+                </h2>
                 <h3>Race results</h3>
                 <p>{results[0].laps} laps</p>
                 <table>
                     <thead>
-                    <tr>
-                        <th className="position">
-                            {
-                                document.body.clientWidth < 450
-                                    ? 'Pos'
-                                    : 'Position'
-                            }
-                        </th>
-                        <th>Driver</th>
-                        <th>Team</th>
-                        <th>Race Time</th>
-                        {this.state.lapTimesExist
-                            ? <th className="optional">Fastest lap</th>
-                            : null
-                        }
-                    </tr>
+                        <tr>
+                            <th className="position">
+                                {document.body.clientWidth < 450
+                                    ? "Pos"
+                                    : "Position"}
+                            </th>
+                            <th>Driver</th>
+                            <th>Team</th>
+                            <th>Race Time</th>
+                            {this.state.lapTimesExist ? (
+                                <th className="optional">Fastest lap</th>
+                            ) : null}
+                        </tr>
                     </thead>
-                    <tbody>
-                        {this.listResults(results)}
-                    </tbody>
+                    <tbody>{this.listResults(results)}</tbody>
                 </table>
             </div>
-        )
+        );
     }
 
     render() {
-        const results = this.state.results
+        const results = this.state.results;
         return (
             <div className="results sub-section">
-                {
-                    results && !results.noData
-                        ? this.buildResultsTable()
-                        : h.handleLoadingOrError(results)
-                }
-          </div>
-        )
+                {results && !results.noData
+                    ? this.buildResultsTable()
+                    : h.handleLoadingOrError(results)}
+            </div>
+        );
     }
 }

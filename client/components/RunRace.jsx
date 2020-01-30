@@ -43,12 +43,15 @@ class RunRace extends React.Component {
             season,
             raceRound,
             raceInfo => {
+                console.log(raceInfo);
+
                 let raceWinner = raceInfo.Results.filter(result => {
                     return result.position === "1";
                 })[0];
                 this.setState({
                     raceName: raceInfo.raceName,
                     raceYear: raceInfo.season,
+                    round: raceInfo.round,
                     results: raceInfo.Results,
                     winner: {
                         winningDriver: raceWinner.Driver.familyName,
@@ -298,6 +301,13 @@ class RunRace extends React.Component {
 
         if (raceData && !raceData.noData && this.state.results) {
             let race = this.state.results[0];
+            let payload = {
+                ...race,
+                round: st.round,
+                raceName: st.raceName,
+                year: st.raceYear
+            };
+
             return (
                 <div className="race">
                     <h2>
@@ -317,7 +327,7 @@ class RunRace extends React.Component {
                     <div className="more-from">
                         <RaceOptions
                             key={race.raceId}
-                            race={race}
+                            race={payload}
                             intro="More from"
                         />
                     </div>
