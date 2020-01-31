@@ -166,9 +166,9 @@ export default class Results extends React.Component {
     }
 
     render() {
-        const results = this.state.results
+        const st = this.state
 
-        if (!this.state.raceYear) {
+        if (!st.raceYear) {
             return (
                 <div>
                     <p>No data. Sorry.</p>
@@ -177,9 +177,9 @@ export default class Results extends React.Component {
         } else {
             return (
                 <div className="results sub-section">
-                    {results && !results.noData
+                    {st.results && !st.results.noData
                         ? this.buildResultsTable()
-                        : h.handleLoadingOrError(results)}
+                        : h.handleLoadingOrError(st.results)}
                 </div>
             )
         }
