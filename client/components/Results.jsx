@@ -1,34 +1,41 @@
-import React from "react";
+import React from "react"
 
-import * as apiRoutes from "../../server/apiRoutes";
-import * as h from "../helpers/helpers";
-import RaceOptions from "./RaceOptions";
+import * as apiRoutes from "../../server/apiRoutes"
+import * as h from "../helpers/helpers"
 
 export default class Results extends React.Component {
     constructor() {
         super(),
             (this.state = {
                 lapTimesExist: false
-            });
+            })
     }
 
     UNSAFE_componentWillMount() {
-        let season = this.props.season;
-        let round = this.props.round;
+        let season = this.props.season
+        let round = this.props.round
+
         apiRoutes.getResults(season, round, results => {
-            let lapTimesExist = false;
+            let lapTimesExist = false
+            console.log(results)
+
             if (
-                results.results[0].fastestLapTime &&
-                results.results[0].fastestLapTime !== "-"
+                results[0].FastestLap.Time &&
+                results[0].FastestLap.Time !== "-"
             ) {
-                lapTimesExist = true;
+                lapTimesExist = true
             }
-            this.setState({ results, lapTimesExist });
-        });
+            this.setState({
+                results,
+                lapTimesExist,
+                raceYear: results.raceYear || season,
+                raceName: results.raceName
+            })
+        })
     }
 
     listResults(results) {
-        let fastestLap = this.findFastestLap(results);
+        let fastestLap = this.findFastestLap(results)
         return results.map(driverResult => {
             const {
                 surname,
@@ -43,7 +50,7 @@ export default class Results extends React.Component {
                 laps,
                 fastestLapTime,
                 fastestLapNumber
-            } = driverResult;
+            } = driverResult
 
             return (
                 <tr key={surname + position}>
@@ -83,8 +90,8 @@ export default class Results extends React.Component {
                         </td>
                     )}
                 </tr>
-            );
-        });
+            )
+        })
     }
 
     statusResult(status, laps) {
@@ -93,39 +100,40 @@ export default class Results extends React.Component {
                 {status}
                 <span className="muted sub-text">{laps}</span>
             </div>
-        );
+        )
     }
 
     findFastestLap(results) {
-        let fastestLapTime;
-        let fastestLapSpeed = 0;
+        let fastestLapTime
+        let fastestLapSpeed = 0
         results.map(result => {
             if (
                 result.fastestLapSpeed &&
                 result.fastestLapSpeed >= fastestLapSpeed
             ) {
-                fastestLapSpeed = result.fastestLapSpeed;
-                fastestLapTime = result.fastestLapTime;
+                fastestLapSpeed = result.fastestLapSpeed
+                fastestLapTime = result.fastestLapTime
             }
-        });
-        return fastestLapTime;
+        })
+        return fastestLapTime
     }
 
     highlightFastestLap(laptime, fastestLap) {
         if (laptime) {
             if (laptime != fastestLap) {
-                return laptime;
+                return laptime
             } else {
-                return <strong>{laptime}</strong>;
+                return <strong>{laptime}</strong>
             }
         } else {
-            return "-";
+            return "-"
         }
     }
 
     buildResultsTable() {
-        const resultsState = this.state.results;
-        const { raceYear, raceName, results } = resultsState;
+        const { raceYear, results } = this.state
+        const { raceName } = this.props
+
         return (
             <div className="content">
                 <h2>
@@ -149,20 +157,29 @@ export default class Results extends React.Component {
                             ) : null}
                         </tr>
                     </thead>
-                    <tbody>{this.listResults(results)}</tbody>
+                    <tbody>{this.listResults(this.state.results)}</tbody>
                 </table>
             </div>
-        );
+        )
     }
 
     render() {
-        const results = this.state.results;
-        return (
-            <div className="results sub-section">
-                {results && !results.noData
-                    ? this.buildResultsTable()
-                    : h.handleLoadingOrError(results)}
-            </div>
-        );
+        const results = this.state.results
+
+        if (!this.state.raceYear) {
+            return (
+                <div>
+                    <p>No data. Sorry.</p>
+                </div>
+            )
+        } else {
+            return (
+                <div className="results sub-section">
+                    {results && !results.noData
+                        ? this.buildResultsTable()
+                        : h.handleLoadingOrError(results)}
+                </div>
+            )
+        }
     }
 }

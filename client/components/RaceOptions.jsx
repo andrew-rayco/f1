@@ -1,36 +1,36 @@
-import React from "react";
-import moment from "moment";
+import React from "react"
+import moment from "moment"
 
-import Grid from "./Grid";
-import Quali from "./Quali";
-import Results from "./Results";
+import Grid from "./Grid"
+import Quali from "./Quali"
+import Results from "./Results"
 
 export default class RaceOptions extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             gridVisible: false,
             qualiVisible: false,
             resultsVisible: false
-        };
+        }
     }
 
     toggleHidden(e, elementToToggle) {
-        e.preventDefault();
-        let raceDetails = document.getElementById(elementToToggle);
+        e.preventDefault()
+        let raceDetails = document.getElementById(elementToToggle)
         let raceSection = document.getElementsByClassName(
             this.props.race.round
-        )[0];
-        raceDetails.classList.toggle("hidden");
-        raceSection.classList.toggle("selected");
+        )[0]
+        raceDetails.classList.toggle("hidden")
+        raceSection.classList.toggle("selected")
     }
 
     handleClick(e, visibleProperty) {
-        e.preventDefault();
+        e.preventDefault()
         this.setState({
             [visibleProperty]: !this.state[visibleProperty]
-        });
-        e.target.classList.toggle("toggle-open");
+        })
+        e.target.classList.toggle("toggle-open")
     }
 
     visualise(race) {
@@ -40,13 +40,13 @@ export default class RaceOptions extends React.Component {
                     Visualise
                 </a>
             </p>
-        );
+        )
     }
 
     render() {
-        let race = this.props.race;
-        const raceDate = new Date(race.date + " " + race.time);
-        const todayDate = new Date();
+        let race = this.props.race
+        const raceDate = new Date(race.date + " " + race.time)
+        const todayDate = new Date()
 
         // Check if race is in past or future. If future, disable selection
         if (raceDate > todayDate) {
@@ -58,7 +58,7 @@ export default class RaceOptions extends React.Component {
                         } - ${race.raceName || race.name}`}</h4>
                     </div>
                 </div>
-            );
+            )
         } else {
             return (
                 <div key={race.round} className="row single-round">
@@ -143,6 +143,7 @@ export default class RaceOptions extends React.Component {
                                 <Results
                                     season={race.season}
                                     round={race.round}
+                                    raceName={race.raceName}
                                 />
                             ) : null}
 
@@ -155,7 +156,7 @@ export default class RaceOptions extends React.Component {
                         </div>
                     </div>
                 </div>
-            );
+            )
         }
     }
 }
