@@ -15,22 +15,23 @@ export default class Results extends React.Component {
         let season = this.props.season
         let round = this.props.round
 
-        apiRoutes.getResults(season, round, results => {
+        apiRoutes.getResults(season, round, data => {
             let lapTimesExist = false
-            console.log(results)
 
-            if (
-                results[0].FastestLap.Time &&
-                results[0].FastestLap.Time !== "-"
-            ) {
-                lapTimesExist = true
+            if (data.results) {
+                if (
+                    data.results[0].FastestLapTime &&
+                    data.results[0].FastestLapTime !== "-"
+                ) {
+                    lapTimesExist = true
+                }
+                this.setState({
+                    results: data,
+                    lapTimesExist,
+                    raceYear: data.raceYear || season,
+                    raceName: data.raceName
+                })
             }
-            this.setState({
-                results,
-                lapTimesExist,
-                raceYear: results.raceYear || season,
-                raceName: results.raceName
-            })
         })
     }
 
@@ -131,8 +132,9 @@ export default class Results extends React.Component {
     }
 
     buildResultsTable() {
-        const { raceYear, results } = this.state
+        const { raceYear, results: data } = this.state
         const { raceName } = this.props
+        const lapsInRace = data.results[0].laps
 
         return (
             <div className="content">
@@ -140,7 +142,7 @@ export default class Results extends React.Component {
                     {raceYear} {raceName}
                 </h2>
                 <h3>Race results</h3>
-                <p>{results[0].laps} laps</p>
+                <p>{lapsInRace} laps</p>
                 <table>
                     <thead>
                         <tr>
@@ -157,7 +159,7 @@ export default class Results extends React.Component {
                             ) : null}
                         </tr>
                     </thead>
-                    <tbody>{this.listResults(this.state.results)}</tbody>
+                    <tbody>{this.listResults(data.results)}</tbody>
                 </table>
             </div>
         )
