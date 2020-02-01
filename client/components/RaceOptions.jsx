@@ -56,6 +56,9 @@ export default class RaceOptions extends React.Component {
                         <h4 className="muted">{`${
                             race.round
                         } - ${race.raceName || race.name}`}</h4>
+                        <p className="muted sub-text-date">
+                            {moment(race.date).format("MMMM Do YYYY")}
+                        </p>
                     </div>
                 </div>
             )
