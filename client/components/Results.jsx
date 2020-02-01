@@ -132,8 +132,7 @@ export default class Results extends React.Component {
     }
 
     buildResultsTable() {
-        const { raceYear, results: data } = this.state
-        const { raceName } = this.props
+        const { raceYear, raceName, results: data } = this.state
         const lapsInRace = data.results[0].laps
 
         return (
@@ -168,20 +167,12 @@ export default class Results extends React.Component {
     render() {
         const st = this.state
 
-        if (!st.raceYear) {
-            return (
-                <div>
-                    <p>No data. Sorry.</p>
-                </div>
-            )
-        } else {
-            return (
-                <div className="results sub-section">
-                    {st.results && !st.results.noData
-                        ? this.buildResultsTable()
-                        : h.handleLoadingOrError(st.results)}
-                </div>
-            )
-        }
+        return (
+            <div className="results sub-section">
+                {st.results && !st.results.noData
+                    ? this.buildResultsTable()
+                    : h.handleLoadingOrError(st.results)}
+            </div>
+        )
     }
 }
