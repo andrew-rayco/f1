@@ -1,24 +1,24 @@
-import React from "react";
+import React from "react"
 
-import * as apiRoutes from "../../server/apiRoutes";
-import * as hVis from "../helpers/visualisation";
-import * as hRet from "../helpers/retiredDrivers";
-import RaceOptions from "./RaceOptions";
-import Loading from "./Loading";
+import * as apiRoutes from "../../server/apiRoutes"
+import * as hVis from "../helpers/visualisation"
+import * as hRet from "../helpers/retiredDrivers"
+import RaceOptions from "./RaceOptions"
+import Loading from "./Loading"
 
 class RunRace extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             lap: 1,
             visualIsRunning: false,
             visualIsComplete: false
-        };
-        this.handleClick = this.handleClick.bind(this);
+        }
+        this.handleClick = this.handleClick.bind(this)
     }
 
     UNSAFE_componentWillMount() {
-        this.getAndSetRaceInfo();
+        this.getAndSetRaceInfo()
     }
 
     componentDidUpdate() {
@@ -29,23 +29,23 @@ class RunRace extends React.Component {
             this.state.winner &&
             !this.state.maxLaps
         ) {
-            this.setRaceDetails();
+            this.setRaceDetails()
         }
     }
 
     getAndSetRaceInfo() {
-        let location = this.props.location.pathname;
-        let pathArray = location.split("/");
-        let season = pathArray[2];
-        let raceRound = pathArray[3];
+        let location = this.props.location.pathname
+        let pathArray = location.split("/")
+        let season = pathArray[2]
+        let raceRound = pathArray[3]
 
         apiRoutes.getRaceDetails(
             season,
             raceRound,
             raceInfo => {
                 let raceWinner = raceInfo.Results.filter(result => {
-                    return result.position === "1";
-                })[0];
+                    return result.position === "1"
+                })[0]
                 this.setState({
                     raceName: raceInfo.raceName,
                     raceYear: raceInfo.season,
@@ -56,26 +56,26 @@ class RunRace extends React.Component {
                         winningTime: raceWinner.Time.millis,
                         laps: raceWinner.laps
                     }
-                });
+                })
             },
             apiRoutes.getVisData(season, raceRound, raceData => {
-                this.setState({ raceData });
+                this.setState({ raceData })
             })
-        );
+        )
     }
 
     setRaceDetails() {
-        let allDrivers = hVis.getAllDriversInRace(this.state.results);
-        let maxLaps = this.state.winner.laps;
+        let allDrivers = hVis.getAllDriversInRace(this.state.results)
+        let maxLaps = this.state.winner.laps
 
         this.setState({
             allDrivers,
             maxLaps
-        });
+        })
     }
 
     handleClick() {
-        const st = this.state;
+        const st = this.state
         if (!st.visualIsRunning || st.visualIsComplete) {
             // this.setState({ visualIsRunning: true })
             if (st.visualIsComplete) {
@@ -86,76 +86,76 @@ class RunRace extends React.Component {
                         visualIsRunning: true
                     },
                     this.ticker
-                );
+                )
             } else {
                 this.setState(
                     {
                         visualIsRunning: true
                     },
                     this.ticker
-                );
+                )
             }
         } else if (st.visualIsRunning) {
-            this.setState({ visualIsRunning: false });
-            console.log("######### this should be working");
+            this.setState({ visualIsRunning: false })
+            console.log("######### this should be working")
         }
     }
 
     ticker() {
-        const st = this.state;
+        const st = this.state
         var lapTicker = setInterval(() => {
             if (st.visualIsRunning) {
                 if (this.state.lap < this.state.maxLaps) {
-                    let newAllDrivers = this.state.allDrivers;
+                    let newAllDrivers = this.state.allDrivers
                     for (var key in this.state.allDrivers) {
                         var currentDriverLap = hVis.getCurrentDriverLap(
                             key,
                             this.state.lap,
                             this.state.raceData
-                        );
+                        )
                         newAllDrivers[key].raceMilliseconds +=
-                            currentDriverLap.milliseconds;
+                            currentDriverLap.milliseconds
                     }
                     this.setState({
                         visualIsRunning: true,
                         allDrivers: newAllDrivers,
                         lap: this.state.lap + 1
-                    });
+                    })
                 } else if (st.lap == st.maxLaps) {
                     this.setState({
                         visualIsRunning: false,
                         visualIsComplete: true
-                    });
-                    clearInterval(lapTicker);
+                    })
+                    clearInterval(lapTicker)
                 } else {
-                    this.setState({ visualIsRunning: false });
-                    clearInterval(lapTicker);
+                    this.setState({ visualIsRunning: false })
+                    clearInterval(lapTicker)
                 }
             }
-        }, 50);
+        }, 50)
     }
 
     showRace(data) {
-        let winner = this.state.winner.winningDriver;
-        let winningTime = this.state.winner.winningTime;
-        let maxLaps = this.state.maxLaps;
-        let allDrivers = this.state.allDrivers;
+        let winner = this.state.winner.winningDriver
+        let winningTime = this.state.winner.winningTime
+        let maxLaps = this.state.maxLaps
+        let allDrivers = this.state.allDrivers
 
         let lapData = hVis.buildLapData(
             this.state.raceData,
             maxLaps,
             this.state.lap,
             this.state.results
-        );
+        )
 
         // Find retired drivers to ultimately add to lapData
         let retiredDrivers = hRet.findRetiredDrivers(
             lapData,
             this.state.results
-        );
+        )
 
         // Add retired drivers last laps to the lapData
-        lapData = hRet.addRetiredLaps(lapData, retiredDrivers, this.state.lap);
+        lapData = hRet.addRetiredLaps(lapData, retiredDrivers, this.state.lap)
 
         // Add 'did not starts' to the lapData
         if (lapData.length < this.state.results.length) {
@@ -168,13 +168,13 @@ class RunRace extends React.Component {
                         surname: result.surname,
                         positionText: result.positionText,
                         positionOrder: result.positionOrder
-                    });
+                    })
                 }
-            });
+            })
         }
 
         return lapData.map((driverLap, i) => {
-            let driverSurname = driverLap.surname;
+            let driverSurname = driverLap.surname
 
             if (
                 hRet.driverDoesNotRetire(driverSurname, retiredDrivers) ||
@@ -207,7 +207,7 @@ class RunRace extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    );
+                    )
                 } else {
                     return (
                         <div key={i} className="driver">
@@ -231,7 +231,7 @@ class RunRace extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    );
+                    )
                 }
             } else if (
                 hRet.hasDriverRetiredYet(
@@ -263,7 +263,7 @@ class RunRace extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    );
+                    )
                 } else {
                     return (
                         <div key={i} className="driver">
@@ -287,24 +287,24 @@ class RunRace extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    );
+                    )
                 }
             }
-        });
+        })
     }
 
     render() {
-        let raceData = this.state.raceData;
-        let st = this.state;
+        let raceData = this.state.raceData
+        let st = this.state
 
         if (raceData && !raceData.noData && this.state.results) {
-            let race = this.state.results[0];
+            let race = this.state.results[0]
             let payload = {
                 ...race,
                 round: st.round,
                 raceName: st.raceName,
                 year: st.raceYear
-            };
+            }
 
             return (
                 <div className="race">
@@ -330,10 +330,9 @@ class RunRace extends React.Component {
                         />
                     </div>
                 </div>
-            );
+            )
         } else if (raceData && raceData.noData && this.state.results) {
-            let race = this.state.results[0];
-            console.log(race);
+            let race = this.state.results[0]
             return (
                 <div>
                     <p>
@@ -348,11 +347,11 @@ class RunRace extends React.Component {
                         intro="See other info from"
                     />
                 </div>
-            );
+            )
         } else {
-            return <Loading />;
+            return <Loading />
         }
     }
 }
 
-export default RunRace;
+export default RunRace

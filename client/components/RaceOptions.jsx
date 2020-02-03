@@ -71,7 +71,7 @@ export default class RaceOptions extends React.Component {
                             <a href="#">
                                 {this.props.intro
                                     ? `${this.props.intro} the ${
-                                          race.season
+                                          race.year
                                       } ${race.raceName || race.name}`
                                     : `${race.round} - ${race.raceName ||
                                           race.name}`}
@@ -98,7 +98,7 @@ export default class RaceOptions extends React.Component {
 
                             {this.state.qualiVisible ? (
                                 <Quali
-                                    season={race.season}
+                                    season={race.year || race.season}
                                     round={race.round}
                                 />
                             ) : null}
@@ -121,7 +121,10 @@ export default class RaceOptions extends React.Component {
                             </p>
 
                             {this.state.gridVisible ? (
-                                <Grid season={race.season} round={race.round} />
+                                <Grid
+                                    season={race.year || race.season}
+                                    round={race.round}
+                                />
                             ) : null}
 
                             {this.props.intro ? null : this.visualise(race)}
@@ -145,7 +148,7 @@ export default class RaceOptions extends React.Component {
 
                             {this.state.resultsVisible ? (
                                 <Results
-                                    season={race.season}
+                                    season={race.year || race.season}
                                     round={race.round}
                                     raceName={race.raceName}
                                 />
