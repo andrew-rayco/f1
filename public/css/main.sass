@@ -10,6 +10,10 @@
   font-weight: 300
   font-style: normal
 
+// Elegant vertical scrollbar jump fix
+html
+  margin-left: calc(100vw - 100%)
+
 h1, h2, h3, h4, h5
   color: #272623
   font-family: 'Martel-Regular', serif
@@ -73,7 +77,7 @@ table
   transition: .15s color ease-in
 
 .alternative
-  display: none
+  // display: none
 
 @media screen and (max-width: 450px)
   h1
@@ -125,8 +129,14 @@ table
   .position
     text-align: center
 
+  .pos
+    text-align: right
 
-/* Home */
+  @media screen and (max-width: 600px)
+    .container
+      width: 100%
+
+//  *** Home ***
 
 .seasons
   display: flex
@@ -212,7 +222,7 @@ table
   animation: fadeIn 1s
 
 .no-data
-  /*color: #3A3937*/
+//  /*color: #3A3937*/
   padding: 2em
   max-width: 50%
   margin: 0 auto
@@ -225,13 +235,25 @@ table
 .center
   margin: 2em auto
 
+.muted
+  color: #aaa
+  letter-spacing: 2px
+
+.sub-text
+  font-size: .7em
+  margin-left: .7em
+
+p.sub-text-date
+  font-size: 1em
+  margin-top: -1em
+  margin-bottom: .5em
+
 @media screen and (max-width: 450px)
   .home h3
     font-size: 26px
     margin: 1em 0 .5em
 
-
-/* Circuits */
+// *** Circuits ***
 
 .circuit-list
   margin: 0 auto
@@ -239,8 +261,7 @@ table
 .circuit-list ul
   margin: 0 auto
 
-
-/*  Visualise page  */
+// *** Visualise page ***
 
 .driver
   text-align: left
@@ -293,8 +314,7 @@ table
 .hidden
   display: none
 
-
-/* Other  */
+// *** Other ***
 .loading
   display: flex
   margin-top: -1em

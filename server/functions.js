@@ -1,7 +1,7 @@
-function prepareRaceData (laptimes) {
+function prepareRaceData(laptimes) {
   // Get all driver Surnames in race
   var driversInRace = []
-  laptimes.map((lap) => {
+  laptimes.map(lap => {
     if (driversInRace.indexOf(lap.surname) == -1) {
       driversInRace.push(lap.surname)
     }
@@ -9,16 +9,17 @@ function prepareRaceData (laptimes) {
 
   // list all laps by driver with id
   var lapsByDriver = []
-  driversInRace.forEach((driver) => {
-    lapsByDriver.push(laptimes.filter((lap) => {
-      return lap.surname === driver
-    }))
+  driversInRace.forEach(driver => {
+    lapsByDriver.push(
+      laptimes.filter(lap => {
+        return lap.surname === driver
+      })
+    )
   })
 
-
   // find maximum laps in race
-  var maxLaps = 0;
-  laptimes.forEach((lap) => {
+  var maxLaps = 0
+  laptimes.forEach(lap => {
     if (lap.lap > maxLaps) {
       maxLaps = lap.lap
     }
@@ -29,14 +30,16 @@ function prepareRaceData (laptimes) {
   var lapsByLapNumber = []
   var count = 1
   for (i = 1; i <= maxLaps; i++) {
-    lapsByLapNumber.push(laptimes.filter((thisLap) => {
-      return thisLap.lap === count
-    }))
+    lapsByLapNumber.push(
+      laptimes.filter(thisLap => {
+        return thisLap.lap === count
+      })
+    )
     count++
   }
 
   var cleanRaceData = []
-  lapsByLapNumber.map((lap) => {
+  lapsByLapNumber.map(lap => {
     for (var i = 0; i < maxLaps; i++) {
       if (lap[i]) {
         cleanRaceData.push({
@@ -51,7 +54,7 @@ function prepareRaceData (laptimes) {
     }
   })
 
-  var count = 1;
+  var count = 1
   var lapCounter = setInterval(function() {
     if (count <= maxLaps) {
       count++
@@ -67,24 +70,24 @@ function prepareRaceData (laptimes) {
 // Add human friendly classification titles
 function cleanResults(results) {
   let newResults = [...results]
-  newResults.forEach((result) => {
+  newResults.forEach(result => {
     switch (result.positionText) {
-      case "R":
+      case 'R':
         result.position = result.positionOrder
         break
-      case "W":
+      case 'W':
         result.position = 'Withdrawn'
         break
-      case "D":
+      case 'D':
         result.position = 'Disqualified'
         break
-      case "E":
+      case 'E':
         result.position = 'Excluded'
         break
-      case "F":
+      case 'F':
         result.position = 'Failed to Qualify'
         break
-      case "N":
+      case 'N':
         result.position = 'Not Classified'
         break
       default:
@@ -103,12 +106,18 @@ function cleanResults(results) {
 
 // Re-sort so grid entry of 0 (for DNQ or similar) aren't first in list
 function sortGrid(gridData) {
-  gridData.map((result) => {
+  gridData.map(result => {
     if (result.grid == 0) {
       result.grid = 99
     }
   })
   gridData.sort(compareGridPos)
+  gridData.map(result => {
+    if (result.grid == 99) {
+      result.grid = 'Pit'
+    }
+  })
+  return gridData
 }
 
 function compareGridPos(a, b) {
@@ -118,14 +127,28 @@ function compareGridPos(a, b) {
   let comparison = 0
   if (gridA > gridB) {
     comparison = 1
-  } else {
+  } else if (gridA < gridB) {
     comparison = -1
   }
   return comparison
 }
 
+// Comparison function to aid in sorting circuit list by country
+function compareCircuits(a, b) {
+  const aCountry = a.Location.country
+  const bCountry = b.Location.country
+  if (aCountry < bCountry) {
+    return -1
+  }
+  if (aCountry > bCountry) {
+    return 1
+  }
+  return 0
+}
+
 module.exports = {
   prepareRaceData,
   cleanResults,
-  sortGrid
+  sortGrid,
+  compareCircuits
 }
