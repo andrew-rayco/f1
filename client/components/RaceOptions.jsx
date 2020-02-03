@@ -45,7 +45,8 @@ export default class RaceOptions extends React.Component {
 
     render() {
         let race = this.props.race
-        const raceDate = new Date(race.date + " " + race.time)
+        // Some races in the distant future may not yet have a race.time. Faking it in the meantime.
+        const raceDate = new Date(race.date + " " + (race.time || "23:10:00Z"))
         const todayDate = new Date()
 
         // Check if race is in past or future. If future, disable selection
