@@ -349,7 +349,16 @@ class RunRace extends React.Component {
                 </div>
             )
         } else {
-            return <Loading />
+            return (
+                <div>
+                    <p>
+                        This takes a long time getting the data from the{" "}
+                        <a href="https://ergast.com/mrd/">source</a>. Please be
+                        patient.
+                    </p>
+                    <Loading />
+                </div>
+            )
         }
     }
 }

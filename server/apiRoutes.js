@@ -230,20 +230,18 @@ function getResults(season, raceRound, callback) {
 
 function getVisData(season, raceRound, callback) {
     // e.g. https://ergast.com/api/f1/2011/5/laps.json
-    // currently only getting 1 lap for development (to not kill the api)
     // request
-    //   .get(`${url}${season}/${raceRound}/laps.json?limit=2000`)
-    //   .end((err, result) => {
-    //     if (err) {
-    //       console.log(err)
-    //     } else {
-    //       const data = result.body.MRData.RaceTable.Races[0].Laps
-    //       callback(data)
-    //     }
-    //   })
+    //     .get(`${url}${season}/${raceRound}/laps.json?limit=2000`)
+    //     .end((err, result) => {
+    //         if (err) {
+    //             console.log(err)
+    //         } else {
+    //             const data = result.body.MRData.RaceTable.Races[0].Laps
+    //             callback(data)
+    //         }
+    //     })
 
     // temp data to not kill the api (and avoid wait times in development)
-
     callback(devData.raceData)
 }
 
