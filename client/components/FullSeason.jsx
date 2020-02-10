@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react"
 
-import * as apiRoutes from '../../server/apiRoutes'
-import RaceOptions from './RaceOptions'
-import Loading from './Loading'
+import * as apiRoutes from "../../server/apiRoutes"
+import RaceOptions from "./RaceOptions"
+import Loading from "./Loading"
 
 export default class FullSeason extends React.Component {
     constructor(props) {
@@ -18,25 +18,32 @@ export default class FullSeason extends React.Component {
 
     UNSAFE_componentWillMount() {
         var location = this.props.location.pathname
-        var pathArray = location.split('/')
+        var pathArray = location.split("/")
         var thisSeason = pathArray[2]
-        apiRoutes.getSingleSeason(thisSeason, (races) => {
+        apiRoutes.getSingleSeason(thisSeason, races => {
             this.setState({ races })
         })
     }
 
     // This is purely for the error loading message after 5 seconds trying.
     componentDidMount() {
-        this.interval = setTimeout(() => this.setState({ renderLoading: false }), 5000)
+        this.interval = setTimeout(
+            () => this.setState({ renderLoading: false }),
+            5000
+        )
     }
 
     listRaces(races) {
-        const toggleStatus = { visibility: 'hidden' }
+        const toggleStatus = { visibility: "hidden" }
 
-        return races.map((race) => {
+        return races.map(race => {
             return (
                 <div key={`key${race.round}`}>
-                    <RaceOptions key={race.round} race={race} visibility={toggleStatus} />
+                    <RaceOptions
+                        key={race.round}
+                        race={race}
+                        visibility={toggleStatus}
+                    />
                 </div>
             )
         })
@@ -49,16 +56,22 @@ export default class FullSeason extends React.Component {
                 <div className="season">
                     <h2>The {racesInSeason[0].season} Formula 1 Season</h2>
                     {this.listRaces(racesInSeason)}
+                    <div className="separator" />
                 </div>
             )
         } else {
             return (
                 <div className="load-error">
-                    {
-                        this.state.renderLoading
-                        ? <Loading />
-                        : <p>There was some sort of problem.<br />Maybe try again but it's not looking good. Sorry about that.</p>
-                    }
+                    {this.state.renderLoading ? (
+                        <Loading />
+                    ) : (
+                        <p>
+                            There was some sort of problem.
+                            <br />
+                            Maybe try again but it's not looking good. Sorry
+                            about that.
+                        </p>
+                    )}
                 </div>
             )
         }

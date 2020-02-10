@@ -127,7 +127,8 @@ export default class RaceOptions extends React.Component {
                                 />
                             ) : null}
 
-                            {this.props.intro ? null : this.visualise(race)}
+                            {/* Long wait fetching laptimes from Ergast API. Disable feature for now */}
+                            {/* {this.props.intro ? null : this.visualise(race)} */}
 
                             <p>
                                 <a
