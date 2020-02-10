@@ -23,9 +23,6 @@ npm run dev
 
 ### TODO/Refactor
 
--   Currently each component that needs data is hitting the api and adding to its own state. Probably better to set up an onclick in the parent component and pass the data as props? (prior to redux version) - ANSWER: YES, pass it down as props.
--   To avoid hitting undefined errors before component state is populated with data, render methods include an if statement checking if state.whatever exists. There's no doubt a better way to do this.
-
-![Test](https://media.giphy.com/media/4KLv24CPUoZ0I/giphy.gif)
-
-![Hey](https://www.capitalfm.co.ke/lifestyle/files/2018/10/web-mr-bean-atkinson-bbc-uk.jpg)
+- Visualisation is disabled due to painfully long wait (60 secs plus) fetching full race laptime data from the source. 
+Source dev is looking into it. But for now it's unplayable. Breaks my heart. 
+- Consider an option to download laptimes soon after new races and store locally to address this.
