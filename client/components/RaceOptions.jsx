@@ -1,73 +1,169 @@
-import React from 'react'
-import moment from 'moment'
+import React from "react"
+import moment from "moment"
 
-import Grid from './Grid'
-import Quali from './Quali'
-import Results from './Results'
+import Grid from "./Grid"
+import Quali from "./Quali"
+import Results from "./Results"
 
 export default class RaceOptions extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      gridVisible: false,
-      qualiVisible: false,
-      resultsVisible: false
+    constructor(props) {
+        super(props)
+        this.state = {
+            gridVisible: false,
+            qualiVisible: false,
+            resultsVisible: false
+        }
     }
-  }
 
-  componentWillMount() {
-    this.setState({race: this.props.props, intro: this.props.intro })
-  }
+    toggleHidden(e, elementToToggle) {
+        e.preventDefault()
+        let raceDetails = document.getElementById(elementToToggle)
+        let raceSection = document.getElementsByClassName(
+            this.props.race.round
+        )[0]
+        raceDetails.classList.toggle("hidden")
+        raceSection.classList.toggle("selected")
+    }
 
+    handleClick(e, visibleProperty) {
+        e.preventDefault()
+        this.setState({
+            [visibleProperty]: !this.state[visibleProperty]
+        })
+        e.target.classList.toggle("toggle-open")
+    }
 
-  toggleHidden(e, elementToToggle) {
-    e.preventDefault()
-    let raceDetails = document.getElementById(elementToToggle)
-    let raceSection = document.getElementsByClassName(this.state.race.raceId)[0]
-    raceDetails.classList.toggle('hidden')
-    raceSection.classList.toggle('selected')
-  }
+    visualise(race) {
+        return (
+            <p>
+                <a href={`/#/season/${race.season}/${race.round}/visualise`}>
+                    Visualise
+                </a>
+            </p>
+        )
+    }
 
-  handleClick(e, visibleProperty) {
-    e.preventDefault()
-    this.setState({[visibleProperty]: !this.state[visibleProperty]})
-    e.target.classList.toggle('toggle-open')
-  }
+    render() {
+        let race = this.props.race
+        // Some races in the distant future may not yet have a race.time. Faking it in the meantime.
+        const raceDate = new Date(race.date + " " + (race.time || "23:10:00Z"))
+        const todayDate = new Date()
 
-  render() {
-    let race = this.state.race
-    return (
-      <div key={race.raceId} className="row single-round">
-        <div className={`twelve columns round ${race.raceId}`}>
-          <h4 onClick={(e) => this.toggleHidden(e, race.raceId)}><a href="#">{(this.state.intro) ?
-            `${this.state.intro} the ${race.year} ${race.name}` :
-            `${race.round} - ${race.raceName || race.name}`}
-          </a></h4>
-          <div id={race.raceId} className={`toggle hidden`}>
-            <p>{moment(race.date).format('MMMM Do YYYY')}</p>
-            <p><a onClick={(e) => this.handleClick(e, 'qualiVisible')} href="#" className="togglable">Qualifying results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>
-            {(this.state.qualiVisible) ?
-              <Quali season={race.year} raceId={race.raceId} /> :
-              null
-            }
-            <p><a onClick={(e) => this.handleClick(e, 'gridVisible')} href="#" className="togglable">Starting grid <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>
-            {(this.state.gridVisible) ?
-              <Grid season={race.year} raceId={race.raceId} /> :
-              null
-            }
-            <p><a href={`/#/season/${race.year}/${race.raceId}/visualise`}>Visualise</a></p>
-            <p><a onClick={(e) => this.handleClick(e, 'resultsVisible')} href="#" className="togglable">Results <img className="toggle-icon" src="../images/down-arrow.svg" alt="read more icon"/></a></p>
-            {(this.state.resultsVisible) ?
-              <Results season={race.year} raceId={race.raceId} /> :
-              null
-            }
-            <p><a href={race.raceUrl}>{race.year} {race.raceName} on Wikipedia</a></p>
-            <div className="separator"></div>
-          </div>
-        </div>
-      </div>
-    )
-  }
+        // Check if race is in past or future. If future, disable selection
+        if (raceDate > todayDate) {
+            return (
+                <div key={race.round} className="row single-round">
+                    <div className={`twelve columns round ${race.round}`}>
+                        <h4 className="muted">{`${
+                            race.round
+                        } - ${race.raceName || race.name}`}</h4>
+                        <p className="muted sub-text-date">
+                            {moment(race.date).format("MMMM Do YYYY")}
+                        </p>
+                    </div>
+                </div>
+            )
+        } else {
+            return (
+                <div key={race.round} className="row single-round">
+                    <div className={`twelve columns round ${race.round}`}>
+                        <h4 onClick={e => this.toggleHidden(e, race.round)}>
+                            <a href="#">
+                                {this.props.intro
+                                    ? `${this.props.intro} the ${
+                                          race.year
+                                      } ${race.raceName || race.name}`
+                                    : `${race.round} - ${race.raceName ||
+                                          race.name}`}
+                            </a>
+                        </h4>
+                        <div id={race.round} className={`toggle hidden`}>
+                            <p>{moment(race.date).format("MMMM Do YYYY")}</p>
+                            <p>
+                                <a
+                                    onClick={e =>
+                                        this.handleClick(e, "qualiVisible")
+                                    }
+                                    href="#"
+                                    className="togglable"
+                                >
+                                    Qualifying results{" "}
+                                    <img
+                                        className="toggle-icon"
+                                        src="../images/down-arrow.svg"
+                                        alt="read more icon"
+                                    />
+                                </a>
+                            </p>
+
+                            {this.state.qualiVisible ? (
+                                <Quali
+                                    season={race.year || race.season}
+                                    round={race.round}
+                                />
+                            ) : null}
+
+                            <p>
+                                <a
+                                    onClick={e =>
+                                        this.handleClick(e, "gridVisible")
+                                    }
+                                    href="#"
+                                    className="togglable"
+                                >
+                                    Starting grid{" "}
+                                    <img
+                                        className="toggle-icon"
+                                        src="../images/down-arrow.svg"
+                                        alt="read more icon"
+                                    />
+                                </a>
+                            </p>
+
+                            {this.state.gridVisible ? (
+                                <Grid
+                                    season={race.year || race.season}
+                                    round={race.round}
+                                />
+                            ) : null}
+
+                            {this.props.intro ? null : this.visualise(race)}
+
+                            <p>
+                                <a
+                                    onClick={e =>
+                                        this.handleClick(e, "resultsVisible")
+                                    }
+                                    href="#"
+                                    className="togglable"
+                                >
+                                    Results{" "}
+                                    <img
+                                        className="toggle-icon"
+                                        src="../images/down-arrow.svg"
+                                        alt="read more icon"
+                                    />
+                                </a>
+                            </p>
+
+                            {this.state.resultsVisible ? (
+                                <Results
+                                    season={race.year || race.season}
+                                    round={race.round}
+                                    raceName={race.raceName}
+                                />
+                            ) : null}
+
+                            <p>
+                                <a href={race.url}>
+                                    {race.season} {race.raceName} on Wikipedia
+                                </a>
+                            </p>
+                            <div className="separator" />
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    }
 }
-
-module.exports = RaceOptions

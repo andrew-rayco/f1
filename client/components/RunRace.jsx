@@ -1,255 +1,366 @@
-// Remember, for inline styles use style={{marginRight: spacing + 'em'}} when using JSX
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react"
 
-import * as api from '../api'
-import * as hVis from '../helpers/visualisation'
-import * as h from '../helpers/retiredDrivers'
-import RaceOptions from './RaceOptions'
+import * as apiRoutes from "../../server/apiRoutes"
+import * as hVis from "../helpers/visualisation"
+import * as hRet from "../helpers/retiredDrivers"
+import RaceOptions from "./RaceOptions"
+import Loading from "./Loading"
 
 class RunRace extends React.Component {
-  constructor(props) {
-    super(props)
-    this.getAndSetRaceInfo()
-    this.state = {
-      lap: 1,
-      visualIsRunning: false
-    }
-  }
-
-  getAndSetRaceInfo () {
-    let location = this.props.location.pathname
-    let pathArray = location.split('/')
-    let season = pathArray[2]
-    let raceId = pathArray[3]
-    api.getRaceDetails(season, raceId, (raceInfo) => {
-      let raceWinner = raceInfo.results.filter((result) => {
-        return result.position === 1
-      })[0]
-      this.setState({
-        raceName: raceInfo.results[0].name,
-        raceYear: raceInfo.results[0].year,
-        results: raceInfo.results,
-        winner: {
-          winningDriver: raceWinner.surname,
-          driverId: raceWinner.driverId,
-          winningTime: raceWinner.milliseconds,
-          laps: raceWinner.laps
-         }
-      })
-    })
-
-    api.getVisData (season, raceId, (raceData) => {
-      this.setState({ raceData })
-      this.setRaceDetails()
-    })
-  }
-
-  setRaceDetails () {
-    let allDrivers = hVis.getAllDriversInRace(this.state.raceData)
-    let maxLaps = this.state.winner.laps
-
-    this.setState({
-      allDrivers,
-      maxLaps
-    })
-  }
-
-  getAndSetRaceInfo () {
-    let location = this.props.location.pathname
-    let pathArray = location.split('/')
-    let season = pathArray[2]
-    let raceId = pathArray[3]
-    api.getRaceDetails(season, raceId, (raceInfo) => {
-      let raceWinner = raceInfo.results.filter((result) => {
-        return result.position === 1
-      })[0]
-      this.setState({
-        raceName: raceInfo.results[0].name,
-        raceYear: raceInfo.results[0].year,
-        results: raceInfo.results,
-        winner: {
-          winningDriver: raceWinner.surname,
-          driverId: raceWinner.driverId,
-          winningTime: raceWinner.milliseconds,
-          laps: raceWinner.laps
-         }
-      })
-    })
-
-    api.getVisData(season, raceId, (raceData) => {
-      this.setState({ raceData })
-      this.setRaceDetails()
-    })
-  }
-
-  calcWidth (driver, winner) {
-    var totalRaceTime = this.state.winner.winningTime
-    if (driver == winner) {
-      return (this.state.allDrivers[winner] / totalRaceTime * 100) + (this.state.allDrivers[winner] / totalRaceTime * 100 / this.state.maxLaps)
-    } else {
-      return ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100) + ((this.state.allDrivers[winner] + this.findDistanceFromWinner(driver, winner)) / totalRaceTime * 100 / this.state.maxLaps)
-    }
-  }
-
-  findDistanceFromWinner (driver, winner) {
-    var totalRaceTime = this.state.winner.winningTime
-    return this.state.allDrivers[winner] - this.state.allDrivers[driver]
-  }
-
-  getCurrentDriverLap (driver, lap) {
-    var toFind = {lap: this.state.lap, surname: driver}
-    var currentDriverLap = this.state.raceData.filter((lap) => {
-      for(var key in toFind) {
-        if(lap[key] !== toFind[key]) {
-          return false
+    constructor(props) {
+        super(props)
+        this.state = {
+            lap: 1,
+            visualIsRunning: false,
+            visualIsComplete: false
         }
-      }
-      return true
-    })
-    return currentDriverLap[0] || { milliseconds: 0 }
-  }
+        this.handleClick = this.handleClick.bind(this)
+    }
 
-  nextRaceLink () {
-    let location = this.props.location.pathname
-    let pathArray = location.split('/')
-    let season = pathArray[2]
+    UNSAFE_componentWillMount() {
+        this.getAndSetRaceInfo()
+    }
 
-    pathArray[3] = Number(pathArray[3]) + 1
-    // console.log(`#/season/${season}/${pathArray[3]}/${pathArray[4]}`)
-    return `/season/${season}/${pathArray[3]}/${pathArray[4]}`
-  }
+    componentDidUpdate() {
+        // ensure getAndSetRaceInfo is complete before running setRaceDetails
+        if (
+            this.state.raceData &&
+            !this.state.raceData.noData &&
+            this.state.winner &&
+            !this.state.maxLaps
+        ) {
+            this.setRaceDetails()
+        }
+    }
 
-  handleClick () {
-    if (this.state.visualIsRunning) {
-      clearInterval(lapTicker)
-      console.log('this should be working')
-    } else {
-      this.setState({visualIsRunning: true})
-      var lapTicker = setInterval(() => {
-        if (this.state.lap < this.state.maxLaps) {
-          var newAllDrivers = {}
-          for (var key in this.state.allDrivers) {
-            var currentDriverLap = this.getCurrentDriverLap(key, this.state.lap)
-            newAllDrivers[key] = this.state.allDrivers[key] + currentDriverLap.milliseconds
-          }
-          this.setState({
-            allDrivers: newAllDrivers,
-            lap: this.state.lap + 1
-          })
+    getAndSetRaceInfo() {
+        let location = this.props.location.pathname
+        let pathArray = location.split("/")
+        let season = pathArray[2]
+        let raceRound = pathArray[3]
+
+        apiRoutes.getRaceDetails(
+            season,
+            raceRound,
+            raceInfo => {
+                let raceWinner = raceInfo.Results.filter(result => {
+                    return result.position === "1"
+                })[0]
+                this.setState({
+                    raceName: raceInfo.raceName,
+                    raceYear: raceInfo.season,
+                    round: raceInfo.round,
+                    results: raceInfo.Results,
+                    winner: {
+                        winningDriver: raceWinner.Driver.familyName,
+                        winningTime: raceWinner.Time.millis,
+                        laps: raceWinner.laps
+                    }
+                })
+            },
+            apiRoutes.getVisData(season, raceRound, raceData => {
+                this.setState({ raceData })
+            })
+        )
+    }
+
+    setRaceDetails() {
+        let allDrivers = hVis.getAllDriversInRace(this.state.results)
+        let maxLaps = this.state.winner.laps
+
+        this.setState({
+            allDrivers,
+            maxLaps
+        })
+    }
+
+    handleClick() {
+        const st = this.state
+        if (!st.visualIsRunning || st.visualIsComplete) {
+            // this.setState({ visualIsRunning: true })
+            if (st.visualIsComplete) {
+                this.setState(
+                    {
+                        lap: 1,
+                        visualIsComplete: false,
+                        visualIsRunning: true
+                    },
+                    this.ticker
+                )
+            } else {
+                this.setState(
+                    {
+                        visualIsRunning: true
+                    },
+                    this.ticker
+                )
+            }
+        } else if (st.visualIsRunning) {
+            this.setState({ visualIsRunning: false })
+            console.log("######### this should be working")
+        }
+    }
+
+    ticker() {
+        const st = this.state
+        var lapTicker = setInterval(() => {
+            if (st.visualIsRunning) {
+                if (this.state.lap < this.state.maxLaps) {
+                    let newAllDrivers = this.state.allDrivers
+                    for (var key in this.state.allDrivers) {
+                        var currentDriverLap = hVis.getCurrentDriverLap(
+                            key,
+                            this.state.lap,
+                            this.state.raceData
+                        )
+                        newAllDrivers[key].raceMilliseconds +=
+                            currentDriverLap.milliseconds
+                    }
+                    this.setState({
+                        visualIsRunning: true,
+                        allDrivers: newAllDrivers,
+                        lap: this.state.lap + 1
+                    })
+                } else if (st.lap == st.maxLaps) {
+                    this.setState({
+                        visualIsRunning: false,
+                        visualIsComplete: true
+                    })
+                    clearInterval(lapTicker)
+                } else {
+                    this.setState({ visualIsRunning: false })
+                    clearInterval(lapTicker)
+                }
+            }
+        }, 50)
+    }
+
+    showRace(data) {
+        let winner = this.state.winner.winningDriver
+        let winningTime = this.state.winner.winningTime
+        let maxLaps = this.state.maxLaps
+        let allDrivers = this.state.allDrivers
+
+        let lapData = hVis.buildLapData(
+            this.state.raceData,
+            maxLaps,
+            this.state.lap,
+            this.state.results
+        )
+
+        // Find retired drivers to ultimately add to lapData
+        let retiredDrivers = hRet.findRetiredDrivers(
+            lapData,
+            this.state.results
+        )
+
+        // Add retired drivers last laps to the lapData
+        lapData = hRet.addRetiredLaps(lapData, retiredDrivers, this.state.lap)
+
+        // Add 'did not starts' to the lapData
+        if (lapData.length < this.state.results.length) {
+            this.state.results.forEach(result => {
+                if (
+                    isNaN(parseInt(result.positionText)) &&
+                    result.positionText != "R"
+                ) {
+                    lapData.push({
+                        surname: result.surname,
+                        positionText: result.positionText,
+                        positionOrder: result.positionOrder
+                    })
+                }
+            })
+        }
+
+        return lapData.map((driverLap, i) => {
+            let driverSurname = driverLap.surname
+
+            if (
+                hRet.driverDoesNotRetire(driverSurname, retiredDrivers) ||
+                !hRet.hasDriverRetiredYet(
+                    driverSurname,
+                    retiredDrivers,
+                    this.state.lap
+                )
+            ) {
+                if (this.state.lap > maxLaps * 0.2) {
+                    return (
+                        <div key={i} className="driver">
+                            <div className={(driverSurname, `driverBar`)}>
+                                <div
+                                    className="vis-color"
+                                    style={{
+                                        width:
+                                            hVis.calcWidth(
+                                                driverSurname,
+                                                winner,
+                                                allDrivers,
+                                                winningTime,
+                                                maxLaps
+                                            ) + "%"
+                                    }}
+                                >
+                                    {driverLap.position ||
+                                        driverLap.positionText}
+                                    : {driverSurname}
+                                </div>
+                            </div>
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div key={i} className="driver">
+                            <div className={(driverSurname, `driverBar`)}>
+                                {driverLap.position || driverLap.positionText}:{" "}
+                                {driverSurname}
+                                <div
+                                    className="vis-color"
+                                    style={{
+                                        width:
+                                            hVis.calcWidth(
+                                                driverSurname,
+                                                winner,
+                                                allDrivers,
+                                                winningTime,
+                                                maxLaps
+                                            ) + "%"
+                                    }}
+                                >
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+            } else if (
+                hRet.hasDriverRetiredYet(
+                    driverSurname,
+                    retiredDrivers,
+                    this.state.lap
+                )
+            ) {
+                if (driverLap.laps < maxLaps * 0.4) {
+                    return (
+                        <div key={i} className="driver">
+                            <div className={"driverBar " + driverSurname}>
+                                {driverLap.position || driverLap.positionOrder}:{" "}
+                                {driverSurname} - Lap {driverLap.laps}
+                                <div
+                                    className="vis-color"
+                                    style={{
+                                        width:
+                                            (this.state.allDrivers[
+                                                driverSurname
+                                            ] /
+                                                winningTime) *
+                                                100 +
+                                            "%",
+                                        backgroundColor: "red"
+                                    }}
+                                >
+                                    &nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div key={i} className="driver">
+                            <div className={"driverBar " + driverSurname}>
+                                <div
+                                    className="vis-color"
+                                    style={{
+                                        width:
+                                            (this.state.allDrivers[
+                                                driverSurname
+                                            ] /
+                                                winningTime) *
+                                                100 +
+                                            "%",
+                                        backgroundColor: "red"
+                                    }}
+                                >
+                                    {driverLap.position ||
+                                        driverLap.positionOrder}
+                                    : {driverSurname} - Lap {driverLap.laps}
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+            }
+        })
+    }
+
+    render() {
+        let raceData = this.state.raceData
+        let st = this.state
+
+        if (raceData && !raceData.noData && this.state.results) {
+            let race = this.state.results[0]
+            let payload = {
+                ...race,
+                round: st.round,
+                raceName: st.raceName,
+                year: st.raceYear
+            }
+
+            return (
+                <div className="race">
+                    <h2>
+                        {st.raceYear} {st.raceName}
+                    </h2>
+                    <button onClick={this.handleClick}>
+                        {this.state.visualIsRunning ? "Pause " : "Start "}{" "}
+                        visualisation
+                    </button>
+                    <p className="beta">This feature is in beta.</p>
+
+                    <h3>
+                        Lap {st.lap} of {st.maxLaps}
+                    </h3>
+                    {st.allDrivers ? this.showRace(raceData) : <Loading />}
+                    {/* <p><Link to={this.nextRaceLink()}>Next Race</Link></p> */}
+                    <div className="more-from">
+                        <RaceOptions
+                            key={race.raceId}
+                            race={payload}
+                            intro="More from"
+                        />
+                    </div>
+                </div>
+            )
+        } else if (raceData && raceData.noData && this.state.results) {
+            let race = this.state.results[0]
+            return (
+                <div>
+                    <p>
+                        Sorry. Visualisation isn't possible for this event.{" "}
+                        <br />
+                        This feature needs data that only started becoming
+                        available mid-2011.
+                    </p>
+                    <RaceOptions
+                        key={race.raceId}
+                        race={race}
+                        intro="See other info from"
+                    />
+                </div>
+            )
         } else {
-          clearInterval(lapTicker)
+            return (
+                <div>
+                    <p>
+                        This takes a long time getting the data from the{" "}
+                        <a href="https://ergast.com/mrd/">source</a>. Please be
+                        patient.
+                    </p>
+                    <Loading />
+                </div>
+            )
         }
-      }, 150)
-
     }
-  }
-
-  showRace (data) {
-    var winner = this.state.winner.winningDriver
-    var totalRaceTime = this.state.winner.winningTime
-    var totalRaceLaps = this.state.maxLaps
-    let allDrivers = this.state.allDrivers
-    let lapData = this.state.raceData.filter((lap) => {
-      return lap.lap === this.state.lap
-    })
-
-    // DEAL WITH LAPPED DRIVERS
-    // 1. Find drivers where result.positionText != 'R'
-    let unretiredDrivers = this.state.results.filter((result) => {
-      return result.positionText != 'R'
-    })
-    let lappedDrivers = unretiredDrivers.filter((result) => {
-      return result.laps < this.state.maxLaps
-    })
-    lappedDrivers.forEach((driver) => {
-      if (driver.laps < this.state.lap) {
-        lapData.push(driver)
-      }
-    }) + 1
-    var retiredDrivers = h.findRetiredDrivers(lapData, this.state.results)
-
-    // Add retired last laps to the lapData
-    h.addRetiredLaps(lapData, retiredDrivers, this.state.lap)
-
-    if (this.state.lap === this.state.maxLaps) {
-      lapData = this.state.results
-    }
-
-    return lapData.map((driverLap, i) => {
-      if (h.driverDoesNotRetire(driverLap.surname, retiredDrivers) || !h.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
-        if (this.state.lap > this.state.maxLaps * .20) {
-          return (
-            <div key={i} className="driver">
-              <div className={driverLap.surname, `driverBar`}>
-                <div className="vis-color" style={{
-                  width: this.calcWidth(driverLap.surname, this.state.winner.winningDriver, this.state.allDrivers) + '%'
-                }}>{driverLap.position || driverLap.positionText}: {driverLap.surname}</div>
-              </div>
-            </div>
-          )
-        } else {
-          return (
-            <div key={i} className="driver">
-              <div className={driverLap.surname, `driverBar`}>
-                {driverLap.position || driverLap.positionText}: {driverLap.surname}
-                <div className="vis-color" style={{
-                  width: this.calcWidth(driverLap.surname, this.state.winner.winningDriver, this.state.allDrivers) + '%'
-                }}>&nbsp;</div>
-              </div>
-            </div>
-          )
-        }
-      } else if (h.hasDriverRetiredYet(driverLap.surname, retiredDrivers, this.state.lap)) {
-        if (driverLap.laps < this.state.maxLaps * .40) {
-          return (
-            <div key={i} className="driver">
-              <div className={'driverBar ' + driverLap.surname} >
-                {driverLap.position || driverLap.positionOrder}: {driverLap.surname} - Lap {driverLap.laps}
-                <div className="vis-color" style={{
-                  width: (this.state.allDrivers[driverLap.surname] / totalRaceTime) * 100 + '%', backgroundColor: 'red'
-                }}>&nbsp;</div>
-              </div>
-            </div>
-          )
-        } else {
-          return (
-            <div key={i} className="driver">
-              <div className={'driverBar ' + driverLap.surname} ><div className="vis-color" style={{
-                  width: (this.state.allDrivers[driverLap.surname] / totalRaceTime) * 100 + '%', backgroundColor: 'red'
-                }}>{driverLap.position || driverLap.positionOrder}: {driverLap.surname} - Lap {driverLap.laps}</div>
-              </div>
-            </div>
-          )
-        }
-      }
-    })
-  }
-
-  render () {
-    if (this.state.raceData) {
-      return (
-        <div className="race">
-          <h2>{this.state.raceYear} {this.state.raceName}</h2>
-          <button onClick={() => this.handleClick()}>Start visualisation</button>
-          <p className="beta">This feature is in beta.</p>
-          <h3>Lap {this.state.lap} of {this.state.maxLaps}</h3>
-          {this.state.allDrivers ? this.showRace(this.state.raceData) : '<p>Loading...</p>'}
-          {/* <p><Link to={this.nextRaceLink()}>Next Race</Link></p> */}
-          <div className="more-from">
-            <RaceOptions key={this.state.results[0].raceId} props={this.state.results[0]} intro='More from' />
-          </div>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          Sorry. Visualisation isn't possible for this event. <br/>
-          This feature needs data that only started becoming available mid-2011.
-        </div>
-      )
-    }
-  }
 }
 
 export default RunRace

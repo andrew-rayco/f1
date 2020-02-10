@@ -1,44 +1,48 @@
 import React from 'react'
 
-import * as api from '../api'
+import * as apiRoutes from '../../server/apiRoutes'
+import ListSeason from './ListSeason'
+import Loading from './Loading'
 
 export default class Home extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      seasons: null
+    constructor() {
+        super()
+        this.state = { seasons: [] }
     }
-  }
 
-  componentWillMount() {
-    api.getSeasons((seasons) => {
-      this.setState({seasons})
-    })
-  }
+    UNSAFE_componentWillMount() {
+        apiRoutes.getSeasons((seasons) => {
+            this.setState({ seasons })
+        })
+    }
 
-  listSeasons(seasons) {
-    return seasons.map((item) => {
-      let year = item.year
-      return <li className="season" key={year}><a href={`/#/season/${year}`}>{year}</a></li>
-    })
-  }
+    listSeasons(seasons) {
+        return seasons.map(({ season }) => {
+            return <ListSeason year={season} key={season}/>
+        })
+    }
 
-  render() {
-    return (
-        <div className="row">
-          <div className="twelve columns home">
-            <h3>Seasons</h3>
-            <ul className="seasons">
-              {this.state.seasons ? this.listSeasons(this.state.seasons) : <img className="center" src="/images/rolling.svg" alt="loading icon"/>}
-            </ul>
+    render() {
+        const { seasons } = this.state
 
-            <h3>Circuits</h3>
-            <div className="circuits">
-              <a href="#/circuits">See all the circuits</a>
+        return (
+            <div className="row">
+                <div className="twelve columns home">
+                    <h3 data-test="heading-seasons">Seasons</h3>
+                    <ul className="seasons">
+                    {
+                        seasons.length > 0
+                            ? this.listSeasons(seasons)
+                            : <Loading />
+                    }
+                    </ul>
+
+                    <h3 data-test="heading-circuits">Circuits</h3>
+                    <div className="circuits">
+                        <a href="/#/circuits">See all the circuits</a>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-    )
-  }
-
+        )
+    }
 }

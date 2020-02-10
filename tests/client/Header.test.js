@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import Header from '../../client/components/Header'
 
 describe('Header', () => {
-  let props = { location: {pathname:"/season/2014"}}
+  let props = { location: { pathname: '/season/2014' } }
   const app = shallow(<Header {...props} />)
 
   it('renders correctly', () => {
@@ -18,7 +18,7 @@ describe('Header', () => {
     expect(app.find('h1').text()).toEqual('F1ian')
   })
 
-  it('contains a home link', () => {
-    expect(app.find('#home-link').exists()).toBe(true)
+  it('contains a .main-header div', () => {
+    expect(app.find('.main-header').exists()).toBe(true)
   })
 })

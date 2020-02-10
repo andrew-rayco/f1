@@ -26,19 +26,11 @@ export function findRetiredDrivers(lapData, results) {
 }
 
 export function addRetiredLaps(lapData, retiredDrivers, currentLap) {
-  // Find drivers who do not complete first lap, sorted by position
-  let driversDoNotCompleteFirstLap = retiredDrivers.filter((result) => {
-    return result.laps == 0
-  }).sort((a, b) => {
-    if (a.laps >= b.laps) {
-      return 1
-    }
-  })
 
-  // If driver has retired, add to raceData
+  // If driver has retired, add driver last lap to raceData
   let allRetiredDrivers = []
   retiredDrivers.forEach((driver) => {
-    if (driver.laps <= currentLap) {
+    if (driver.laps < currentLap) {
       allRetiredDrivers.unshift(driver)
     }
   })
@@ -46,6 +38,8 @@ export function addRetiredLaps(lapData, retiredDrivers, currentLap) {
   allRetiredDrivers.forEach((driver) => {
     lapData.push(driver)
   })
+
+  return lapData
 }
 
 export function driverDoesNotRetire (driver, retiredDrivers) {

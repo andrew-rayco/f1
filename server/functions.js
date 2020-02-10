@@ -1,9 +1,7 @@
-function prepareRaceData (laptimes) {
-  // console.log(laptimes)
-
+function prepareRaceData(laptimes) {
   // Get all driver Surnames in race
   var driversInRace = []
-  laptimes.map((lap) => {
+  laptimes.map(lap => {
     if (driversInRace.indexOf(lap.surname) == -1) {
       driversInRace.push(lap.surname)
     }
@@ -11,16 +9,17 @@ function prepareRaceData (laptimes) {
 
   // list all laps by driver with id
   var lapsByDriver = []
-  driversInRace.forEach((driver) => {
-    lapsByDriver.push(laptimes.filter((lap) => {
-      return lap.surname === driver
-    }))
+  driversInRace.forEach(driver => {
+    lapsByDriver.push(
+      laptimes.filter(lap => {
+        return lap.surname === driver
+      })
+    )
   })
 
-
   // find maximum laps in race
-  var maxLaps = 0;
-  laptimes.forEach((lap) => {
+  var maxLaps = 0
+  laptimes.forEach(lap => {
     if (lap.lap > maxLaps) {
       maxLaps = lap.lap
     }
@@ -31,16 +30,16 @@ function prepareRaceData (laptimes) {
   var lapsByLapNumber = []
   var count = 1
   for (i = 1; i <= maxLaps; i++) {
-    lapsByLapNumber.push(laptimes.filter((thisLap) => {
-      return thisLap.lap === count
-    }))
+    lapsByLapNumber.push(
+      laptimes.filter(thisLap => {
+        return thisLap.lap === count
+      })
+    )
     count++
   }
 
-  // console.log(lapsByLapNumber)
-  // Only take driver surname, lap num, time and milliseconds
   var cleanRaceData = []
-  lapsByLapNumber.map((lap) => {
+  lapsByLapNumber.map(lap => {
     for (var i = 0; i < maxLaps; i++) {
       if (lap[i]) {
         cleanRaceData.push({
@@ -55,16 +54,12 @@ function prepareRaceData (laptimes) {
     }
   })
 
-
-  //experimenting
-  var count = 1;
+  var count = 1
   var lapCounter = setInterval(function() {
     if (count <= maxLaps) {
-      // console.log(count)
       count++
       return count
     } else {
-      // console.log('race is over');
       clearInterval(lapCounter)
     }
   }, 50)
@@ -72,28 +67,27 @@ function prepareRaceData (laptimes) {
   return cleanRaceData
 }
 
-// Add human friendly classification titles and ensure classified runners are
-// listed ahead of others in results table
+// Add human friendly classification titles
 function cleanResults(results) {
   let newResults = [...results]
-  newResults.forEach((result) => {
+  newResults.forEach(result => {
     switch (result.positionText) {
-      case "R":
-        result.position = 'Retired'
+      case 'R':
+        result.position = result.positionOrder
         break
-      case "W":
+      case 'W':
         result.position = 'Withdrawn'
         break
-      case "D":
+      case 'D':
         result.position = 'Disqualified'
         break
-      case "E":
+      case 'E':
         result.position = 'Excluded'
         break
-      case "F":
+      case 'F':
         result.position = 'Failed to Qualify'
         break
-      case "N":
+      case 'N':
         result.position = 'Not Classified'
         break
       default:
@@ -101,22 +95,60 @@ function cleanResults(results) {
     }
   })
 
-  // create array of finished drivers
-  let finishedResults = newResults.filter((result) => {
-    return (typeof result.position == 'number')
-  })
+  let finalResults = {
+    raceName: newResults[0].raceName,
+    raceYear: newResults[0].raceYear,
+    results: newResults
+  }
 
-  // create array of drivers who failed to finish
-  let dnfResults = results.filter((result) => {
-    return (typeof result.position == 'string')
-  })
-
-  // combine two above arrays with unclassified drivers after classified drivers
-  return finishedResults.concat(dnfResults)
+  return finalResults
 }
 
+// Re-sort so grid entry of 0 (for DNQ or similar) aren't first in list
+function sortGrid(gridData) {
+  gridData.map(result => {
+    if (result.grid == 0) {
+      result.grid = 99
+    }
+  })
+  gridData.sort(compareGridPos)
+  gridData.map(result => {
+    if (result.grid == 99) {
+      result.grid = 'Pit'
+    }
+  })
+  return gridData
+}
+
+function compareGridPos(a, b) {
+  const gridA = Number(a.grid)
+  const gridB = Number(b.grid)
+
+  let comparison = 0
+  if (gridA > gridB) {
+    comparison = 1
+  } else if (gridA < gridB) {
+    comparison = -1
+  }
+  return comparison
+}
+
+// Comparison function to aid in sorting circuit list by country
+function compareCircuits(a, b) {
+  const aCountry = a.Location.country
+  const bCountry = b.Location.country
+  if (aCountry < bCountry) {
+    return -1
+  }
+  if (aCountry > bCountry) {
+    return 1
+  }
+  return 0
+}
 
 module.exports = {
   prepareRaceData,
-  cleanResults
+  cleanResults,
+  sortGrid,
+  compareCircuits
 }
