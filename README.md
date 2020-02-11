@@ -30,9 +30,9 @@ bundle*
 main.css
 ```
 
-and ensure bundle files and main.css are generated before pushing to Heroku.
+-   Ensure bundle files and main.css are generated before pushing to Heroku.
 
-Then login to Heroku and push up:
+-   Login to Heroku and push up:
 
 ```
 heroku login
