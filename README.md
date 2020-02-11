@@ -19,13 +19,40 @@ npm run knex seed:run
 npm run dev
 ```
 
+## Deployment to Heroku
+
+There's no doubt a smarter way to do this...
+
+-   Remove the following from the `.gitignore` file
+
+```
+bundle*
+main.css
+```
+
+and ensure bundle files and main.css are generated before pushing to Heroku.
+
+Then login to Heroku and push up:
+
+```
+heroku login
+git push heroku [branch-to-push]:master
+```
+
+Force push if you get a rejection that isn't resolved by a git pull:
+
+```
+git push heroku [branch-to-push]:master -f
+```
+
 ## Notes
 
 ### TODO/Refactor
 
--   Currently each component that needs data is hitting the api and adding to its own state. Probably better to set up an onclick in the parent component and pass the data as props? (prior to redux version) - ANSWER: YES, pass it down as props.
--   To avoid hitting undefined errors before component state is populated with data, render methods include an if statement checking if state.whatever exists. There's no doubt a better way to do this.
+-   Visualisation is disabled due to painfully long wait (60 secs plus) fetching full race laptime data from the source.
+    Source dev is looking into it. But for now it's unplayable. Breaks my heart.
+-   Consider an option to download laptimes soon after new races and store locally to address this.
 
-![Test](https://media.giphy.com/media/4KLv24CPUoZ0I/giphy.gif)
+### Hey
 
-![Hey](https://www.capitalfm.co.ke/lifestyle/files/2018/10/web-mr-bean-atkinson-bbc-uk.jpg)
+Thanks for being you.
