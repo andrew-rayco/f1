@@ -19,10 +19,40 @@ npm run knex seed:run
 npm run dev
 ```
 
+## Deployment to Heroku
+
+There's no doubt a smarter way to do this...
+
+-   Remove the following from the `.gitignore` file
+
+```
+bundle*
+main.css
+```
+
+and ensure bundle files and main.css are generated before pushing to Heroku.
+
+Then login to Heroku and push up:
+
+```
+heroku login
+git push heroku [branch-to-push]:master
+```
+
+Force push if you get a rejection that isn't resolved by a git pull:
+
+```
+git push heroku [branch-to-push]:master -f
+```
+
 ## Notes
 
 ### TODO/Refactor
 
-- Visualisation is disabled due to painfully long wait (60 secs plus) fetching full race laptime data from the source. 
-Source dev is looking into it. But for now it's unplayable. Breaks my heart. 
-- Consider an option to download laptimes soon after new races and store locally to address this.
+-   Visualisation is disabled due to painfully long wait (60 secs plus) fetching full race laptime data from the source.
+    Source dev is looking into it. But for now it's unplayable. Breaks my heart.
+-   Consider an option to download laptimes soon after new races and store locally to address this.
+
+### Hey
+
+Thanks for being you.
